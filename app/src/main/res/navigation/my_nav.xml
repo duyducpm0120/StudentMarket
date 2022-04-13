@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/home2">
+
+    <fragment
+        android:id="@+id/home2"
+        android:name="com.example.studentmarket.Home"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/favorite"
+        android:name="com.example.studentmarket.Favorite"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/category"
+        android:name="com.example.studentmarket.Category"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" />
+    <navigation android:id="@+id/navigation"
+        app:startDestination="@id/login">
+        <fragment
+            android:id="@+id/login"
+            android:name="com.example.studentmarket.Login"
+            android:label="fragment_login"
+            tools:layout="@layout/fragment_login" >
+            <action
+                android:id="@+id/action_login_to_account"
+                app:destination="@+id/account" />
+        </fragment>
+        <fragment
+            android:id="@+id/account"
+            android:name="com.example.studentmarket.Account"
+            android:label="fragment_account"
+            tools:layout="@layout/fragment_account">
+            <action
+                android:id="@+id/action_account_to_login"
+                app:destination="@id/login" />
+        </fragment>
+    </navigation>
+</navigation>
