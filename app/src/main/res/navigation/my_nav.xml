@@ -52,8 +52,13 @@
             tools:layout="@layout/fragment_pre_register" />
         <fragment
             android:id="@+id/forgot_password"
-            android:name="com.example.studentmarket.Forgot_password"
+            android:name="com.example.studentmarket.Account.Forgot_password"
             android:label="fragment_forgot_password"
             tools:layout="@layout/fragment_forgot_password" />
+        <fragment
+            android:id="@+id/change_pass"
+            android:name="com.example.studentmarket.change_pass"
+            android:label="fragment_change_pass"
+            tools:layout="@layout/fragment_change_pass" />
     </navigation>
 </navigation>

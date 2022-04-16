@@ -1,4 +1,4 @@
-package com.example.studentmarket;
+package com.example.studentmarket.Account;
 
 import android.os.Bundle;
 
@@ -13,8 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.studentmarket.Account.Account;
-import com.example.studentmarket.Account.Login;
+import com.example.studentmarket.R;
 
 /**
  * A simple {@link Fragment} subclass.
