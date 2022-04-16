@@ -3,15 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/drawable/edittextstyle.xml" value="0.25" />
+        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/drawable/gradient_background.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/drawable/ic_baseline_category_24.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.25" />
+        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/drawable/mybutton.xml" value="0.25" />
+        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/drawable/rounded.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/fragment_account.xml" value="0.12158054711246201" />
+        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/fragment_account.xml" value="0.2" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/fragment_category.xml" value="0.12158054711246201" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/fragment_home.xml" value="0.2" />
-        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/fragment_login.xml" value="0.12158054711246201" />
+        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/fragment_login.xml" value="0.2" />
+        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/fragment_pre_register.xml" value="0.2" />
+        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/fragment_register.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/menu/bottom_menu.xml" value="0.23703703703703705" />
       </map>
     </option>

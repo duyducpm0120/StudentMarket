@@ -4,19 +4,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login">
+    tools:context=".register">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin"
         android:orientation="vertical"
-        android:padding="16dp"
         android:background="@drawable/gradient_background"
-        android:layout_height="match_parent">
+        android:stateListAnimator="@animator/nav_default_enter_anim">
         <ImageButton
             android:layout_marginTop="15dp"
-            android:id="@+id/close"
             android:layout_width="wrap_content"
+            android:id="@+id/close"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_close"
             android:backgroundTint="#fff"
@@ -28,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
-            android:text="Đăng nhập"
+            android:text="Đăng ký"
             android:textSize="32dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24dp"
-            android:text="Xin chào,\nĐăng nhập tại đây"
+            android:text="Xin chào,\nĐăng ký tại đây"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
@@ -48,43 +49,56 @@
             android:layout_marginTop="104dp"
             android:autofillHints="@string/prompt_email"
             android:background="@drawable/edittextstyle"
-            android:hint="Email, Tên đăng nhập"
+            android:hint="Tên đăng nhập"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:selectAllOnFocus="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
+        <EditText
+            android:id="@+id/university"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autofillHints="@string/prompt_email"
+            android:background="@drawable/edittextstyle"
+            android:hint="Trường đại học"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:selectAllOnFocus="true"
+            app:layout_constraintTop_toTopOf="@+id/username" />
+        <EditText
+            android:id="@+id/phonenumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:autofillHints="@string/prompt_email"
+            android:background="@drawable/edittextstyle"
+            android:hint="Số điện thoại"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            android:selectAllOnFocus="true"
+            app:layout_constraintTop_toTopOf="@+id/university" />
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:autofillHints="@string/prompt_password"
+            android:autofillHints="@string/prompt_email"
             android:background="@drawable/edittextstyle"
             android:hint="Mật khẩu"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
+            android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:selectAllOnFocus="true"
-            app:layout_constraintTop_toBottomOf="@+id/username" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Quên mật khẩu?"
-            android:layout_gravity="end"
-            android:layout_marginTop="10dp"
-            android:textColor="#5AC7E6"
-            />
+            app:layout_constraintTop_toTopOf="@+id/phonenumber" />
+
 
         <Button
             android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Đăng nhập"
+            android:text="Đăng ký"
             style="@style/myButton"
             app:layout_constraintTop_toBottomOf="@+id/password"
             />
@@ -98,7 +112,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bạn chưa có tài khoản? "
+                android:text="Bạn đã có tài khoản ? "
                 android:textSize="16dp"
 
                 >
@@ -106,14 +120,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đăng ký"
+                android:text="Đăng nhập"
                 android:textSize="16dp"
-                android:clickable="true"
                 android:textColor="@color/primary"
                 android:id="@+id/register"
                 />
-
         </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>

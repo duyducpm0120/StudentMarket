@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Login">
+    tools:context=".pre_register">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="@dimen/activity_horizontal_margin"
         android:background="@drawable/gradient_background"
         android:layout_height="match_parent">
         <ImageButton
@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="0dp"
-            android:text="Đăng nhập"
+            android:text="Đăng ký"
             android:textSize="32dp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,17 +38,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24dp"
-            android:text="Xin chào,\nĐăng nhập tại đây"
+            android:text="Xin chào,\nĐăng ký tại đây"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="104dp"
             android:autofillHints="@string/prompt_email"
             android:background="@drawable/edittextstyle"
-            android:hint="Email, Tên đăng nhập"
+            android:hint="Nhập email"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:selectAllOnFocus="true"
@@ -56,35 +56,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:autofillHints="@string/prompt_password"
-            android:background="@drawable/edittextstyle"
-            android:hint="Mật khẩu"
-            android:imeActionLabel="@string/action_sign_in_short"
-            android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            android:selectAllOnFocus="true"
-            app:layout_constraintTop_toBottomOf="@+id/username" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Quên mật khẩu?"
-            android:layout_gravity="end"
-            android:layout_marginTop="10dp"
-            android:textColor="#5AC7E6"
-            />
-
         <Button
-            android:id="@+id/login"
+            android:id="@+id/continueRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Đăng nhập"
+            android:text="Tiêp tục"
             style="@style/myButton"
             app:layout_constraintTop_toBottomOf="@+id/password"
             />
@@ -98,7 +74,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bạn chưa có tài khoản? "
+                android:text="Bạn đã có tài khoản ? "
                 android:textSize="16dp"
 
                 >
@@ -106,14 +82,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đăng ký"
+                android:text="Đăng nhập"
                 android:textSize="16dp"
-                android:clickable="true"
                 android:textColor="@color/primary"
                 android:id="@+id/register"
                 />
-
         </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>
