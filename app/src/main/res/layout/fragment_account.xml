@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Account">
+    tools:context=".Account.Account">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -24,6 +24,18 @@
             android:layout_height="wrap_content"
             style="@style/myButton"
             android:text="Đăng nhập" />
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/myButton"
+            android:text="Quên mật khẩu" />
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/myButton"
+            android:text="Thông báo" />
     </LinearLayout>
 
 </FrameLayout>
