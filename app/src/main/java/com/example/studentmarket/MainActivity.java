@@ -9,10 +9,10 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.studentmarket.Account.Account;
-import com.example.studentmarket.Category.Category;
-import com.example.studentmarket.Favorite.Favorite;
-import com.example.studentmarket.Home.Home;
+import com.example.studentmarket.Controller.Account.Account;
+import com.example.studentmarket.Controller.Category.Category;
+import com.example.studentmarket.Controller.Favorite.Favorite;
+import com.example.studentmarket.Controller.Home.Home;
 import com.example.studentmarket.databinding.ActivityMainBinding;
 
 

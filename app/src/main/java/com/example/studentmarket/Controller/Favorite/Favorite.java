@@ -1,4 +1,4 @@
-package com.example.studentmarket.Favorite;
+package com.example.studentmarket.Controller.Favorite;
 
 import android.os.Bundle;
 

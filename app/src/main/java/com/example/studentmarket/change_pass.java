@@ -12,9 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.studentmarket.Account.Account;
-import com.example.studentmarket.Account.Login;
-import com.example.studentmarket.Account.pre_register;
+import com.example.studentmarket.Controller.Account.Login;
+import com.example.studentmarket.Controller.Account.pre_register;
 
 /**
  * A simple {@link Fragment} subclass.

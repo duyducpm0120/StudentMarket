@@ -1,4 +1,4 @@
-package com.example.studentmarket.Account;
+package com.example.studentmarket.Controller.Account;
 
 import android.content.DialogInterface;
 import android.graphics.Typeface;

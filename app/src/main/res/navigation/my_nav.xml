@@ -7,24 +7,24 @@
 
     <fragment
         android:id="@+id/home2"
-        android:name="com.example.studentmarket.Home.Home"
+        android:name="com.example.studentmarket.Controller.Home.Home"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/favorite"
-        android:name="com.example.studentmarket.Favorite.Favorite"
+        android:name="com.example.studentmarket.Controller.Favorite.Favorite"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/category"
-        android:name="com.example.studentmarket.Category.Category"
+        android:name="com.example.studentmarket.Controller.Category.Category"
         android:label="fragment_category"
         tools:layout="@layout/fragment_category" />
     <navigation android:id="@+id/accountNav"
         app:startDestination="@id/login">
         <fragment
             android:id="@+id/login"
-            android:name="com.example.studentmarket.Account.Login"
+            android:name="com.example.studentmarket.Controller.Account.Login"
             android:label="fragment_login"
             tools:layout="@layout/fragment_login" >
             <action
@@ -33,7 +33,7 @@
         </fragment>
         <fragment
             android:id="@+id/account"
-            android:name="com.example.studentmarket.Account.Account"
+            android:name="com.example.studentmarket.Controller.Account.Account"
             android:label="fragment_account"
             tools:layout="@layout/fragment_account">
             <action
@@ -42,17 +42,17 @@
         </fragment>
         <fragment
             android:id="@+id/register2"
-            android:name="com.example.studentmarket.Account.register"
+            android:name="com.example.studentmarket.Controller.Account.register"
             android:label="fragment_register"
             tools:layout="@layout/fragment_register" />
         <fragment
             android:id="@+id/pre_register"
-            android:name="com.example.studentmarket.Account.pre_register"
+            android:name="com.example.studentmarket.Controller.Account.pre_register"
             android:label="fragment_pre_register"
             tools:layout="@layout/fragment_pre_register" />
         <fragment
             android:id="@+id/forgot_password"
-            android:name="com.example.studentmarket.Account.Forgot_password"
+            android:name="com.example.studentmarket.Controller.Account.Forgot_password"
             android:label="fragment_forgot_password"
             tools:layout="@layout/fragment_forgot_password" />
         <fragment
