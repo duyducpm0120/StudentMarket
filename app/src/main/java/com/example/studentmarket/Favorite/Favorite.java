@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.studentmarket.R;
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Favorite#newInstance} factory method to

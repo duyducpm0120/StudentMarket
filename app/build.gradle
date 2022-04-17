@@ -28,6 +28,13 @@ android {
     buildFeatures {
         viewBinding true
     }
+    sourceSets {
+        main {
+            res {
+                srcDirs 'src\\main\\res', 'src\\main\\res\\layouts\\Account', 'src\\main\\res\\layouts\\Profile', 'src\\main\\res\\layouts\\Product', 'src\\main\\res\\layouts\\Home', 'src\\main\\res\\layouts\\Favorite'
+            }
+        }
+    }
 }
 
 dependencies {
