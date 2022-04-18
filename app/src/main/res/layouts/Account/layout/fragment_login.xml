@@ -23,7 +23,7 @@
             android:textSize="24dp" android:text="Xin chào,\nĐăng nhập tại đây"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-        <EditText android:id="@+id/username" android:layout_width="match_parent"
+        <EditText android:id="@+id/register_username_edit_text" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_marginTop="104dp"
             android:autofillHints="@string/prompt_email"
             android:background="@drawable/edittextstyle" android:hint="Email, Tên đăng nhập"
@@ -33,21 +33,21 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
-        <EditText android:id="@+id/password" android:layout_width="match_parent"
+        <EditText android:id="@+id/register_password_edit_text" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:layout_marginTop="10dp"
             android:autofillHints="@string/prompt_password"
             android:background="@drawable/edittextstyle" android:hint="Mật khẩu"
             android:imeActionLabel="@string/action_sign_in_short" android:imeOptions="actionDone"
             android:inputType="textPassword" android:minHeight="48dp"
-            android:selectAllOnFocus="true" app:layout_constraintTop_toBottomOf="@+id/username" />
+            android:selectAllOnFocus="true" app:layout_constraintTop_toBottomOf="@+id/register_username_edit_text" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:text="Quên mật khẩu?" android:clickable="true" android:id="@+id/forgot_password"
             android:layout_gravity="end" android:layout_marginTop="10dp"
             android:textColor="#5AC7E6" />
 
-        <Button android:id="@+id/login" android:layout_width="match_parent"
+        <Button android:id="@+id/register_button" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:text="Đăng nhập" style="@style/myButton"
-            app:layout_constraintTop_toBottomOf="@+id/password" />
+            app:layout_constraintTop_toBottomOf="@+id/register_password_edit_text" />
         <LinearLayout android:layout_marginTop="10dp" android:layout_width="match_parent"
             android:layout_height="wrap_content" android:gravity="center"
 

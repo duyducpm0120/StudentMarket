@@ -42,7 +42,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/pre_register_email_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
@@ -58,14 +58,14 @@
 
 
         <Button
-            android:id="@+id/login"
+            android:id="@+id/register_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="52dp"
 
             android:text="Đồng ý"
             style="@style/myButton"
-            app:layout_constraintTop_toBottomOf="@+id/password"
+            app:layout_constraintTop_toBottomOf="@+id/register_password_edit_text"
             />
         <LinearLayout
             android:layout_marginTop="20dp"

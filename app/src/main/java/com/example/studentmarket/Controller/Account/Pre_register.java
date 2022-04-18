@@ -17,10 +17,10 @@ import com.example.studentmarket.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link pre_register#newInstance} factory method to
+ * Use the {@link Pre_register#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class pre_register extends Fragment {
+public class Pre_register extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,7 +31,7 @@ public class pre_register extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public pre_register() {
+    public Pre_register() {
         // Required empty public constructor
     }
 
@@ -44,8 +44,8 @@ public class pre_register extends Fragment {
      * @return A new instance of fragment pre_register.
      */
     // TODO: Rename and change types and number of parameters
-    public static pre_register newInstance(String param1, String param2) {
-        pre_register fragment = new pre_register();
+    public static Pre_register newInstance(String param1, String param2) {
+        Pre_register fragment = new Pre_register();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -89,7 +89,7 @@ public class pre_register extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new register());
+                fragmentTransaction.replace(R.id.fragmentContainerView,new Register());
                 fragmentTransaction.commit();
             }
         });

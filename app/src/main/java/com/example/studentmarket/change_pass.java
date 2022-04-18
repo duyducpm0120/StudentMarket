@@ -13,7 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.studentmarket.Controller.Account.Login;
-import com.example.studentmarket.Controller.Account.pre_register;
+import com.example.studentmarket.Controller.Account.Pre_register;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -81,7 +81,7 @@ public class change_pass extends Fragment {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new pre_register());
+                fragmentTransaction.replace(R.id.fragmentContainerView,new Pre_register());
                 fragmentTransaction.commit();
             }
         });

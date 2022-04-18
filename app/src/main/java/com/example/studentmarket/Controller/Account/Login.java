@@ -82,7 +82,7 @@ public class Login extends Fragment {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new pre_register());
+                fragmentTransaction.replace(R.id.fragmentContainerView,new Pre_register());
                 fragmentTransaction.commit();
             }
         });

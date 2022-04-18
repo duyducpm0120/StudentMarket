@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controller.Account.register">
+    tools:context=".Controller.Account.Register">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -43,7 +43,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/register_username_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="104dp"
@@ -56,20 +56,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <EditText
-            android:id="@+id/university"
-            android:layout_marginTop="10dp"
+            android:id="@+id/register_user_full_name_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:autofillHints="@string/prompt_email"
             android:background="@drawable/edittextstyle"
-            android:hint="Trường đại học"
+            android:hint="@string/userFullName"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:selectAllOnFocus="true"
-            app:layout_constraintTop_toTopOf="@+id/username" />
+            app:layout_constraintTop_toTopOf="@+id/register_username_edit_text" />
         <EditText
-            android:id="@+id/phonenumber"
+            android:id="@+id/register_phonenumber_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -79,9 +80,9 @@
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:selectAllOnFocus="true"
-            app:layout_constraintTop_toTopOf="@+id/university" />
+            app:layout_constraintTop_toTopOf="@+id/register_user_full_name_edit_text" />
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/register_password_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -91,16 +92,16 @@
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:selectAllOnFocus="true"
-            app:layout_constraintTop_toTopOf="@+id/phonenumber" />
+            app:layout_constraintTop_toTopOf="@+id/register_phonenumber_edit_text" />
 
 
         <Button
-            android:id="@+id/login"
+            android:id="@+id/register_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Đăng ký"
             style="@style/myButton"
-            app:layout_constraintTop_toBottomOf="@+id/password"
+            app:layout_constraintTop_toBottomOf="@+id/register_password_edit_text"
             />
         <LinearLayout
             android:layout_marginTop="10dp"

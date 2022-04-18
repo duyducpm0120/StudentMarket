@@ -21,9 +21,9 @@
         android:label="fragment_category"
         tools:layout="@layout/fragment_category" />
     <navigation android:id="@+id/accountNav"
-        app:startDestination="@id/login">
+        app:startDestination="@id/register_button">
         <fragment
-            android:id="@+id/login"
+            android:id="@+id/register_button"
             android:name="com.example.studentmarket.Controller.Account.Login"
             android:label="fragment_login"
             tools:layout="@layout/fragment_login" >
@@ -38,16 +38,16 @@
             tools:layout="@layout/fragment_account">
             <action
                 android:id="@+id/action_account_to_login"
-                app:destination="@id/login" />
+                app:destination="@id/register_button" />
         </fragment>
         <fragment
             android:id="@+id/register2"
-            android:name="com.example.studentmarket.Controller.Account.register"
+            android:name="com.example.studentmarket.Controller.Account.Register"
             android:label="fragment_register"
             tools:layout="@layout/fragment_register" />
         <fragment
             android:id="@+id/pre_register"
-            android:name="com.example.studentmarket.Controller.Account.pre_register"
+            android:name="com.example.studentmarket.Controller.Account.Pre_register"
             android:label="fragment_pre_register"
             tools:layout="@layout/fragment_pre_register" />
         <fragment
