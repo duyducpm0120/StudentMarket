@@ -9,9 +9,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.example.studentmarket.R;
 
@@ -41,7 +40,7 @@ public class Forgot_password extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Forgot_password.
+     * @return A new instance of fragment change_pass.
      */
     // TODO: Rename and change types and number of parameters
     public static Forgot_password newInstance(String param1, String param2) {
@@ -67,20 +66,21 @@ public class Forgot_password extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_forgot_password, container, false);
-        Button btn = (Button) view.findViewById(R.id.save);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(view.getContext(),"Đã lưu",Toast.LENGTH_LONG).show();
-            }
-        });
-        ImageButton imageButton = (ImageButton) view.findViewById(R.id.close);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton forgotPasswordClose = (ImageButton) view.findViewById(R.id.forgotPasswordClose);
+        forgotPasswordClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Account());
+                fragmentTransaction.replace(R.id.fragmentContainerView,new Login());
+                fragmentTransaction.commit();
+            }
+        });
+        TextView textView = (TextView) view.findViewById(R.id.register);
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentTransaction.replace(R.id.fragmentContainerView,new Pre_register());
                 fragmentTransaction.commit();
             }
         });

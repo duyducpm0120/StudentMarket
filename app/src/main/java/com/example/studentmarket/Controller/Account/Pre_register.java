@@ -69,8 +69,8 @@ public class Pre_register extends Fragment {
         View view= inflater.inflate(R.layout.fragment_pre_register, container, false);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-        ImageButton imageButton = (ImageButton) view.findViewById(R.id.close);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton preRegisterClose = (ImageButton) view.findViewById(R.id.preRegisterClose);
+        preRegisterClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Login());

@@ -82,14 +82,14 @@ public class Register extends Fragment {
         View view=  inflater.inflate(R.layout.fragment_register, container, false);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-        ImageButton imageButton = (ImageButton) view.findViewById(R.id.close);
+        ImageButton regiterClose = (ImageButton) view.findViewById(R.id.regiterClose);
         registerButton =(Button) view.findViewById(R.id.register_button);
         emailEditText =(EditText) view.findViewById(R.id.pre_register_email_edit_text);
         userNameEditText =(EditText) view.findViewById(R.id.register_username_edit_text);
         userFullNameEditText =(EditText) view.findViewById(R.id.register_user_full_name_edit_text);
         phoneNumberEditText =(EditText) view.findViewById(R.id.register_phonenumber_edit_text);
         passwordEditText =(EditText) view.findViewById(R.id.register_password_edit_text);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        regiterClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Pre_register());
