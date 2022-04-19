@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/home2">
+
+    <fragment
+        android:id="@+id/home2"
+        android:name="com.example.studentmarket.Controller.Home.Home"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/favorite"
+        android:name="com.example.studentmarket.Controller.Favorite.Favorite"
+        android:label="fragment_favorite"
+        tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/category"
+        android:name="com.example.studentmarket.Controller.Category.Category"
+        android:label="fragment_category"
+        tools:layout="@layout/fragment_category" />
+    <navigation android:id="@+id/accountNav"
+        app:startDestination="@id/register_button">
+        <fragment
+            android:id="@+id/register_button"
+            android:name="com.example.studentmarket.Controller.Account.Login"
+            android:label="fragment_login"
+            tools:layout="@layout/fragment_login" >
+            <action
+                android:id="@+id/action_login_to_account"
+                app:destination="@+id/account" />
+        </fragment>
+        <fragment
+            android:id="@+id/account"
+            android:name="com.example.studentmarket.Controller.Account.Account"
+            android:label="fragment_account"
+            tools:layout="@layout/fragment_account">
+            <action
+                android:id="@+id/action_account_to_login"
+                app:destination="@id/register_button" />
+        </fragment>
+        <fragment
+            android:id="@+id/register2"
+            android:name="com.example.studentmarket.Controller.Account.Register"
+            android:label="fragment_register"
+            tools:layout="@layout/fragment_register" />
+        <fragment
+            android:id="@+id/pre_register"
+            android:name="com.example.studentmarket.Controller.Account.Pre_register"
+            android:label="fragment_pre_register"
+            tools:layout="@layout/fragment_pre_register" />
+        <fragment
+            android:id="@+id/forgot_password"
+            android:name="com.example.studentmarket.Controller.Account.Forgot_password"
+            android:label="fragment_forgot_password"
+            tools:layout="@layout/fragment_forgot_password" />
+        <fragment
+            android:id="@+id/change_pass"
+            android:name="com.example.studentmarket.change_pass"
+            android:label="fragment_change_pass"
+            tools:layout="@layout/fragment_change_pass" />
+    </navigation>
+</navigation>
