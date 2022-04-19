@@ -7,127 +7,135 @@
     tools:context=".Controller.Account.Register">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:orientation="vertical"
-        android:background="@drawable/gradient_background"
-        android:stateListAnimator="@animator/nav_default_enter_anim">
-        <ImageButton
-            android:layout_marginTop="15dp"
-            android:layout_width="wrap_content"
-            android:id="@+id/close"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_close"
-            android:backgroundTint="#fff"
-            android:layout_gravity="end"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            />
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            android:text="Đăng ký"
-            android:textSize="32dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:scrollbars="none">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="24dp"
-            android:text="Xin chào,\nĐăng ký tại đây"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-        <EditText
-            android:id="@+id/register_username_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="104dp"
-            android:autofillHints="@string/prompt_email"
-            android:background="@drawable/edittextstyle"
-            android:hint="Tên đăng nhập"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            android:selectAllOnFocus="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/register_user_full_name_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:autofillHints="@string/prompt_email"
-            android:background="@drawable/edittextstyle"
-            android:hint="@string/userFullName"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            android:selectAllOnFocus="true"
-            app:layout_constraintTop_toTopOf="@+id/register_username_edit_text" />
-        <EditText
-            android:id="@+id/register_phonenumber_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:autofillHints="@string/prompt_email"
-            android:background="@drawable/edittextstyle"
-            android:hint="Số điện thoại"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            android:selectAllOnFocus="true"
-            app:layout_constraintTop_toTopOf="@+id/register_user_full_name_edit_text" />
-        <EditText
-            android:id="@+id/register_password_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:autofillHints="@string/prompt_email"
-            android:background="@drawable/edittextstyle"
-            android:hint="Mật khẩu"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            android:selectAllOnFocus="true"
-            app:layout_constraintTop_toTopOf="@+id/register_phonenumber_edit_text" />
-
-
-        <Button
-            android:id="@+id/register_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Đăng ký"
-            style="@style/myButton"
-            app:layout_constraintTop_toBottomOf="@+id/register_password_edit_text"
-            />
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="12dp">
 
-            >
+            <ImageButton
+                android:id="@+id/close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="15dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:backgroundTint="#fff"
+                android:src="@drawable/ic_close" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bạn đã có tài khoản ? "
-                android:textSize="16dp"
+                android:text="Xin chào,\nĐăng ký tại đây"
+                android:textSize="24dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:text="Đăng ký"
+                android:textSize="32dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/register_username_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="104dp"
+                android:autofillHints="@string/prompt_email"
+                android:background="@drawable/edittextstyle"
+                android:hint="Tên đăng nhập"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:selectAllOnFocus="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/register_phonenumber_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:autofillHints="@string/prompt_email"
+                android:background="@drawable/edittextstyle"
+                android:hint="Số điện thoại"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:selectAllOnFocus="true"
+                app:layout_constraintTop_toTopOf="@+id/register_user_full_name_edit_text" />
+
+            <EditText
+                android:id="@+id/register_password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:autofillHints="@string/prompt_email"
+                android:background="@drawable/edittextstyle"
+                android:hint="Mật khẩu"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:selectAllOnFocus="true"
+                app:layout_constraintTop_toTopOf="@+id/register_phonenumber_edit_text" />
+
+            <EditText
+                android:id="@+id/register_user_full_name_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:autofillHints="@string/prompt_email"
+                android:background="@drawable/edittextstyle"
+                android:hint="@string/userFullName"
+                android:inputType="textEmailAddress"
+                android:minHeight="48dp"
+                android:selectAllOnFocus="true"
+                app:layout_constraintTop_toTopOf="@+id/register_username_edit_text" />
+
+            <Button
+                android:id="@+id/register_button"
+                style="@style/myButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đăng ký"
+                app:layout_constraintTop_toBottomOf="@+id/register_password_edit_text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
 
                 >
-            </TextView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đăng nhập"
-                android:textSize="16dp"
-                android:textColor="@color/primary"
-                android:id="@+id/register"
-                />
-        </LinearLayout>
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bạn đã có tài khoản ? "
+                    android:textSize="16dp"
+
+                    ></TextView>
+
+                <TextView
+                    android:id="@+id/register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đăng nhập"
+                    android:textColor="@color/primary"
+                    android:textSize="16dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
