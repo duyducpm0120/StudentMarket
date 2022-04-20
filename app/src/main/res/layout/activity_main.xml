@@ -12,6 +12,8 @@
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
         android:id="@+id/bottomNavigationView"
+        app:itemTextColor="@drawable/nav_item_color_state"
+        app:itemIconTint="@drawable/nav_item_color_state"
         app:menu="@menu/bottom_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

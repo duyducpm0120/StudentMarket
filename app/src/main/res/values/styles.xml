@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="myButton" parent="@style/Theme.Material3.Light.NoActionBar">
-        <item name="android:backgroundTint">@color/primary</item>
+        <item name="android:backgroundTint">@drawable/button_color</item>
         <item name="android:textColor">#fff</item>
         <item name="android:textAllCaps">false</item>
         <item name="cornerRadius">5dp</item>
@@ -11,12 +11,13 @@
         <item name="android:stateListAnimator">@animator/nav_default_enter_anim</item>
         <item name="android:textSize">16dp</item>
     </style>
-    <style name="transparentStatusBar" parent="@style/Theme.Material3.Light.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
+    <style name="darkTextStatusBar" parent="@style/Theme.Material3.Light.NoActionBar">
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
     <style name="Themeoverlay" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="buttonBarNegativeButtonStyle">@style/myButton</item>
     </style>
+
 
 </resources>
