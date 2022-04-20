@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.studentmarket.R;
-import com.example.studentmarket.Validate;
+import com.example.studentmarket.Helper.Validation.Validate;
 
 /**
  * A simple {@link Fragment} subclass.
