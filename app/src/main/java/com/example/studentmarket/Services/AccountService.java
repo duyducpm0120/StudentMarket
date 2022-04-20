@@ -21,7 +21,7 @@ public class AccountService {
 
         requestBody.put("userAddress", "AAAAA");
 
-        requestBody.put("userEmail", "duyduc@gmail");
+        requestBody.put("userEmail", "ducduypm0120@gmail.com");
 
         requestBody.put("accountName", userName);
 
@@ -55,7 +55,35 @@ public class AccountService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void Login(String accountName, String password) {
+    public void Login(String accountName, String password,  Context context) throws JSONException {
+        String url = SIGNUP_URL;
+
+        JSONObject requestBody = new JSONObject();
+
+        requestBody.put("accountName", "ducduypm0120@gmail.com");
+
+        requestBody.put("password", "ducduypm012");
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //textView.setText("Response: " + response.toString());
+                        Log.d("login response", response.toString());
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.d("login response err", error.toString());
+
+                    }
+                });
+
+        // Access the RequestQueue through your singleton class.
+        ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
     public void ChangePassword(String id, String oldPassword, String newPassword) {

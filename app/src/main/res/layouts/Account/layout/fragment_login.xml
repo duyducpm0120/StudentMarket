@@ -89,7 +89,7 @@
                 android:textColor="#5AC7E6" />
 
             <Button
-                android:id="@+id/register_button"
+                android:id="@+id/login_button"
                 style="@style/myButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

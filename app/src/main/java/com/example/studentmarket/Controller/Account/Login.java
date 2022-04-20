@@ -9,10 +9,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.studentmarket.R;
+import com.example.studentmarket.Services.AccountService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +33,8 @@ public class Login extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Button loginButton;
 
     public Login() {
         // Required empty public constructor
@@ -60,6 +65,8 @@ public class Login extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
@@ -93,7 +100,25 @@ public class Login extends Fragment {
                 fragmentTransaction.commit();
             }
         });
+        loginButton = view.findViewById(R.id.login_button);
+        loginButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                login("aaa", "aaaa");
+            }
+        });
         return view;
+    }
+
+    public void login(String accountName, String password) {
+        AccountService accountService = new AccountService();
+        try {
+            accountService.Login(accountName,password, getContext());
+        } catch (Exception err) {
+            Toast toast = Toast.makeText(getContext(),
+                    getString(R.string.SignUp_Error),
+                    Toast.LENGTH_LONG);
+        }
     }
 
 }
