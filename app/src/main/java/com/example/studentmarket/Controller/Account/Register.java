@@ -7,15 +7,19 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.studentmarket.R;
 import com.example.studentmarket.Service.AccountService;
+import com.example.studentmarket.Validate;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,19 +38,21 @@ public class Register extends Fragment {
     private String mParam2;
 
 
-    private Button registerButton ;
+    private Button registerButton;
     private EditText emailEditText;
     private EditText userNameEditText;
     private EditText userFullNameEditText;
     private EditText phoneNumberEditText;
     private EditText passwordEditText;
-
-
+    private TextView errorText;
 
 
     public Register() {
         // Required empty public constructor
     }
+
+    private Bundle bundle;
+    private String textEmail;
 
     /**
      * Use this factory method to create a new instance of
@@ -79,33 +85,67 @@ public class Register extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view=  inflater.inflate(R.layout.fragment_register, container, false);
+        View view = inflater.inflate(R.layout.fragment_register, container, false);
+        TextView regiterToLogin = (TextView) view.findViewById(R.id.registerToLogin);
+        bundle = this.getArguments();
+        getTextEmail(bundle);
         FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-        ImageButton imageButton = (ImageButton) view.findViewById(R.id.close);
-        registerButton =(Button) view.findViewById(R.id.register_button);
-        emailEditText =(EditText) view.findViewById(R.id.pre_register_email_edit_text);
-        userNameEditText =(EditText) view.findViewById(R.id.register_username_edit_text);
-        userFullNameEditText =(EditText) view.findViewById(R.id.register_user_full_name_edit_text);
-        phoneNumberEditText =(EditText) view.findViewById(R.id.register_phonenumber_edit_text);
-        passwordEditText =(EditText) view.findViewById(R.id.register_password_edit_text);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        ImageButton regiterClose = (ImageButton) view.findViewById(R.id.regiterClose);
+        registerButton = (Button) view.findViewById(R.id.register_button);
+        userNameEditText = (EditText) view.findViewById(R.id.register_username_edit_text);
+        userFullNameEditText = (EditText) view.findViewById(R.id.register_user_full_name_edit_text);
+        phoneNumberEditText = (EditText) view.findViewById(R.id.register_phonenumber_edit_text);
+        passwordEditText = (EditText) view.findViewById(R.id.register_password_edit_text);
+        errorText = (TextView) view.findViewById(R.id.regiterErrorText);
+        regiterClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Pre_register());
+                fragmentTransaction.replace(R.id.fragmentContainerView, new Pre_register());
                 fragmentTransaction.commit();
 
             }
         });
 
-        registerButton.setOnClickListener(new View.OnClickListener(){
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Click on button","clickedddd");
-                AccountService accountService = new AccountService();
-                accountService.SignUp("aaaa", userNameEditText.getText().toString(),userFullNameEditText.getText().toString(),phoneNumberEditText.getText().toString(),passwordEditText.getText().toString(),getContext());
+                if (Validate.validatePhoneNumber(phoneNumberEditText.getText().toString())) {
+                    Log.d("log","1");
+                    signUp(textEmail, userFullNameEditText.getText().toString(), userFullNameEditText.getText().toString(), phoneNumberEditText.getText().toString(), passwordEditText.getText().toString());
+                    Toast toast = Toast.makeText(getContext(), "Đã xảy ra lỗi,vui loingf thử lại sau", Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
+                    toast.show();
+                    errorText.setVisibility(View.INVISIBLE);
+
+                } else {
+                    Log.d("log","0");
+                    errorText.setVisibility(View.VISIBLE);
+                }
             }
         });
+        regiterToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentTransaction.replace(R.id.fragmentContainerView,new Login());
+                fragmentTransaction.commit();
+            }
+        });
+
         return view;
+    }
+
+    public void getTextEmail(Bundle bundle) {
+        if (bundle != null) {
+            textEmail = bundle.getString("EmailData", "");
+            Toast.makeText(getContext(), textEmail, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+
+    public void signUp(String email, String username, String userFullName, String phoneNumber, String password) {
+        AccountService accountService = new AccountService();
+        accountService.SignUp(email, username, userFullName, phoneNumber, password, getContext());
     }
 }

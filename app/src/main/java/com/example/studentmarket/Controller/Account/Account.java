@@ -85,7 +85,7 @@ public class Account extends Fragment {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Forgot_password());
+                fragmentTransaction.replace(R.id.fragmentContainerView,new Change_password());
                 fragmentTransaction.commit();
             }
         });

@@ -1,4 +1,4 @@
-package com.example.studentmarket;
+package com.example.studentmarket.Controller.Account;
 
 import android.os.Bundle;
 
@@ -9,18 +9,18 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.studentmarket.Controller.Account.Login;
-import com.example.studentmarket.Controller.Account.Pre_register;
+import com.example.studentmarket.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link change_pass#newInstance} factory method to
+ * Use the {@link Change_password#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class change_pass extends Fragment {
+public class Change_password extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -31,7 +31,7 @@ public class change_pass extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public change_pass() {
+    public Change_password() {
         // Required empty public constructor
     }
 
@@ -41,11 +41,11 @@ public class change_pass extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment change_pass.
+     * @return A new instance of fragment Forgot_password.
      */
     // TODO: Rename and change types and number of parameters
-    public static change_pass newInstance(String param1, String param2) {
-        change_pass fragment = new change_pass();
+    public static Change_password newInstance(String param1, String param2) {
+        Change_password fragment = new Change_password();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,22 +66,21 @@ public class change_pass extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_change_pass, container, false);
+        View view = inflater.inflate(R.layout.fragment_change_password, container, false);
+        Button btn = (Button) view.findViewById(R.id.save);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-        ImageButton imageButton = (ImageButton) view.findViewById(R.id.close);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Login());
-                fragmentTransaction.commit();
+            public void onClick(View view) {
+                Toast.makeText(view.getContext(),"Đã lưu",Toast.LENGTH_LONG).show();
             }
         });
-        TextView textView = (TextView) view.findViewById(R.id.register);
-        textView.setOnClickListener(new View.OnClickListener() {
+        ImageButton changePasswordClose = (ImageButton) view.findViewById(R.id.changePasswordClose);
+        changePasswordClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Pre_register());
+                fragmentTransaction.replace(R.id.fragmentContainerView,new Account());
                 fragmentTransaction.commit();
             }
         });

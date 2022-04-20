@@ -13,7 +13,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.studentmarket.R;
-import com.example.studentmarket.change_pass;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,8 +69,8 @@ public class Login extends Fragment {
         View view= inflater.inflate(R.layout.fragment_login, container, false);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-        ImageButton imageButton = (ImageButton) view.findViewById(R.id.close);
-        imageButton.setOnClickListener(new View.OnClickListener() {
+        ImageButton loginClose = (ImageButton) view.findViewById(R.id.loginClose);
+        loginClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Account());
@@ -90,7 +89,7 @@ public class Login extends Fragment {
         forgot_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new change_pass());
+                fragmentTransaction.replace(R.id.fragmentContainerView,new Forgot_password());
                 fragmentTransaction.commit();
             }
         });
