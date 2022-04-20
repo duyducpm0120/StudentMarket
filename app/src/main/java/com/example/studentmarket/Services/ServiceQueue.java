@@ -1,4 +1,4 @@
-package com.example.studentmarket.Service;
+package com.example.studentmarket.Services;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,13 +9,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
-public class MySingleton {
-    private static MySingleton instance;
+public class ServiceQueue {
+    private static ServiceQueue instance;
     private RequestQueue requestQueue;
     private ImageLoader imageLoader;
     private static Context ctx;
 
-    private MySingleton(Context context) {
+    private ServiceQueue(Context context) {
         ctx = context;
         requestQueue = getRequestQueue();
 
@@ -36,9 +36,9 @@ public class MySingleton {
                 });
     }
 
-    public static synchronized MySingleton getInstance(Context context) {
+    public static synchronized ServiceQueue getInstance(Context context) {
         if (instance == null) {
-            instance = new MySingleton(context);
+            instance = new ServiceQueue(context);
         }
         return instance;
     }

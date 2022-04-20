@@ -1,4 +1,4 @@
-package com.example.studentmarket.Service;
+package com.example.studentmarket.Services;
 
 public class EndpointConstant {
     public static final String ENDPOINT_PREFIX = "http://10.0.2.2:8080/";

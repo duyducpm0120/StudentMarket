@@ -18,8 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studentmarket.R;
-import com.example.studentmarket.Service.AccountService;
-import com.example.studentmarket.Validate;
+import com.example.studentmarket.Services.AccountService;
+import com.example.studentmarket.Helper.Validation.Validate;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -110,24 +110,24 @@ public class Register extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Validate.validatePhoneNumber(phoneNumberEditText.getText().toString())) {
-                    Log.d("log","1");
-                    signUp(textEmail, userFullNameEditText.getText().toString(), userFullNameEditText.getText().toString(), phoneNumberEditText.getText().toString(), passwordEditText.getText().toString());
-                    Toast toast = Toast.makeText(getContext(), "Đã xảy ra lỗi,vui loingf thử lại sau", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 0);
-                    toast.show();
-                    errorText.setVisibility(View.INVISIBLE);
-
-                } else {
-                    Log.d("log","0");
-                    errorText.setVisibility(View.VISIBLE);
-                }
+                signUp(textEmail, userFullNameEditText.getText().toString(), userFullNameEditText.getText().toString(), phoneNumberEditText.getText().toString(), passwordEditText.getText().toString());
+//                if (Validate.validatePhoneNumber(phoneNumberEditText.getText().toString())) {
+//                    Log.d("validate successfully", "1");
+//                    signUp(textEmail, userFullNameEditText.getText().toString(), userFullNameEditText.getText().toString(), phoneNumberEditText.getText().toString(), passwordEditText.getText().toString());
+////                    Toast toast = Toast.makeText(getContext(), "Đã xảy ra lỗi,vui lòng thử lại sau", Toast.LENGTH_SHORT);
+////                    toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+////                    toast.show();
+////                    errorText.setVisibility(View.INVISIBLE);
+//                } else {
+//                    Log.d("validate fail", "0");
+//                    errorText.setVisibility(View.VISIBLE);
+//                }
             }
         });
         regiterToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Login());
+                fragmentTransaction.replace(R.id.fragmentContainerView, new Login());
                 fragmentTransaction.commit();
             }
         });
@@ -143,9 +143,14 @@ public class Register extends Fragment {
     }
 
 
-
     public void signUp(String email, String username, String userFullName, String phoneNumber, String password) {
         AccountService accountService = new AccountService();
-        accountService.SignUp(email, username, userFullName, phoneNumber, password, getContext());
+        try {
+            accountService.SignUp(email, username, userFullName, phoneNumber, password, getContext());
+        } catch (Exception err) {
+             Toast toast = Toast.makeText(getContext(),
+                     getString(R.string.SignUp_Error),
+                     Toast.LENGTH_LONG);
+        }
     }
 }
