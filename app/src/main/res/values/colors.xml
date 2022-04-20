@@ -10,4 +10,5 @@
     <color name="borderColor">#000</color>
     <color name="primary">#5AC7E6</color>
     <color name="secondary">#FF7B00</color>
+    <color name="gray">#6A6565</color>
 </resources>

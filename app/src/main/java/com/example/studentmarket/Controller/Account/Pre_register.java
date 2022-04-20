@@ -6,14 +6,19 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.studentmarket.R;
+import com.example.studentmarket.Validate;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +39,8 @@ public class Pre_register extends Fragment {
     public Pre_register() {
         // Required empty public constructor
     }
+    private EditText editTextPreRegiter;
+    private Bundle bundle;
 
     /**
      * Use this factory method to create a new instance of
@@ -67,6 +74,13 @@ public class Pre_register extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_pre_register, container, false);
+        editTextPreRegiter = (EditText) view.findViewById(R.id.pre_register_email_edit_text);
+        TextView preRegisterLoginTextView = (TextView) view.findViewById(R.id.pre_register_login);
+        Button continueRegisterButton = (Button) view.findViewById(R.id.continueRegister);
+
+        bundle = new Bundle();
+        Register registerFragment = new Register();
+        registerFragment.setArguments(bundle);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
         ImageButton preRegisterClose = (ImageButton) view.findViewById(R.id.preRegisterClose);
@@ -77,22 +91,43 @@ public class Pre_register extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-        TextView textView = (TextView) view.findViewById(R.id.register);
-        textView.setOnClickListener(new View.OnClickListener() {
+        preRegisterLoginTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Login());
                 fragmentTransaction.commit();
             }
         });
-        Button button = (Button) view.findViewById(R.id.continueRegister);
-        button.setOnClickListener(new View.OnClickListener() {
+        continueRegisterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Register());
+                bundle.putString("EmailData",editTextPreRegiter.getText().toString());
+                fragmentTransaction.replace(R.id.fragmentContainerView,registerFragment);
                 fragmentTransaction.commit();
             }
         });
+        editTextPreRegiter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (Validate.validateEmail(s.toString())){
+                    continueRegisterButton.setEnabled(true);
+                }
+                else {
+                    continueRegisterButton.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         return view;
     }
 }
