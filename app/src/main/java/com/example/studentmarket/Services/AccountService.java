@@ -56,6 +56,7 @@ public class AccountService {
     }
 
     public void Login(String accountName, String password,  Context context) throws JSONException {
+        Log.d("test", "test");
         String url = SIGNUP_URL;
 
         JSONObject requestBody = new JSONObject();
