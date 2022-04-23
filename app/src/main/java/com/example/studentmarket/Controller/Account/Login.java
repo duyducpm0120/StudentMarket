@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +36,13 @@ public class Login extends Fragment {
     private String mParam2;
 
     private Button loginButton;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    private ImageButton loginClose;
+    private TextView loginToRegister;
+    private TextView loginForgotPassword;
+    private EditText loginEditTextEmail;
+    private EditText loginEditTextPassword;
 
     public Login() {
         // Required empty public constructor
@@ -74,9 +82,11 @@ public class Login extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_login, container, false);
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-        ImageButton loginClose = (ImageButton) view.findViewById(R.id.loginClose);
+        fragmentManager = getParentFragmentManager();
+        fragmentTransaction= fragmentManager.beginTransaction();
+        loginEditTextEmail = (EditText) view.findViewById(R.id.login_username_edit_text);
+        loginEditTextPassword = (EditText) view.findViewById(R.id.login_password_edit_text);
+        loginClose = (ImageButton) view.findViewById(R.id.login_close_button);
         loginClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,27 +94,34 @@ public class Login extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-        TextView textView = (TextView) view.findViewById(R.id.register);
-        textView.setOnClickListener(new View.OnClickListener() {
+        loginToRegister = (TextView) view.findViewById(R.id.login_to_register);
+        loginToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Pre_register());
                 fragmentTransaction.commit();
             }
         });
-        TextView forgot_pass = (TextView) view.findViewById(R.id.forgot_password);
-        forgot_pass.setOnClickListener(new View.OnClickListener() {
+        loginForgotPassword = (TextView) view.findViewById(R.id.login_forgot_password);
+        loginForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Forgot_password());
                 fragmentTransaction.commit();
             }
         });
-        loginButton = view.findViewById(R.id.login_button);
+        loginButton = view.findViewById(R.id.login_button_login);
         loginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                login("aaa", "aaaa");
+                String textEmail = loginEditTextEmail.getText().toString();
+                String textPassword = loginEditTextPassword.getText().toString();
+                if (!textEmail.isEmpty()&&!textPassword.isEmpty()){
+                    login(textEmail, textPassword);
+                }
+                else {
+                    Toast.makeText(getContext(),getString(R.string.empty),Toast.LENGTH_SHORT);
+                }
             }
         });
         return view;
