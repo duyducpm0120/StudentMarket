@@ -56,7 +56,7 @@
                 android:autofillHints="@string/prompt_email"
                 android:background="@drawable/edittextstyle"
                 android:hint="Tên đăng nhập"
-                android:inputType="textEmailAddress"
+                android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:selectAllOnFocus="true"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +71,7 @@
                 android:autofillHints="@string/prompt_email"
                 android:background="@drawable/edittextstyle"
                 android:hint="@string/userFullName"
-                android:inputType="textEmailAddress"
+                android:inputType="textPersonName"
                 android:minHeight="48dp"
                 android:selectAllOnFocus="true"
                 app:layout_constraintTop_toTopOf="@+id/register_username_edit_text" />
@@ -84,7 +84,7 @@
                 android:autofillHints="@string/prompt_email"
                 android:background="@drawable/edittextstyle"
                 android:hint="Số điện thoại"
-                android:inputType="textEmailAddress"
+                android:inputType="textPhonetic"
                 android:minHeight="48dp"
                 android:selectAllOnFocus="true"
                 app:layout_constraintTop_toTopOf="@+id/register_user_full_name_edit_text" />
@@ -97,17 +97,16 @@
                 android:autofillHints="@string/prompt_email"
                 android:background="@drawable/edittextstyle"
                 android:hint="Mật khẩu"
-                android:inputType="textEmailAddress"
+                android:inputType="textPassword"
                 android:minHeight="48dp"
                 android:selectAllOnFocus="true"
                 app:layout_constraintTop_toTopOf="@+id/register_phonenumber_edit_text" />
 
             <TextView
-                android:id="@+id/regiterErrorText"
+                android:id="@+id/regiter_warning_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="Số điên thoại không hợp lệ"
                 android:textColor="#ff0000"
                 android:textSize="16dp"
                 android:visibility="invisible">

@@ -6,12 +6,18 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.example.studentmarket.Helper.Validation.Validate;
 import com.example.studentmarket.R;
 
 /**
@@ -33,6 +39,13 @@ public class Forgot_password extends Fragment {
     public Forgot_password() {
         // Required empty public constructor
     }
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    private ImageButton forgotPasswordClose;
+    private TextView forgotPasswordToRegister;
+    private EditText forgotPasswordEdittextEmail;
+    private Button forgotPasswordButtonAgree;
+    private TextView forgotPasswordTextViewWarning;
 
     /**
      * Use this factory method to create a new instance of
@@ -66,9 +79,12 @@ public class Forgot_password extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_forgot_password, container, false);
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-        ImageButton forgotPasswordClose = (ImageButton) view.findViewById(R.id.forgotPasswordClose);
+        fragmentManager = getParentFragmentManager();
+        fragmentTransaction= fragmentManager.beginTransaction();
+        forgotPasswordClose = (ImageButton) view.findViewById(R.id.forgot_password_button_close);
+        forgotPasswordButtonAgree =(Button) view.findViewById(R.id.forgot_password_button_agree);
+        forgotPasswordTextViewWarning = (TextView) view.findViewById(R.id.forgot_password_textview_warning);
+        forgotPasswordEdittextEmail = (EditText) view.findViewById(R.id.forgot_password_edittext_email);
         forgotPasswordClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,14 +92,30 @@ public class Forgot_password extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-        TextView textView = (TextView) view.findViewById(R.id.register);
-        textView.setOnClickListener(new View.OnClickListener() {
+        forgotPasswordToRegister = (TextView) view.findViewById(R.id.forgot_password_to_register);
+        forgotPasswordToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Pre_register());
                 fragmentTransaction.commit();
             }
         });
+
+        forgotPasswordButtonAgree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Validate.validateEmail(forgotPasswordEdittextEmail.getText().toString()))
+                {
+                    forgotPasswordTextViewWarning.setVisibility(View.INVISIBLE);
+                    //do something
+                }
+                else
+                {
+                    forgotPasswordTextViewWarning.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
         return view;
     }
 }

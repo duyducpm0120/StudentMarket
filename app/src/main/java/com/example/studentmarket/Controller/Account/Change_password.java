@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.studentmarket.Helper.Validation.Validate;
 import com.example.studentmarket.R;
 
 /**
@@ -30,6 +32,13 @@ public class Change_password extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+    private Button changePasswordButtonSave;
+    private EditText changePasswordEdittextCurrent;
+    private EditText changePasswordEdittextNew;
+    private EditText changePasswordEdittextConfirm;
+    private ImageButton changePasswordClose;
 
     public Change_password() {
         // Required empty public constructor
@@ -67,16 +76,38 @@ public class Change_password extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_change_password, container, false);
-        Button btn = (Button) view.findViewById(R.id.save);
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-        btn.setOnClickListener(new View.OnClickListener() {
+        changePasswordButtonSave = (Button) view.findViewById(R.id.change_pass_button_save);
+        fragmentManager = getParentFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        changePasswordEdittextCurrent = (EditText) view.findViewById(R.id.change_pass_current);
+        changePasswordEdittextNew = (EditText) view.findViewById(R.id.change_pass_new);
+        changePasswordEdittextConfirm = (EditText) view.findViewById(R.id.change_pass_confirm);
+        changePasswordButtonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(view.getContext(),"Đã lưu",Toast.LENGTH_LONG).show();
+                String currentPass = changePasswordEdittextCurrent.getText().toString();
+                String newPass = changePasswordEdittextNew.getText().toString();
+                String confirmPass = changePasswordEdittextConfirm.getText().toString();
+                if (currentPass.isEmpty()||newPass.isEmpty()||confirmPass.isEmpty()){
+                    Toast.makeText(view.getContext(),getString(R.string.empty),Toast.LENGTH_LONG).show();
+                }
+                else {
+                    if (!newPass.equals(confirmPass)){
+                        Toast.makeText(view.getContext(),"Mật khẩu mới và mật khẩu xác nhận không giống nhau",Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        if (Validate.validPassword(newPass)){
+                            //do something
+                        }
+                        else {
+                            Toast.makeText(view.getContext(),getString(R.string.passwordValid),Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
             }
         });
-        ImageButton changePasswordClose = (ImageButton) view.findViewById(R.id.changePasswordClose);
+        changePasswordClose = (ImageButton) view.findViewById(R.id.changePasswordClose);
         changePasswordClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

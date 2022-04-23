@@ -19,4 +19,6 @@
     <string name="userFullName">Họ và tên</string>
     <string name="SignUp_Error">SignUp fail, Please try again</string>
     <string name="common_continue">Tiếp tục</string>
+    <string name="empty">Không được để trống</string>
+    <string name="passwordValid">Mật khẩu phải từ 8->24,phải chứa ký tự đặc biệt,phải chứa số,bắt đầu bằng chứ in hoa</string>
 </resources>

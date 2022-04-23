@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.studentmarket.Helper.Validation.Validate;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.AccountService;
 
@@ -41,7 +42,7 @@ public class Register extends Fragment {
     private EditText userFullNameEditText;
     private EditText phoneNumberEditText;
     private EditText passwordEditText;
-    private TextView errorText;
+    private TextView warningText;
 
 
     public Register() {
@@ -94,7 +95,7 @@ public class Register extends Fragment {
         userFullNameEditText = (EditText) view.findViewById(R.id.register_user_full_name_edit_text);
         phoneNumberEditText = (EditText) view.findViewById(R.id.register_phonenumber_edit_text);
         passwordEditText = (EditText) view.findViewById(R.id.register_password_edit_text);
-        errorText = (TextView) view.findViewById(R.id.regiterErrorText);
+        warningText = (TextView) view.findViewById(R.id.regiter_warning_text);
         regiterClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,18 +108,44 @@ public class Register extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signUp(textEmail, userFullNameEditText.getText().toString(), userFullNameEditText.getText().toString(), phoneNumberEditText.getText().toString(), passwordEditText.getText().toString());
-//                if (Validate.validatePhoneNumber(phoneNumberEditText.getText().toString())) {
-//                    Log.d("validate successfully", "1");
-//                    signUp(textEmail, userFullNameEditText.getText().toString(), userFullNameEditText.getText().toString(), phoneNumberEditText.getText().toString(), passwordEditText.getText().toString());
-////                    Toast toast = Toast.makeText(getContext(), "Đã xảy ra lỗi,vui lòng thử lại sau", Toast.LENGTH_SHORT);
-////                    toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
-////                    toast.show();
-////                    errorText.setVisibility(View.INVISIBLE);
-//                } else {
-//                    Log.d("validate fail", "0");
-//                    errorText.setVisibility(View.VISIBLE);
-//                }
+                String userName = userNameEditText.getText().toString();
+                String userFullName = userFullNameEditText.getText().toString();
+                String phoneNumber = phoneNumberEditText.getText().toString();
+                String password = passwordEditText.getText().toString();
+                if (userName.isEmpty()||userFullName.isEmpty()||phoneNumber.isEmpty()||password.isEmpty()){
+                    warningText.setText(getString(R.string.empty));
+                    warningText.setVisibility(View.VISIBLE);
+                }
+                else {
+                    if (Validate.validSpecialCharacter(userName))
+                    {
+                        if (Validate.validSpecialCharacter(userFullName))
+                        {
+                            if (Validate.validatePhoneNumber(phoneNumber)){
+                                if (Validate.validPassword(password)){
+                                    warningText.setVisibility(View.INVISIBLE);
+                                    signUp(textEmail,userName,userFullName,phoneNumber,password);
+                                }
+                                else {
+                                    warningText.setText(getString(R.string.passwordValid));
+                                    warningText.setVisibility(View.VISIBLE);
+                                }
+                            }
+                            else {
+                                warningText.setText("Số điện thoại không hợp lệ");
+                                warningText.setVisibility(View.VISIBLE);
+                            }
+                        }
+                        else {
+                            warningText.setText("Tên đầy đủ không được chứa ký tự đặc biệt");
+                            warningText.setVisibility(View.VISIBLE);
+                        }
+                    }
+                    else {
+                        warningText.setText("Tên đăng nhập không được chứa ký tự đặc biệt");
+                        warningText.setVisibility(View.VISIBLE);
+                    }
+                }
             }
         });
         regiterToLogin.setOnClickListener(new View.OnClickListener() {
