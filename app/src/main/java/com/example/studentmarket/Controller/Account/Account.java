@@ -34,6 +34,9 @@ public class Account extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Button accountButtonLogin;
+    private Button accountButotnForgotPass;
+    private Button accountNotice;
 
     public Account() {
         // Required empty public constructor
@@ -71,26 +74,27 @@ public class Account extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_account, container, false);
-        Button btn = (Button) v.findViewById(R.id.button);
+        accountButtonLogin = (Button) v.findViewById(R.id.button);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
-        btn.setOnClickListener(new View.OnClickListener() {
+        accountButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Login());
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
-        Button btn1 = (Button) v.findViewById(R.id.button1);
-        btn1.setOnClickListener(new View.OnClickListener() {
+        accountButotnForgotPass = (Button) v.findViewById(R.id.button1);
+        accountButotnForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Change_password());
                 fragmentTransaction.commit();
             }
         });
-        Button btn2 = (Button) v.findViewById(R.id.button2);
-        btn2.setOnClickListener(new View.OnClickListener() {
+        accountNotice = (Button) v.findViewById(R.id.button2);
+        accountNotice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
