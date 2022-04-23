@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -90,8 +91,9 @@ public class Login extends Fragment {
         loginClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Account());
-                fragmentTransaction.commit();
+//                fragmentTransaction.replace(R.id.fragmentContainerView,new Account());
+//                fragmentTransaction.commit();
+                    getParentFragmentManager().popBackStackImmediate();
             }
         });
         loginToRegister = (TextView) view.findViewById(R.id.login_to_register);
@@ -118,14 +120,17 @@ public class Login extends Fragment {
                 String textPassword = loginEditTextPassword.getText().toString();
                 if (!textEmail.isEmpty()&&!textPassword.isEmpty()){
                     login(textEmail, textPassword);
+                    Toast.makeText(getContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(getContext(),getString(R.string.empty),Toast.LENGTH_SHORT);
+
+                    Toast.makeText(getContext(),getString(R.string.empty),Toast.LENGTH_SHORT).show();
                 }
             }
         });
         return view;
     }
+
 
     public void login(String accountName, String password) {
         AccountService accountService = new AccountService();

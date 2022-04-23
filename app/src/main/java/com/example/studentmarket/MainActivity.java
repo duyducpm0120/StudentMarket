@@ -83,5 +83,18 @@ public class MainActivity extends AppCompatActivity {
         win.setAttributes(winParams);
 
     }
+    @Override
+    public void onBackPressed() {
+
+        int count = getSupportFragmentManager().getBackStackEntryCount();
+
+        if (count == 0) {
+            super.onBackPressed();
+            //additional code
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
+
+    }
 
 }
