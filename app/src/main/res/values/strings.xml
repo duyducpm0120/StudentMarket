@@ -22,4 +22,6 @@
     <string name="empty">Không được để trống</string>
     <string name="passwordValid">Mật khẩu phải từ 8->24,phải chứa ký tự đặc biệt,phải chứa số,bắt đầu bằng chứ in hoa</string>
     <string name="Appname">STUDENTMARKET</string>
+    <string name="profile_post">Bài đăng</string>
+    <string name="profile_info">Thông tin</string>
 </resources>
