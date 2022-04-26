@@ -1,47 +1,47 @@
 package com.example.studentmarket.Controller.Home;
 
 public class product {
-    private String nameProduct;
-    private String priceProduct;
-    private int imageProduct;
-    private boolean heartProduct;
+    private String name;
+    private String price;
+    private int image;
+    private boolean heart;
 
     public product(String nameProduct, String priceProduct, int imageProduct,boolean heartProduct) {
-        this.nameProduct = nameProduct;
-        this.priceProduct = priceProduct;
-        this.imageProduct = imageProduct;
-        this.heartProduct = heartProduct;
+        this.name = nameProduct;
+        this.price = priceProduct;
+        this.image = imageProduct;
+        this.heart = heartProduct;
     }
 
     public String getNameProduct() {
-        return nameProduct;
+        return name;
     }
 
     public String getPriceProduct() {
-        return priceProduct;
+        return price;
     }
 
     public int getImageProduct() {
-        return imageProduct;
+        return image;
     }
 
     public void setNameProduct(String nameProduct) {
-        this.nameProduct = nameProduct;
+        this.name = nameProduct;
     }
 
     public void setPriceProduct(String priceProduct) {
-        this.priceProduct = priceProduct;
+        this.price = priceProduct;
     }
 
     public void setImageProduct(int imageProduct) {
-        this.imageProduct = imageProduct;
+        this.image = imageProduct;
     }
 
     public boolean isHeartProduct() {
-        return heartProduct;
+        return heart;
     }
 
     public void setHeartProduct(boolean heartProduct) {
-        this.heartProduct = heartProduct;
+        this.heart = heartProduct;
     }
 }

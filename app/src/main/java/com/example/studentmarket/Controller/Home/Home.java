@@ -72,13 +72,13 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        Anhxa(view);
+        Mapping(view);
         productAdater = new productAdater(getContext(),R.layout.product,arrayProduct);
         homeListProduct.setAdapter(productAdater);
         return view;
     }
 
-    private void Anhxa(View view) {
+    private void Mapping(View view) {
         homeListProduct = (GridView) view.findViewById(R.id.home_list_products);
         arrayProduct = new ArrayList<>();
         for (int i=0;i<10;i++){
