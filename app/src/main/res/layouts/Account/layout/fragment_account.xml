@@ -36,6 +36,12 @@
             android:layout_height="wrap_content"
             style="@style/myButton"
             android:text="Thông báo" />
+        <Button
+            android:id="@+id/button_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/myButton"
+            android:text="Profile" />
     </LinearLayout>
 
 </FrameLayout>
