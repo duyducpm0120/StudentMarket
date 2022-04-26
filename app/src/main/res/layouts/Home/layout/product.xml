@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/image_product"
+            android:layout_width="159dp"
+            android:layout_height="163dp"
+            android:clickable="true"
+            style="@style/conner"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <ImageButton
+            android:padding="10dp"
+            android:background="@drawable/rounded"
+            android:id="@+id/product_heart"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="140dp"
+            android:backgroundTint="#fff"
+            style="@style/elevation"
+            android:src="@drawable/ic_heart" />
+    </FrameLayout>
+
+
+    <TextView
+        android:layout_gravity="start"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/name_product"
+        android:layout_width="159dp"
+        android:layout_height="wrap_content"
+        android:textSize="12.5dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/price_product"
+        android:layout_marginLeft="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:text="TextView"
+        android:textColor="@color/secondary"
+        android:textSize="13.5dp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>

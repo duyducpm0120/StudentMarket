@@ -4,11 +4,18 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.Toast;
 
 import com.example.studentmarket.R;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +32,9 @@ public class Home extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private GridView homeListProduct;
+    private ArrayList<product> arrayProduct;
+    private productAdater productAdater;
 
     public Home() {
         // Required empty public constructor
@@ -61,6 +71,19 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        Mapping(view);
+        productAdater = new productAdater(getContext(),R.layout.product,arrayProduct);
+        homeListProduct.setAdapter(productAdater);
+        return view;
+    }
+
+    private void Mapping(View view) {
+        homeListProduct = (GridView) view.findViewById(R.id.home_list_products);
+        arrayProduct = new ArrayList<>();
+        for (int i=0;i<10;i++){
+            arrayProduct.add(new product("DKNY t-shirt - colour block front logo"+i,"39.000 VND",R.drawable.img,true));
+        }
+
     }
 }

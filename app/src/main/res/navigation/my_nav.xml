@@ -3,13 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/home2">
+    app:startDestination="@id/homeNav">
 
-    <fragment
-        android:id="@+id/home2"
-        android:name="com.example.studentmarket.Controller.Home.Home"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/favorite"
         android:name="com.example.studentmarket.Controller.Favorite.Favorite"
@@ -60,5 +55,13 @@
             android:name="com.example.studentmarket.Controller.Account.Forgot_password"
             android:label="fragment_change_pass"
             tools:layout="@layout/fragment_forgot_password" />
+    </navigation>
+    <navigation android:id="@+id/homeNav"
+        app:startDestination="@id/home2">
+        <fragment
+            android:id="@+id/home2"
+            android:name="com.example.studentmarket.Controller.Home.Home"
+            android:label="fragment_home"
+            tools:layout="@layout/fragment_home" />
     </navigation>
 </navigation>
