@@ -74,6 +74,5 @@ public class Profile extends Fragment {
         transaction.replace(R.id.profile_fragmentContainerView, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-
     }
 }
