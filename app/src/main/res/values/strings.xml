@@ -12,7 +12,7 @@
     <string name="account">"Tài khoản"</string>
     <string name="home">"Trang chủ"</string>
     <string name="favorite">"Yêu thích"</string>
-    <string name="category">"Danh mục"</string>
+    <string name="message">"Tin nhắn"</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

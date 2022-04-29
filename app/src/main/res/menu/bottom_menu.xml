@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="@string/home" android:icon="@drawable/homeicon" android:id="@+id/home"/>
-    <item android:title="@string/category" android:icon="@drawable/categoryicon" android:id="@+id/category"/>
+    <item android:title="@string/message" android:icon="@drawable/stroke_4" android:id="@+id/category"/>
     <item android:title="@string/favorite" android:icon="@drawable/favoriteicon" android:id="@+id/favorite"/>
     <item android:title="@string/account" android:icon="@drawable/accounticon" android:id="@+id/account"/>
 </menu>
