@@ -12,16 +12,17 @@
         tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/category"
-        android:name="com.example.studentmarket.Controller.Category.Category"
+        android:name="com.example.studentmarket.Controller.Message.Message"
         android:label="fragment_category"
         tools:layout="@layout/fragment_category" />
-    <navigation android:id="@+id/accountNav"
-        app:startDestination="@id/register_button">
+    <navigation
+        android:id="@+id/accountNav"
+        app:startDestination="@id/account">
         <fragment
             android:id="@+id/register_button"
             android:name="com.example.studentmarket.Controller.Account.Login"
             android:label="fragment_login"
-            tools:layout="@layout/fragment_login" >
+            tools:layout="@layout/fragment_login">
             <action
                 android:id="@+id/action_login_to_account"
                 app:destination="@+id/account" />
@@ -63,5 +64,10 @@
             android:name="com.example.studentmarket.Controller.Home.Home"
             android:label="fragment_home"
             tools:layout="@layout/fragment_home" />
+        <fragment
+            android:id="@+id/listCategory"
+            android:name="com.example.studentmarket.Controller.Home.ListCategory"
+            android:label="fragment_list_category"
+            tools:layout="@layout/fragment_list_category" />
     </navigation>
 </navigation>
