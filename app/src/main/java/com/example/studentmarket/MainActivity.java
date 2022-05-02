@@ -7,15 +7,13 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import android.app.Activity;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.studentmarket.Controller.Account.Account;
-import com.example.studentmarket.Controller.Category.Category;
+import com.example.studentmarket.Controller.Message.Message;
 import com.example.studentmarket.Controller.Favorite.Favorite;
 import com.example.studentmarket.Controller.Home.Home;
 import com.example.studentmarket.databinding.ActivityMainBinding;
@@ -39,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new Home());
                     break;
                 case R.id.category:
-                    replaceFragment(new Category());
+                    replaceFragment(new Message());
                     break;
                 case R.id.favorite:
                     replaceFragment(new Favorite());

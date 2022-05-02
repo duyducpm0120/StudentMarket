@@ -37,6 +37,9 @@ public class Account extends Fragment {
     private Button accountButtonLogin;
     private Button accountButotnForgotPass;
     private Button accountNotice;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+
 
     public Account() {
         // Required empty public constructor
@@ -75,8 +78,8 @@ public class Account extends Fragment {
         // Inflate the layout for this fragment
         View v =  inflater.inflate(R.layout.fragment_account, container, false);
         accountButtonLogin = (Button) v.findViewById(R.id.button);
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction fragmentTransaction= fragmentManager.beginTransaction();
+        fragmentManager = getParentFragmentManager();
+        fragmentTransaction= fragmentManager.beginTransaction();
         accountButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

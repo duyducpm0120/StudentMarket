@@ -1,4 +1,4 @@
-package com.example.studentmarket.Controller.Home;
+package com.example.studentmarket.Controller.Common;
 
 public class product {
     private String name;
