@@ -17,3 +17,4 @@ local.properties
 
 #firebase Config
 app/google-services.json
+.idea/misc.xml
