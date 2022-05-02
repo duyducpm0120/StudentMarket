@@ -133,9 +133,9 @@ public class Login extends Fragment {
 
 
     public void login(String accountName, String password) {
-        AccountService accountService = new AccountService();
+        AccountService accountService = new AccountService(this.getContext());
         try {
-            accountService.Login(accountName,password, getContext());
+            accountService.Login(accountName,password);
         } catch (Exception err) {
             Toast toast = Toast.makeText(getContext(),
                     getString(R.string.SignUp_Error),

@@ -59,4 +59,6 @@ public class ServiceQueue {
     public ImageLoader getImageLoader() {
         return imageLoader;
     }
+
+
 }

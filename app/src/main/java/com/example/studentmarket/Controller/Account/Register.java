@@ -168,9 +168,9 @@ public class Register extends Fragment {
 
 
     public void signUp(String email, String username, String userFullName, String phoneNumber, String password) {
-        AccountService accountService = new AccountService();
+        AccountService accountService = new AccountService(this.getContext());
         try {
-            accountService.SignUp(email, username, userFullName, phoneNumber, password, getContext());
+            accountService.SignUp(email, username, userFullName, phoneNumber, password);
         } catch (Exception err) {
              Toast toast = Toast.makeText(getContext(),
                      getString(R.string.SignUp_Error),

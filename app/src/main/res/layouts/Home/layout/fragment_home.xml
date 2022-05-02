@@ -13,16 +13,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="110dp"
-            android:gravity="center"
             android:background="@drawable/gradient_background_header_home"
-            >
+            android:gravity="center">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="32dp"
-                android:textStyle="bold"
                 android:paddingHorizontal="40dp"
-                android:text="@string/Appname"/>
+                android:text="@string/Appname"
+                android:textSize="32dp"
+                android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/home_button_notice"
@@ -97,7 +97,9 @@
             android:maxLines="1"
             android:id="@+id/home_edittext_search"
             android:layout_marginHorizontal="27dp"
-            android:hint="Tìm kiếm" />
+            android:hint="Tìm kiếm"
+            android:inputType="text"
+            android:maxLines="1" />
     </RelativeLayout>
     <!-- TODO: Update blank fragment layout -->
 
