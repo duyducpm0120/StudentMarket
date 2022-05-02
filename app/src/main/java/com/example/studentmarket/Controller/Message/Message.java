@@ -1,4 +1,4 @@
-package com.example.studentmarket.Controller.Favorite;
+package com.example.studentmarket.Controller.Message;
 
 import android.os.Bundle;
 
@@ -7,21 +7,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
-import com.example.studentmarket.Controller.Common.product;
-import com.example.studentmarket.Controller.Common.productAdater;
 import com.example.studentmarket.R;
-
-import java.util.ArrayList;
-
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link Favorite#newInstance} factory method to
+ * Use the {@link Message#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Favorite extends Fragment {
+public class Message extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -32,11 +26,7 @@ public class Favorite extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private GridView homeListProduct;
-    private ArrayList<product> arrayProduct;
-    private com.example.studentmarket.Controller.Common.productAdater productAdater;
-
-    public Favorite() {
+    public Message() {
         // Required empty public constructor
     }
 
@@ -46,11 +36,11 @@ public class Favorite extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Favorite.
+     * @return A new instance of fragment Category.
      */
     // TODO: Rename and change types and number of parameters
-    public static Favorite newInstance(String param1, String param2) {
-        Favorite fragment = new Favorite();
+    public static Message newInstance(String param1, String param2) {
+        Message fragment = new Message();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,19 +61,6 @@ public class Favorite extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_favorite, container, false);
-        MappingProduct(view);
-        productAdater = new productAdater(getContext(),R.layout.product,arrayProduct);
-        homeListProduct.setAdapter(productAdater);
-        return view;
-    }
-
-    private void MappingProduct(View view) {
-        homeListProduct = (GridView) view.findViewById(R.id.favorite_list_product);
-        arrayProduct = new ArrayList<>();
-        for (int i=0;i<10;i++){
-            arrayProduct.add(new product("DKNY t-shirt - colour block front logo"+i,"39.000 VND",R.drawable.img,true));
-        }
-
+        return inflater.inflate(R.layout.fragment_category, container, false);
     }
 }
