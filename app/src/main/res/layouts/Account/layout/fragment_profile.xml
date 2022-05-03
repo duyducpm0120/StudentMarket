@@ -7,80 +7,125 @@
     tools:context=".Controller.Account.Login">
 
     <!-- TODO: Update blank fragment layout -->
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/common_header"
-                android:orientation="horizontal"
-                android:padding="16dp">
+                android:layout_height="110dp"
+                android:background="@drawable/gradient_background_header_home"
+                android:orientation="horizontal"></LinearLayout>
 
-                <com.mikhaellopez.circularimageview.CircularImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="0dp"
-                    android:src="@drawable/ic_close"
-                    app:civ_border_color="@color/white"
-                    app:civ_border_width="2dp"
-                    app:civ_shadow="true"
-                    app:civ_shadow_color="@color/white"
-                    app:civ_shadow_radius="0dp" />
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/avatar"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="2dp"
+                app:civ_shadow="true"
+                app:civ_shadow_color="@color/white"
+                app:civ_shadow_radius="0dp" />
+
+            <TextView
+                android:id="@+id/profile_name_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="160dp"
+                android:layout_marginTop="80dp"
+                android:layout_weight="1"
+                android:fontFamily="sans-serif"
+                android:text="TextView"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="160dp"
+                android:layout_marginTop="115dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/imageButton"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/Transparent"
+                    android:src="@drawable/ic_icon_like_light" />
 
                 <TextView
-                    android:id="@+id/profile_name_text_view"
+                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:fontFamily="sans-serif"
-                    android:text="TextView"
-                    android:textColor="@color/white"
-                    android:textSize="24sp"
+                    android:text="16"
+                    android:textColor="@color/primary"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/Transparent"
+                    android:src="@drawable/ic_icon_dislike_light" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="10"
+                    android:textColor="@color/primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/profile_tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:tabIndicatorColor="@color/primary"
-                app:tabTextColor="@color/primary">
+        </RelativeLayout>
 
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/profile_post_tab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/profile_post"></com.google.android.material.tabs.TabItem>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/profile_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:tabIndicatorColor="@color/primary"
+            app:tabTextColor="@color/primary">
 
-                <com.google.android.material.tabs.TabItem
-                    android:id="@+id/profile_info_tab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/profile_info" />
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/profile_post_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_post"></com.google.android.material.tabs.TabItem>
 
-            </com.google.android.material.tabs.TabLayout>
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/profile_info_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_info" />
 
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/profile_fragmentContainerView"
-                android:name="com.example.studentmarket.Controller.Account.Profile_info"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/profile_fragmentContainerView"
+            android:name="com.example.studentmarket.Controller.Account.Profile_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
 
-        </LinearLayout>
+    </LinearLayout>
 
-
-    </ScrollView>
 </FrameLayout>

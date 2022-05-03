@@ -24,4 +24,10 @@
     <string name="Appname">STUDENTMARKET</string>
     <string name="profile_post">Bài đăng</string>
     <string name="profile_info">Thông tin</string>
+    <string name="account_name">Tên đăng nhập</string>
+    <string name="university">Trường đại học</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="email">Email</string>
+    <string name="password">Mật khẩu</string>
+    <string name="edit">Chỉnh sửa</string>
 </resources>
