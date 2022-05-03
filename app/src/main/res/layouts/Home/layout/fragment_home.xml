@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Controller.Home.Home">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,12 +39,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="110dp"
-            android:orientation="vertical"
-            android:background="@drawable/gradient_background">
+            android:background="@drawable/gradient_background"
+            android:orientation="vertical">
+
             <RelativeLayout
-                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -54,48 +56,48 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:clickable="true"
                     android:id="@+id/home_textview_see_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="20dp"
+                    android:clickable="true"
                     android:text="Xem tất cả >"
                     android:textColor="#ACACAC" />
             </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/home_list_type"
-                android:layout_marginTop="7dp"
                 android:layout_width="match_parent"
-                android:layout_marginHorizontal="20dp"
                 android:layout_height="80dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="horizontal"/>
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sản phẩm"
-                android:textSize="18dp"
+                android:layout_marginLeft="32dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="12dp"
-                android:layout_marginLeft="32dp"
-                android:textStyle="bold"/>
+                android:text="Sản phẩm"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
             <GridView
-                android:numColumns="2"
                 android:id="@+id/home_list_products"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:numColumns="2"
                 android:verticalSpacing="25dp" />
         </LinearLayout>
 
         <EditText
+            android:id="@+id/home_edittext_search"
             style="@style/editTextSearchStyle"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:inputType="text"
-            android:maxLines="1"
-            android:id="@+id/home_edittext_search"
             android:layout_marginHorizontal="27dp"
             android:hint="Tìm kiếm"
             android:inputType="text"
