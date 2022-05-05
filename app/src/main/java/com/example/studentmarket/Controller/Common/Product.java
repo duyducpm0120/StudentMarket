@@ -1,12 +1,12 @@
 package com.example.studentmarket.Controller.Common;
 
-public class product {
+public class Product {
     private String name;
     private String price;
     private int image;
     private boolean heart;
 
-    public product(String nameProduct, String priceProduct, int imageProduct,boolean heartProduct) {
+    public Product(String nameProduct, String priceProduct, int imageProduct, boolean heartProduct) {
         this.name = nameProduct;
         this.price = priceProduct;
         this.image = imageProduct;

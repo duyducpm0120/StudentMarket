@@ -12,14 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.studentmarket.Component.ProfileBottomSheet;
 import com.example.studentmarket.R;
 import com.google.android.material.tabs.TabLayout;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 
 public class Profile extends Fragment {
     private TabLayout tabLayout;
     private Fragment profile_info_fragment;
     private Fragment profile_post_fragment;
+    private CircularImageView profile_avatar;
 
 
     @Override
@@ -34,9 +37,10 @@ public class Profile extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        //init fragment
+        //init
         profile_info_fragment = new Profile_info();
         profile_post_fragment = new Profile_post();
+        profile_avatar = view.findViewById(R.id.profile_avatar);
 
 
         //Call TabLayout
@@ -64,9 +68,15 @@ public class Profile extends Fragment {
         });
 
 
-        // Inflate the layout for this fragment
-        return view;
+        profile_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfileBottomSheet profileBottomSheet = new ProfileBottomSheet();
+                profileBottomSheet.show(getActivity().getSupportFragmentManager(),"TAG");
+            }
+        });
 
+        return view;
     }
     private void openFragment(final Fragment fragment)   {
         FragmentManager fragmentManager = getParentFragmentManager();
