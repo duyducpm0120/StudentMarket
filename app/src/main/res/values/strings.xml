@@ -30,4 +30,6 @@
     <string name="email">Email</string>
     <string name="password">Mật khẩu</string>
     <string name="edit">Chỉnh sửa</string>
+    <string name="view_avatar">Xem ảnh đại diện</string>
+    <string name="select_avatar">Chọn ảnh đại diện</string>
 </resources>

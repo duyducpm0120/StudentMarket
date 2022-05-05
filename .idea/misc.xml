@@ -44,12 +44,18 @@
         <entry key="app/src/main/res/drawable/gradient_background.xml" value="0.2135" />
         <entry key="app/src/main/res/drawable/gradient_background_header_home.xml" value="0.2135" />
         <entry key="app/src/main/res/drawable/homeicon.xml" value="0.2135" />
+        <entry key="app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.1265" />
+        <entry key="app/src/main/res/drawable/ic_baseline_category_24.xml" value="0.1265" />
         <entry key="app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.2135" />
         <entry key="app/src/main/res/drawable/ic_baseline_home_24.xml" value="0.2135" />
+        <entry key="app/src/main/res/drawable/ic_bottom_drawner.xml" value="0.1265" />
         <entry key="app/src/main/res/drawable/ic_close.xml" value="0.2135" />
         <entry key="app/src/main/res/drawable/ic_icon_dislike_light.xml" value="0.15" />
         <entry key="app/src/main/res/drawable/ic_icon_like_light.xml" value="0.15" />
+        <entry key="app/src/main/res/drawable/ic_image.xml" value="0.1265" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2135" />
+        <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.1265" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.1265" />
         <entry key="app/src/main/res/drawable/mybutton.xml" value="0.2135" />
         <entry key="app/src/main/res/drawable/nav_item_color_state.xml" value="0.1165" />
         <entry key="app/src/main/res/drawable/rounded.xml" value="0.2135" />
@@ -70,14 +76,17 @@
         <entry key="app/src/main/res/layouts/Account/layout/fragment_forgot_password.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_login.xml" value="0.2" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_pre_register.xml" value="0.225" />
-        <entry key="app/src/main/res/layouts/Account/layout/fragment_profile.xml" value="0.22" />
+        <entry key="app/src/main/res/layouts/Account/layout/fragment_profile.xml" value="0.25" />
+        <entry key="app/src/main/res/layouts/Account/layout/fragment_profile_bottom_sheet.xml" value="0.67" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_profile_info.xml" value="0.33" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_profile_post.xml" value="0.13269927536231885" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_register.xml" value="0.18" />
         <entry key="app/src/main/res/layouts/Favorite/drawable/common_header.xml" value="0.1165" />
+        <entry key="app/src/main/res/layouts/Favorite/drawable/ic_image.xml" value="0.1265" />
         <entry key="app/src/main/res/layouts/Home/layout/category.xml" value="0.15307971014492755" />
         <entry key="app/src/main/res/layouts/Home/layout/fragment_home.xml" value="0.25" />
         <entry key="app/src/main/res/layouts/Home/layout/product.xml" value="0.22" />
+        <entry key="app/src/main/res/layouts/Product/layout/fragment_category.xml" value="0.1595744680851064" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.1" />
       </map>
     </option>

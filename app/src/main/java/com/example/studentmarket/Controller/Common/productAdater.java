@@ -1,10 +1,6 @@
 package com.example.studentmarket.Controller.Common;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,19 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.studentmarket.Controller.Common.product;
 import com.example.studentmarket.R;
-import com.example.studentmarket.Services.DownloadImageTask;
 
-import java.net.URL;
 import java.util.List;
 
 public class productAdater extends BaseAdapter {
     private Context context;
     private int layout;
-    private List<product> productList;
+    private List<Product> productList;
 
-    public productAdater(Context context, int layout, List<product> productList) {
+    public productAdater(Context context, int layout, List<Product> productList) {
         this.context = context;
         this.layout = layout;
         this.productList = productList;
@@ -71,7 +64,7 @@ public class productAdater extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        product product = productList.get(position);
+        Product product = productList.get(position);
         holder.imgProduct.setImageResource(product.getImageProduct());
 //        new DownloadImageTask(holder.imgProduct).execute("https://i0.wp.com/yellowcodebooks.com/wp-content/uploads/2016/11/device-2016-11-15-141631.png?ssl=1");
         holder.imgProduct.setOnClickListener(new View.OnClickListener() {

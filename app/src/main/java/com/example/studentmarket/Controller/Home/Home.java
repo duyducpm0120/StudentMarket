@@ -13,8 +13,7 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.example.studentmarket.Controller.Account.Login;
-import com.example.studentmarket.Controller.Common.product;
+import com.example.studentmarket.Controller.Common.Product;
 import com.example.studentmarket.Controller.Common.productAdater;
 import com.example.studentmarket.Controller.Common.type;
 import com.example.studentmarket.Controller.Common.typeAdapter;
@@ -39,7 +38,7 @@ public class Home extends Fragment {
     private String mParam2;
 
     private GridView homeListProduct;
-    private ArrayList<product> arrayProduct;
+    private ArrayList<Product> arrayProduct;
     private com.example.studentmarket.Controller.Common.productAdater productAdater;
 
     private RecyclerView homeListType;
@@ -115,7 +114,7 @@ public class Home extends Fragment {
         homeListProduct = (GridView) view.findViewById(R.id.home_list_products);
         arrayProduct = new ArrayList<>();
         for (int i=0;i<10;i++){
-            arrayProduct.add(new product("DKNY t-shirt - colour block front logo"+i,"39.000 VND",R.drawable.img,true));
+            arrayProduct.add(new Product("DKNY t-shirt - colour block front logo"+i,"39.000 VND",R.drawable.img,true));
         }
 
     }
