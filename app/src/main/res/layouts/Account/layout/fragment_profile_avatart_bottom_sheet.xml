@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="#202020">
+    android:backgroundTint="#202020"
+    android:id="@+id/bottom_sheet_id">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +13,10 @@
         android:backgroundTint="@color/Transparent"
         android:orientation="vertical"
         android:paddingTop="40dp"
-        android:paddingBottom="40dp">
+        android:paddingBottom="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <View
             android:id="@+id/view"
@@ -26,7 +30,8 @@
         <LinearLayout
             android:id="@+id/view_avatar_section"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
             android:gravity="center_horizontal|center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="24dp"
@@ -53,7 +58,7 @@
         <LinearLayout
             android:id="@+id/select_avatar_section"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal|center_vertical"
             android:orientation="horizontal"
             android:paddingLeft="24dp"
@@ -74,6 +79,12 @@
                 android:text="@string/select_avatar"
                 android:textSize="16sp" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonTest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Button" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

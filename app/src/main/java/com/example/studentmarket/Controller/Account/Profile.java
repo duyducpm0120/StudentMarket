@@ -1,28 +1,33 @@
 package com.example.studentmarket.Controller.Account;
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import com.example.studentmarket.Component.ProfileBottomSheet;
 import com.example.studentmarket.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
-import com.mikhaellopez.circularimageview.CircularImageView;
+
+
+import io.getstream.avatarview.AvatarView;
 
 
 public class Profile extends Fragment {
     private TabLayout tabLayout;
     private Fragment profile_info_fragment;
     private Fragment profile_post_fragment;
-    private CircularImageView profile_avatar;
+    private AvatarView profile_avatar;
 
 
     @Override
@@ -38,8 +43,8 @@ public class Profile extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         //init
-        profile_info_fragment = new Profile_info();
-        profile_post_fragment = new Profile_post();
+        profile_info_fragment = new ProfileInfo();
+        profile_post_fragment = new ProfilePost();
         profile_avatar = view.findViewById(R.id.profile_avatar);
 
 
@@ -49,10 +54,10 @@ public class Profile extends Fragment {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getText() == getResources().getString(R.string.profile_info)) {
-                  openFragment(profile_info_fragment);
+                    openFragment(profile_info_fragment);
 
                 } else {
-                   openFragment(profile_post_fragment);
+                    openFragment(profile_post_fragment);
                 }
             }
 
@@ -71,18 +76,38 @@ public class Profile extends Fragment {
         profile_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProfileBottomSheet profileBottomSheet = new ProfileBottomSheet();
-                profileBottomSheet.show(getActivity().getSupportFragmentManager(),"TAG");
+//                ProfileBottomSheet profileBottomSheet = new ProfileBottomSheet();
+//                profileBottomSheet.show(getActivity().getSupportFragmentManager(),"TAG");
+                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+                View bottomSheetView = inflater.inflate(R.layout.fragment_profile_avatart_bottom_sheet, view.findViewById(R.id.bottom_sheet_id), false);
+                Button buttonTest = bottomSheetView.findViewById(R.id.buttonTest);
+                buttonTest.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AvatarView avatar = view.findViewById(R.id.profile_avatar);
+                       navigateToViewAvatar(view, avatar.getBackground());
+                    }
+                });
+                bottomSheetDialog.setContentView(bottomSheetView);
+                bottomSheetDialog.show();
+
             }
         });
 
         return view;
     }
-    private void openFragment(final Fragment fragment)   {
+
+    private void openFragment(final Fragment fragment) {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.profile_fragmentContainerView, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    void navigateToViewAvatar(View view, Drawable background) {
+        Intent intent = new Intent(view.getContext(),ViewAvatar.class);
+        intent.putExtra("avatar", background);
+        startActivity(intent);
     }
 }
