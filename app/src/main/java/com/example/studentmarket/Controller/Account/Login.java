@@ -101,6 +101,7 @@ public class Login extends Fragment {
             @Override
             public void onClick(View v) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Pre_register());
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
@@ -109,6 +110,7 @@ public class Login extends Fragment {
             @Override
             public void onClick(View v) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Forgot_password());
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });

@@ -74,40 +74,41 @@ public class productAdater extends BaseAdapter {
         }
 
         product product = productList.get(position);
-        holder.imgProduct.setImageResource(product.getImageProduct());
-//        new DownloadImageTask(holder.imgProduct).execute("https://i0.wp.com/yellowcodebooks.com/wp-content/uploads/2016/11/device-2016-11-15-141631.png?ssl=1");
+//        holder.imgProduct.setImageResource(product.get());
+        new DownloadImageTask(holder.imgProduct).execute(product.getImage());
         holder.imgProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(context, product.getNameProduct(), Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(context,ProductDetail.class);
-                myIntent.putExtra("name",product.getNameProduct());
-                myIntent.putExtra("price",product.getPriceProduct());
-                myIntent.putExtra("image",product.getImageProduct());
+                myIntent.putExtra("name",product.getTitle());
+                myIntent.putExtra("price",product.getPrice());
+                myIntent.putExtra("image",product.getImage());
+                myIntent.putExtra("body",product.getBody());
                 context.startActivity(myIntent);
             }
         });
         holder.heartProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!product.isHeartProduct()){
+                if (!product.isHeart()){
                 holder.heartProduct.setColorFilter(context.getColor(R.color.secondary));
                 }
                 else {
                     holder.heartProduct.setColorFilter(context.getColor(R.color.gray));
                 }
-                product.setHeartProduct(!product.isHeartProduct());
-                Toast.makeText(context, product.isHeartProduct() ? "Đã thích "+product.getNameProduct() : "Đã huỷ thích "+product.getNameProduct(), Toast.LENGTH_SHORT).show();
+                product.setHeart(!product.isHeart());
+                Toast.makeText(context, product.isHeart() ? "Đã thích "+product.getTitle() : "Đã huỷ thích "+product.getTitle(), Toast.LENGTH_SHORT).show();
             }
         });
-        if (product.isHeartProduct()){
+        if (product.isHeart()){
             holder.heartProduct.setColorFilter(context.getColor(R.color.secondary));
         }
         else {
             holder.heartProduct.setColorFilter(context.getColor(R.color.gray));
         }
-        holder.nameProduct.setText(product.getNameProduct());
-        holder.priceProduct.setText(product.getPriceProduct());
+        holder.nameProduct.setText(product.getTitle());
+        holder.priceProduct.setText(product.getPrice());
 
         return convertView;
     }

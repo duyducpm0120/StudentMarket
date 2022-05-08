@@ -2,6 +2,7 @@ package com.example.studentmarket.Controller.Common;
 
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.studentmarket.R;
+import com.example.studentmarket.Services.DownloadImageTask;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ public class ProductDetail extends AppCompatActivity {
     private ImageButton detailProductRemove;
     private ImageView detailProductAvatar;
     private TextView detailProductAvatarName;
+    private ImageView detailProductImage;
 
 
     @Override
@@ -32,6 +34,8 @@ public class ProductDetail extends AppCompatActivity {
         Intent myIntent = getIntent();
         String productName = myIntent.getStringExtra("name");
         String productPrice = myIntent.getStringExtra("price");
+        String productImage = myIntent.getStringExtra("image");
+        String productBody = myIntent.getStringExtra("body");
         detailProductName = findViewById(R.id.product_detail_textview_name_product);
         detailProductPrice = findViewById(R.id.product_detail_price);
         detailProductDescriptions = findViewById(R.id.product_detail_description);
@@ -42,6 +46,7 @@ public class ProductDetail extends AppCompatActivity {
         detailProductRemove = findViewById(R.id.product_detail_remove);
         detailProductAvatar = findViewById(R.id.product_detail_avatar);
         detailProductAvatarName = findViewById(R.id.product_detail_avatar_name);
+        detailProductImage = findViewById(R.id.product_detail_image);
 
 
         detailProductName.setText(productName);
@@ -53,6 +58,8 @@ public class ProductDetail extends AppCompatActivity {
                 finish();
             }
         });
+        new DownloadImageTask(detailProductImage).execute(productImage);
+
 
     }
 }

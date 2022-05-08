@@ -19,10 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
+                android:id="@+id/product_detail_image"
                 android:layout_width="match_parent"
                 android:layout_height="260dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/img" />
+                android:src="@drawable/imgdefault"
+                android:scaleType="fitXY" />
             <ImageButton
                 android:id="@+id/product_detail_goback"
                 android:layout_width="30dp"

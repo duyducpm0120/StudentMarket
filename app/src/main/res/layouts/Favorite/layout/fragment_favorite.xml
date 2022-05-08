@@ -52,14 +52,14 @@
         </LinearLayout>
 
         <EditText
-            style="@style/editTextSearchStyle"
             android:id="@+id/favorite_edittext_search"
+            style="@style/editTextSearchStyle"
             android:layout_width="match_parent"
             android:layout_height="44dp"
-            android:inputType="text"
-            android:maxLines="1"
             android:layout_marginHorizontal="27dp"
-            android:hint="Tìm kiếm" />
+            android:hint="Tìm kiếm trong bài đăng yêu thích"
+            android:inputType="text"
+            android:maxLines="1" />
     </RelativeLayout>
 
 </FrameLayout>
