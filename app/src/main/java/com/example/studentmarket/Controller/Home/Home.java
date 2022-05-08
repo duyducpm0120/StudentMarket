@@ -1,5 +1,6 @@
 package com.example.studentmarket.Controller.Home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,18 +8,24 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.studentmarket.Controller.Account.Login;
+import com.example.studentmarket.Controller.Common.ProductDetail;
 import com.example.studentmarket.Controller.Common.product;
 import com.example.studentmarket.Controller.Common.productAdater;
 import com.example.studentmarket.Controller.Common.type;
 import com.example.studentmarket.Controller.Common.typeAdapter;
 import com.example.studentmarket.R;
+import static com.example.studentmarket.Controller.Common.IndexCategory.*;
 
 import java.util.ArrayList;
 
@@ -47,9 +54,16 @@ public class Home extends Fragment {
     private com.example.studentmarket.Controller.Common.typeAdapter typeAdapter;
 
     private TextView homeTextViewSeeMore;
+    private EditText homeEdittextSearch;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+
+    long delay = 1000; // 1 seconds after user stops typing
+    long last_text_edit = 0;
+    Handler handler = new Handler();
+    private String searchText;
+    private String[] listName = {"All Woments","New Collection","Active / Sports","Luxury","Swimwear","Casual"};
 
     public Home() {
         // Required empty public constructor
@@ -88,6 +102,8 @@ public class Home extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         homeTextViewSeeMore = (TextView) view.findViewById(R.id.home_textview_see_more);
+        homeEdittextSearch = view.findViewById(R.id.home_edittext_search);
+
         fragmentManager = getParentFragmentManager();
         fragmentTransaction= fragmentManager.beginTransaction();
 
@@ -102,9 +118,34 @@ public class Home extends Fragment {
         homeTextViewSeeMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new ListCategory());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+//                fragmentTransaction.replace(R.id.fragmentContainerView,new ListCategory1());
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
+                Intent myIntent = new Intent(getContext(), ListCategory.class);
+                getContext().startActivity(myIntent);
+            }
+        });
+
+        homeEdittextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                searchText = s.toString();
+                handler.removeCallbacks(input_finish_checker);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    last_text_edit = System.currentTimeMillis();
+                    handler.postDelayed(input_finish_checker, delay);
+                } else {
+
+                }
             }
         });
 
@@ -115,7 +156,7 @@ public class Home extends Fragment {
         homeListProduct = (GridView) view.findViewById(R.id.home_list_products);
         arrayProduct = new ArrayList<>();
         for (int i=0;i<10;i++){
-            arrayProduct.add(new product("DKNY t-shirt - colour block front logo"+i,"39.000 VND",R.drawable.img,true));
+            arrayProduct.add(new product("DKNY t-shirt - colour block front logo"+i,"3"+i+".000 VND",R.drawable.img,true));
         }
 
     }
@@ -123,8 +164,20 @@ public class Home extends Fragment {
     private void MappingType(View view){
         homeListType = (RecyclerView) view.findViewById(R.id.home_list_type);
         arrayType = new ArrayList<>();
-        for (int i=0;i<10;i++){
-            arrayType.add(new type("tên "+i,R.drawable.type));
+        for (int i=0;i<listName.length;i++){
+            arrayType.add(new type(listName[i],R.drawable.type,false));
         }
+        setIndex(-1);
     }
+
+    private Runnable input_finish_checker = new Runnable() {
+        public void run() {
+            if (System.currentTimeMillis() > (last_text_edit + delay - 500)) {
+                // TODO: do what you need here
+                // ............
+                // ............
+                Toast.makeText(getContext(), searchText, Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 }

@@ -1,6 +1,7 @@
 package com.example.studentmarket.Controller.Common;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studentmarket.Controller.Common.product;
+import com.example.studentmarket.MainActivity;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.DownloadImageTask;
 
@@ -77,7 +79,12 @@ public class productAdater extends BaseAdapter {
         holder.imgProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, product.getNameProduct(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, product.getNameProduct(), Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(context,ProductDetail.class);
+                myIntent.putExtra("name",product.getNameProduct());
+                myIntent.putExtra("price",product.getPriceProduct());
+                myIntent.putExtra("image",product.getImageProduct());
+                context.startActivity(myIntent);
             }
         });
         holder.heartProduct.setOnClickListener(new View.OnClickListener() {

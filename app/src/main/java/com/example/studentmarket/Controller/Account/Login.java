@@ -138,7 +138,7 @@ public class Login extends Fragment {
             accountService.Login(accountName,password);
         } catch (Exception err) {
             Toast toast = Toast.makeText(getContext(),
-                    getString(R.string.SignUp_Error),
+                    getString(R.string.SignIn_Error),
                     Toast.LENGTH_LONG);
         }
     }

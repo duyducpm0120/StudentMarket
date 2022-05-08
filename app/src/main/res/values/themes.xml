@@ -22,4 +22,10 @@
         <item name="colorSecondary">@color/secondary</item>
         <item name="buttonBarNegativeButtonStyle">@style/myButton</item>
     </style>
+    <style name="darkTextStatusBar.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="darkTextStatusBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="darkTextStatusBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
