@@ -12,7 +12,8 @@ public class product {
     private String price;
     private boolean heart;
 
-    public product(int id, String address, String body, String image, String timeStamp, String title, int status, int poster, String price, boolean heart) {
+    public product(int id, String address, String body, String image, String timeStamp, String title, int status,
+            int poster, String price, boolean heart) {
         this.id = id;
         this.address = address;
         this.body = body;

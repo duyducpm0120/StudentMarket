@@ -9,12 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 
-import com.example.studentmarket.Controller.Common.product;
+import com.example.studentmarket.Controller.Common.Product;
 import com.example.studentmarket.Controller.Common.productAdater;
 import com.example.studentmarket.R;
 
 import java.util.ArrayList;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +32,7 @@ public class Favorite extends Fragment {
     private String mParam2;
 
     private GridView homeListProduct;
-    private ArrayList<product> arrayProduct;
+    private ArrayList<Product> arrayProduct;
     private com.example.studentmarket.Controller.Common.productAdater productAdater;
 
     public Favorite() {
@@ -69,11 +68,11 @@ public class Favorite extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+            Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         MappingProduct(view);
-        productAdater = new productAdater(getContext(),R.layout.product,arrayProduct);
+        productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
         homeListProduct.setAdapter(productAdater);
         return view;
     }
@@ -81,8 +80,10 @@ public class Favorite extends Fragment {
     private void MappingProduct(View view) {
         homeListProduct = (GridView) view.findViewById(R.id.favorite_list_product);
         arrayProduct = new ArrayList<>();
-        for (int i=0;i<10;i++){
-            arrayProduct.add(new product(i,"Address","body","https://product.hstatic.net/200000260587/product/zve03357_9bb9116b5f3341059fba977d701403f2_grande.png","timestapm","DKNY t-shirt - colour block front logo"+i,i,i,"3"+i+".000 VND",true));
+        for (int i = 0; i < 10; i++) {
+            arrayProduct.add(new product(i, "Address", "body",
+                    "https://product.hstatic.net/200000260587/product/zve03357_9bb9116b5f3341059fba977d701403f2_grande.png",
+                    "timestapm", "DKNY t-shirt - colour block front logo" + i, i, i, "3" + i + ".000 VND", true));
         }
 
     }
