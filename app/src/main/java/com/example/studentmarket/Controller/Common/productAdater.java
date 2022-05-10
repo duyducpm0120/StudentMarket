@@ -1,6 +1,11 @@
 package com.example.studentmarket.Controller.Common;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.studentmarket.Controller.Common.product;
+import com.example.studentmarket.MainActivity;
 import com.example.studentmarket.R;
 
 import java.util.List;
@@ -40,7 +47,7 @@ public class productAdater extends BaseAdapter {
         return 0;
     }
 
-    private class ViewHolder{
+    private class ViewHolder {
         ImageView imgProduct;
         TextView nameProduct;
         TextView priceProduct;
@@ -51,49 +58,55 @@ public class productAdater extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
 
-        if (convertView == null){
+        if (convertView == null) {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(layout,null );
+            convertView = inflater.inflate(layout, null);
             holder.imgProduct = (ImageView) convertView.findViewById(R.id.image_product);
             holder.nameProduct = (TextView) convertView.findViewById(R.id.name_product);
             holder.priceProduct = (TextView) convertView.findViewById(R.id.price_product);
             holder.heartProduct = (ImageButton) convertView.findViewById(R.id.product_heart);
             convertView.setTag(holder);
-        }else{
+        } else {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Product product = productList.get(position);
-        holder.imgProduct.setImageResource(product.getImageProduct());
-//        new DownloadImageTask(holder.imgProduct).execute("https://i0.wp.com/yellowcodebooks.com/wp-content/uploads/2016/11/device-2016-11-15-141631.png?ssl=1");
+        product product = productList.get(position);
+        // holder.imgProduct.setImageResource(product.get());
+        new DownloadImageTask(holder.imgProduct).execute(product.getImage());
         holder.imgProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, product.getNameProduct(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(context, product.getNameProduct(), Toast.LENGTH_SHORT).show();
+                Intent myIntent = new Intent(context, ProductDetail.class);
+                myIntent.putExtra("name", product.getTitle());
+                myIntent.putExtra("price", product.getPrice());
+                myIntent.putExtra("image", product.getImage());
+                myIntent.putExtra("body", product.getBody());
+                context.startActivity(myIntent);
             }
         });
         holder.heartProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!product.isHeartProduct()){
-                holder.heartProduct.setColorFilter(context.getColor(R.color.secondary));
-                }
-                else {
+                if (!product.isHeart()) {
+                    holder.heartProduct.setColorFilter(context.getColor(R.color.secondary));
+                } else {
                     holder.heartProduct.setColorFilter(context.getColor(R.color.gray));
                 }
-                product.setHeartProduct(!product.isHeartProduct());
-                Toast.makeText(context, product.isHeartProduct() ? "Đã thích "+product.getNameProduct() : "Đã huỷ thích "+product.getNameProduct(), Toast.LENGTH_SHORT).show();
+                product.setHeart(!product.isHeart());
+                Toast.makeText(context,
+                        product.isHeart() ? "Đã thích " + product.getTitle() : "Đã huỷ thích " + product.getTitle(),
+                        Toast.LENGTH_SHORT).show();
             }
         });
-        if (product.isHeartProduct()){
+        if (product.isHeart()) {
             holder.heartProduct.setColorFilter(context.getColor(R.color.secondary));
-        }
-        else {
+        } else {
             holder.heartProduct.setColorFilter(context.getColor(R.color.gray));
         }
-        holder.nameProduct.setText(product.getNameProduct());
-        holder.priceProduct.setText(product.getPriceProduct());
+        holder.nameProduct.setText(product.getTitle());
+        holder.priceProduct.setText(product.getPrice());
 
         return convertView;
     }
