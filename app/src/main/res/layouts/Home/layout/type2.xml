@@ -2,17 +2,17 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_marginBottom="15dp"
+    android:id="@+id/type2_clickable"
+    android:clickable="true"
     android:background="@drawable/rounded"
     android:layout_height="100dp">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_marginRight="100dp"
             android:gravity="center_vertical"
-
             android:layout_height="match_parent">
             <TextView
                 android:id="@+id/type2_textview_name"
@@ -32,5 +32,4 @@
             android:layout_alignParentRight="true"
             android:src="@drawable/img"/>
     </RelativeLayout>
-
 </FrameLayout>

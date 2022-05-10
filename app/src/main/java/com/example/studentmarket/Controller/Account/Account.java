@@ -1,6 +1,7 @@
 package com.example.studentmarket.Controller.Account;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 
@@ -37,6 +38,7 @@ public class Account extends Fragment {
     private Button accountButtonLogin;
     private Button accountButotnForgotPass;
     private Button accountNotice;
+    private Button accountPost;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
 
@@ -93,6 +95,7 @@ public class Account extends Fragment {
             @Override
             public void onClick(View view) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Change_password());
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
@@ -121,12 +124,21 @@ public class Account extends Fragment {
                 alertDialog.show();
             }
         });
+        accountPost = v.findViewById(R.id.button_post);
+        accountPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(getContext(),Post.class);
+                startActivity(myIntent);
+            }
+        });
 
         Button profileButton = v.findViewById(R.id.button_profile);
         profileButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Profile());
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });

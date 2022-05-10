@@ -101,6 +101,7 @@ public class Login extends Fragment {
             @Override
             public void onClick(View v) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Pre_register());
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
@@ -109,6 +110,7 @@ public class Login extends Fragment {
             @Override
             public void onClick(View v) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Forgot_password());
+                fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
         });
@@ -138,7 +140,7 @@ public class Login extends Fragment {
             accountService.Login(accountName,password);
         } catch (Exception err) {
             Toast toast = Toast.makeText(getContext(),
-                    getString(R.string.SignUp_Error),
+                    getString(R.string.SignIn_Error),
                     Toast.LENGTH_LONG);
         }
     }
