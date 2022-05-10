@@ -1,4 +1,4 @@
-package com.example.studentmarket.Services;
+package com.example.studentmarket.Helper.DownloadImageTask;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

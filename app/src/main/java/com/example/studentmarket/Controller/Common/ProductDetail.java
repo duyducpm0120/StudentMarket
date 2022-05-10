@@ -1,8 +1,10 @@
 package com.example.studentmarket.Controller.Common;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.studentmarket.Helper.DownloadImageTask.DownloadImageTask;
 import com.example.studentmarket.R;
-import com.example.studentmarket.Services.DownloadImageTask;
+
 
 import android.content.Intent;
 import android.os.Bundle;

@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
-    tools:context=".Controller.Account.Profile_info">
+    tools:context=".Controller.Account.ProfileInfo">
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView

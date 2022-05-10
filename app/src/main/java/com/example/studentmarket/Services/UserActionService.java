@@ -1,7 +1,6 @@
 package com.example.studentmarket.Services;
 
-import static com.example.studentmarket.Services.EndpointConstant.LOGIN_URL;
-import static com.example.studentmarket.Services.EndpointConstant.RATING_USER_PREFIX_URL;
+import static com.example.studentmarket.Constants.EndpointConstant.RATING_USER_PREFIX_URL;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,6 +11,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,11 +8,13 @@
 
     <!-- TODO: Update blank fragment layout -->
     <ScrollView
+        android:id="@+id/profile_scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
 
         <LinearLayout
+            android:id="@+id/profile_main_linearlayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="0dp"
@@ -30,19 +32,14 @@
                     android:background="@drawable/gradient_background_header_home"
                     android:orientation="horizontal"></LinearLayout>
 
-                <com.mikhaellopez.circularimageview.CircularImageView
+                <io.getstream.avatarview.AvatarView
                     android:id="@+id/profile_avatar"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginTop="50dp"
-                    android:clickable="true"
-                    android:src="@drawable/avatar"
-                    app:civ_border_color="@color/white"
-                    app:civ_border_width="2dp"
-                    app:civ_shadow="true"
-                    app:civ_shadow_color="@color/white"
-                    app:civ_shadow_radius="0dp" />
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    app:avatarViewBorderColor="@color/white"
+                    app:avatarViewBorderWidth="3dp"
+                    app:avatarViewShape="circle"
+                    app:avatarViewPlaceholder="@drawable/avatar"/>
 
                 <TextView
                     android:id="@+id/profile_name_text_view"
@@ -128,12 +125,11 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/profile_fragmentContainerView"
-                android:name="com.example.studentmarket.Controller.Account.Profile_info"
+                android:name="com.example.studentmarket.Controller.Account.ProfileInfo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-
-
         </LinearLayout>
     </ScrollView>
 
-</FrameLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
