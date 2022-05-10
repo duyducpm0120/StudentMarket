@@ -1,4 +1,4 @@
-package com.example.studentmarket.Services;
+package com.example.studentmarket.Helper.ServiceQueue;
 
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.studentmarket.Helper.Popup.PopupHelper;
 import com.example.studentmarket.Helper.Validation.Validate;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.AccountService;
@@ -112,40 +113,42 @@ public class Register extends Fragment {
                 String userFullName = userFullNameEditText.getText().toString();
                 String phoneNumber = phoneNumberEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
-                if (userName.isEmpty()||userFullName.isEmpty()||phoneNumber.isEmpty()||password.isEmpty()){
-                    warningText.setText(getString(R.string.empty));
-                    warningText.setVisibility(View.VISIBLE);
-                }
-                else {
-                    if (Validate.validSpecialCharacter(userName))
-                    {
-                        if (Validate.validSpecialCharacter(userFullName))
-                        {
-                            if (Validate.validatePhoneNumber(phoneNumber)){
-                                if (Validate.validPassword(password)){
-                                    warningText.setVisibility(View.INVISIBLE);
-                                    signUp(textEmail,userName,userFullName,phoneNumber,password);
-                                }
-                                else {
-                                    warningText.setText(getString(R.string.passwordValid));
-                                    warningText.setVisibility(View.VISIBLE);
-                                }
-                            }
-                            else {
-                                warningText.setText("Số điện thoại không hợp lệ");
-                                warningText.setVisibility(View.VISIBLE);
-                            }
-                        }
-                        else {
-                            warningText.setText("Tên đầy đủ không được chứa ký tự đặc biệt");
-                            warningText.setVisibility(View.VISIBLE);
-                        }
-                    }
-                    else {
-                        warningText.setText("Tên đăng nhập không được chứa ký tự đặc biệt");
-                        warningText.setVisibility(View.VISIBLE);
-                    }
-                }
+//                if (userName.isEmpty()||userFullName.isEmpty()||phoneNumber.isEmpty()||password.isEmpty()){
+//                    warningText.setText(getString(R.string.empty));
+//                    warningText.setVisibility(View.VISIBLE);
+//                }
+//                else {
+//                    if (Validate.validSpecialCharacter(userName))
+//                    {
+//                        if (Validate.validSpecialCharacter(userFullName))
+//                        {
+//                            if (Validate.validatePhoneNumber(phoneNumber)){
+//                                if (Validate.validPassword(password)){
+//                                    warningText.setVisibility(View.INVISIBLE);
+//                                    signUp(textEmail,userName,userFullName,phoneNumber,password);
+//                                }
+//                                else {
+//                                    warningText.setText(getString(R.string.passwordValid));
+//                                    warningText.setVisibility(View.VISIBLE);
+//                                }
+//                            }
+//                            else {
+//                                warningText.setText("Số điện thoại không hợp lệ");
+//                                warningText.setVisibility(View.VISIBLE);
+//                            }
+//                        }
+//                        else {
+//                            warningText.setText("Tên đầy đủ không được chứa ký tự đặc biệt");
+//                            warningText.setVisibility(View.VISIBLE);
+//                        }
+//                    }
+//                    else {
+//                        warningText.setText("Tên đăng nhập không được chứa ký tự đặc biệt");
+//                        warningText.setVisibility(View.VISIBLE);
+//                    }
+//                }
+                signUp(textEmail,userName,userFullName,phoneNumber,password);
+
             }
         });
         regiterToLogin.setOnClickListener(new View.OnClickListener() {
@@ -171,6 +174,9 @@ public class Register extends Fragment {
         AccountService accountService = new AccountService(this.getContext());
         try {
             accountService.SignUp(email, username, userFullName, phoneNumber, password);
+            PopupHelper popup = new PopupHelper(getContext(),"Đăng ký thành công. Quay lại đăng nhập để tiếp tục.","");
+            popup.Show();
+
         } catch (Exception err) {
              Toast toast = Toast.makeText(getContext(),
                      getString(R.string.SignUp_Error),

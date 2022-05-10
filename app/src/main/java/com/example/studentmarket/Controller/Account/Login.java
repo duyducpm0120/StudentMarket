@@ -1,11 +1,6 @@
 package com.example.studentmarket.Controller.Account;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +11,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import com.example.studentmarket.Helper.Popup.PopupHelper;
+import com.example.studentmarket.Models.UserProfile;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.AccountService;
+
+import org.json.JSONException;
+
+import java.io.UnsupportedEncodingException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,6 +49,8 @@ public class Login extends Fragment {
     private TextView loginForgotPassword;
     private EditText loginEditTextEmail;
     private EditText loginEditTextPassword;
+
+    private UserProfile userProfile;
 
     public Login() {
         // Required empty public constructor
@@ -82,9 +89,9 @@ public class Login extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_login, container, false);
         fragmentManager = getParentFragmentManager();
-        fragmentTransaction= fragmentManager.beginTransaction();
+        fragmentTransaction = fragmentManager.beginTransaction();
         loginEditTextEmail = (EditText) view.findViewById(R.id.login_username_edit_text);
         loginEditTextPassword = (EditText) view.findViewById(R.id.login_password_edit_text);
         loginClose = (ImageButton) view.findViewById(R.id.login_close_button);
@@ -93,7 +100,7 @@ public class Login extends Fragment {
             public void onClick(View v) {
 //                fragmentTransaction.replace(R.id.fragmentContainerView,new Account());
 //                fragmentTransaction.commit();
-                    getParentFragmentManager().popBackStackImmediate();
+                getParentFragmentManager().popBackStackImmediate();
             }
         });
         loginToRegister = (TextView) view.findViewById(R.id.login_to_register);
@@ -111,22 +118,21 @@ public class Login extends Fragment {
             public void onClick(View v) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Forgot_password());
                 fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
             }
         });
         loginButton = view.findViewById(R.id.login_button_login);
-        loginButton.setOnClickListener(new View.OnClickListener(){
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String textEmail = loginEditTextEmail.getText().toString();
                 String textPassword = loginEditTextPassword.getText().toString();
-                if (!textEmail.isEmpty()&&!textPassword.isEmpty()){
+                if (!textEmail.isEmpty() && !textPassword.isEmpty()) {
+//                    PopupHelper popup = new PopupHelper(getContext(), "Đăng nhập thành công", "");
+//                    Toast.makeText(getActivity(),"aaa",Toast.LENGTH_LONG).show();
                     login(textEmail, textPassword);
-                    Toast.makeText(getContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                }
-                else {
-
-                    Toast.makeText(getContext(),getString(R.string.empty),Toast.LENGTH_SHORT).show();
+                } else {
+//                    PopupHelper popup = new PopupHelper(getContext(), "Đăng nhập thành công", "");
+                    Toast.makeText(getActivity(), getString(R.string.empty), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -135,13 +141,13 @@ public class Login extends Fragment {
 
 
     public void login(String accountName, String password) {
-        AccountService accountService = new AccountService(this.getContext());
+        AccountService accountService = new AccountService(getContext());
         try {
-            accountService.Login(accountName,password);
+            accountService.Login(accountName, password);
+            Log.d("catch login err", "cant catch");
         } catch (Exception err) {
-            Toast toast = Toast.makeText(getContext(),
-                    getString(R.string.SignIn_Error),
-                    Toast.LENGTH_LONG);
+            PopupHelper popup = new PopupHelper(getContext(), "Đăng nhập thành công", "");
+            Log.d("catch login err", "catched");
         }
     }
 

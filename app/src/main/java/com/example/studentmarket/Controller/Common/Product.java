@@ -1,6 +1,6 @@
 package com.example.studentmarket.Controller.Common;
 
-public class product {
+public class Product {
     private int id;
     private String address;
     private String body;
@@ -12,8 +12,8 @@ public class product {
     private String price;
     private boolean heart;
 
-    public product(int id, String address, String body, String image, String timeStamp, String title, int status,
-            int poster, String price, boolean heart) {
+    public Product(int id, String address, String body, String image, String timeStamp, String title, int status,
+                   int poster, String price, boolean heart) {
         this.id = id;
         this.address = address;
         this.body = body;

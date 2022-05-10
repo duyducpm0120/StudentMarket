@@ -1,24 +1,27 @@
 package com.example.studentmarket.Services;
 
-import static com.example.studentmarket.Services.EndpointConstant.*;
+import static com.example.studentmarket.Constants.EndpointConstant.FORGOT_PASSWORD_PREFIX_URL;
+import static com.example.studentmarket.Constants.EndpointConstant.LOGIN_URL;
+import static com.example.studentmarket.Constants.EndpointConstant.SIGNUP_URL;
 
 import android.content.Context;
 import android.util.Log;
-
-import androidx.annotation.NonNull;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.ClientError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.studentmarket.Helper.Popup.PopupHelper;
+import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
 import com.example.studentmarket.Store.SharedStorage;
 import com.example.studentmarket.Store.StorageKeyConstant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +32,7 @@ public class AccountService {
         this.context = context;
     }
 
-    public void SignUp(String email, String userName, String fullname, String phone, String password) throws JSONException {
+    public void SignUp(String email, String userName, String fullname, String phone, String password) throws Exception {
         String url = SIGNUP_URL;
 
         JSONObject requestBody = new JSONObject();
@@ -68,7 +71,7 @@ public class AccountService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void Login(String accountName, String password) throws JSONException {
+    public void Login(String accountName, String password) throws JSONException, Exception {
         String url = LOGIN_URL;
 
         JSONObject requestBody = new JSONObject();
@@ -86,12 +89,15 @@ public class AccountService {
                         Log.d("login response", response.toString());
                     }
                 }, new Response.ErrorListener() {
-
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        parseVolleyError(error); //handle wrong username or password
+                        Log.d("response err", error.toString());
+                        PopupHelper popup = new PopupHelper(context, "Đăng nhập thất bại, vui lòng thử lại", "");
+                        Toast.makeText(context,"Login err", Toast.LENGTH_LONG).show();
+
                     }
+
                 });
 
         // Access the RequestQueue through your singleton class.
@@ -122,11 +128,11 @@ public class AccountService {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        parseVolleyError(error); //handle wrong username or password
+                        //parseVolleyError(error); //handle wrong username or password
                     }
-                }){
+                }) {
             @Override
-            public Map<String, String> getHeaders()throws AuthFailureError {
+            public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 SharedStorage st = new SharedStorage(context);
                 StorageKeyConstant storageKeyConstant = new StorageKeyConstant();
@@ -140,7 +146,7 @@ public class AccountService {
     }
 
     public void ForgotPassword(String email) throws JSONException {
-        String url = FORGOT_PASSWORD_PREFIX_URL + "{" + email.toString() + "}";
+        String url = FORGOT_PASSWORD_PREFIX_URL + "{" + email + "}";
 
         JSONObject requestBody = new JSONObject();
 
@@ -159,7 +165,7 @@ public class AccountService {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        parseVolleyError(error); //handle wrong username or password
+                        //parseVolleyError(error); //handle wrong username or password
                     }
                 });
 
@@ -170,22 +176,5 @@ public class AccountService {
     public void ValidateEmail(String email) {
     }
 
-    public void parseVolleyError(@NonNull VolleyError error) {
-        try {
-//            String responseBody = new String(error.networkResponse.data, "utf-8");
-//            JSONObject data = new JSONObject(responseBody);
-//            JSONArray errors = data.getJSONArray("errors");
-//            JSONObject jsonMessage = errors.getJSONObject(0);
-//            String message = jsonMessage.getString("message");
-            String responseBody = new String(error.networkResponse.data, "utf-8");
-            JSONObject data = new JSONObject(responseBody);
-            String message = data.optString("message");
-            Log.d("err", message);
-        } catch (JSONException e) {
-            Log.d("err", e.toString());
-        } catch (UnsupportedEncodingException errorr) {
-            Log.d("err", errorr.toString());
-        }
-    }
 
 }

@@ -2,10 +2,6 @@ package com.example.studentmarket.Controller.Common;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.studentmarket.Controller.Common.product;
-import com.example.studentmarket.MainActivity;
+import com.example.studentmarket.Helper.DownloadImageTask.DownloadImageTask;
 import com.example.studentmarket.R;
 
 import java.util.List;
@@ -71,7 +66,7 @@ public class productAdater extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        product product = productList.get(position);
+        Product product = productList.get(position);
         // holder.imgProduct.setImageResource(product.get());
         new DownloadImageTask(holder.imgProduct).execute(product.getImage());
         holder.imgProduct.setOnClickListener(new View.OnClickListener() {
