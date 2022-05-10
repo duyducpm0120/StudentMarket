@@ -128,13 +128,14 @@ Side pockets/ Elasticated hem.
 Regular fit. True to size. Model wears: UK S/ EU S/ US" />
             </LinearLayout>
         </LinearLayout>
+
         <ImageButton
             android:id="@+id/product_detail_heart"
             style="@style/elevation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="238dp"
+            android:layout_marginTop="270dp"
             android:layout_marginRight="14dp"
             android:background="@drawable/circle"
             android:backgroundTint="#fff"
