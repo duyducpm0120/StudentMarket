@@ -39,5 +39,6 @@
     <string name="previous">Previous</string>
     <string name="view_avatar">Xem ảnh đại diện</string>
     <string name="select_avatar">Chọn ảnh đại diện</string>
+    <string name="error">Có lỗi trong quá trình xử lý. Vui lòng thử lại</string>
 
 </resources>
