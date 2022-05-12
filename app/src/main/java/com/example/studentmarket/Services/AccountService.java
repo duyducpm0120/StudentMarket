@@ -6,18 +6,18 @@ import static com.example.studentmarket.Constants.EndpointConstant.SIGNUP_URL;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.ClientError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.studentmarket.Helper.Popup.PopupHelper;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
+import com.example.studentmarket.Helper.VolleyErrorHelper;
+import com.example.studentmarket.Models.LoginResponse;
 import com.example.studentmarket.Store.SharedStorage;
 import com.example.studentmarket.Store.StorageKeyConstant;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,7 +71,7 @@ public class AccountService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void Login(String accountName, String password) throws JSONException, Exception {
+    public void Login(String accountName, String password) throws JSONException {
         String url = LOGIN_URL;
 
         JSONObject requestBody = new JSONObject();
@@ -86,16 +86,18 @@ public class AccountService {
                     @Override
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
-                        Log.d("login response", response.toString());
+
+                        LoginResponse loginResponse = new Gson().fromJson(String.valueOf(response), LoginResponse.class);
+                        Log.d("Login response token", loginResponse.getToken());
+                        SharedStorage storage = new SharedStorage(context);
+                        storage.saveValue(new StorageKeyConstant().getTokenIdKey(),loginResponse.getToken());
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Log.d("response err", error.toString());
-                        PopupHelper popup = new PopupHelper(context, "Đăng nhập thất bại, vui lòng thử lại", "");
-                        Toast.makeText(context,"Login err", Toast.LENGTH_LONG).show();
-
+                        VolleyErrorHelper helper = new VolleyErrorHelper(context);
+                        helper.parseVolleyError(error,"Sai tên đăng nhập hoặc mật khẩu. Vui lòng thử lại sau");
                     }
 
                 });
@@ -175,6 +177,8 @@ public class AccountService {
 
     public void ValidateEmail(String email) {
     }
+
+
 
 
 }

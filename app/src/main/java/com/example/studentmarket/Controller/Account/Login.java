@@ -19,6 +19,8 @@ import com.example.studentmarket.Helper.Popup.PopupHelper;
 import com.example.studentmarket.Models.UserProfile;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.AccountService;
+import com.example.studentmarket.Store.SharedStorage;
+import com.example.studentmarket.Store.StorageKeyConstant;
 
 import org.json.JSONException;
 
@@ -127,8 +129,6 @@ public class Login extends Fragment {
                 String textEmail = loginEditTextEmail.getText().toString();
                 String textPassword = loginEditTextPassword.getText().toString();
                 if (!textEmail.isEmpty() && !textPassword.isEmpty()) {
-//                    PopupHelper popup = new PopupHelper(getContext(), "Đăng nhập thành công", "");
-//                    Toast.makeText(getActivity(),"aaa",Toast.LENGTH_LONG).show();
                     login(textEmail, textPassword);
                 } else {
 //                    PopupHelper popup = new PopupHelper(getContext(), "Đăng nhập thành công", "");
@@ -144,10 +144,15 @@ public class Login extends Fragment {
         AccountService accountService = new AccountService(getContext());
         try {
             accountService.Login(accountName, password);
-            Log.d("catch login err", "cant catch");
-        } catch (Exception err) {
-            PopupHelper popup = new PopupHelper(getContext(), "Đăng nhập thành công", "");
-            Log.d("catch login err", "catched");
+            String key = new SharedStorage(getContext()).getValue(new StorageKeyConstant().getTokenIdKey());
+            if(key != "") {
+                fragmentTransaction.replace(R.id.fragmentContainerView,new Profile());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+        } catch (JSONException err) {
+            PopupHelper popup = new PopupHelper(getContext(), "Đăng nhập không thành công", "");
+            popup.Show();
         }
     }
 
