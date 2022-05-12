@@ -146,7 +146,8 @@ public class Login extends Fragment {
             accountService.Login(accountName, password);
             String key = new SharedStorage(getContext()).getValue(new StorageKeyConstant().getTokenIdKey());
             if(key != "") {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Profile());
+                UserProfile userProfile = new UserProfile("111","aaa", "email", "0123", "123123");
+                fragmentTransaction.replace(R.id.fragmentContainerView,new Profile(userProfile));
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
