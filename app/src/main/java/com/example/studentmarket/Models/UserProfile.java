@@ -3,7 +3,7 @@ package com.example.studentmarket.Models;
 import java.util.ArrayList;
 
 public class UserProfile {
-    public int userId;
+    public String userId;
     public String userAddress;
     public String userEmail;
     public String userFullName;
@@ -16,51 +16,75 @@ public class UserProfile {
     public String accountName;
     public String userUniversity;
 
-    public int getUserId() {
-        return userId;
+    public String getUserId() {
+        if (userId != null)
+            return userId;
+        return "";
     }
 
     public String getUserAddress() {
-        return userAddress;
+        if (userAddress != null)
+            return userAddress;
+        return "";
     }
 
     public String getUserEmail() {
-        return userEmail;
+        if (userEmail != null)
+            return userEmail;
+        return "";
     }
 
     public String getUserFullName() {
-        return userFullName;
+        if (userFullName != null)
+            return userFullName;
+        return "";
     }
 
     public String getUserPhone() {
-        return userPhone;
+        if (userPhone != null)
+            return userPhone;
+        return "";
     }
 
     public String getUserPic() {
-        return userPic;
+        if (userPic != null)
+            return userPic;
+        return "";
     }
 
     public String getRole() {
-        return role;
+        if (role != null)
+            return role;
+        return "";
     }
 
     public ArrayList<String> getAuthorities() {
-        return authorities;
+        if (authorities != null)
+            return authorities;
+        return new ArrayList<String>();
     }
 
     public boolean isActive() {
-        return isActive;
+        if (isActive)
+            return isActive;
+        return false;
     }
 
     public boolean isNotLocked() {
-        return isNotLocked;
+        if (isNotLocked)
+            return isNotLocked;
+        return false;
     }
 
     public String getAccountName() {
-        return accountName;
+        if (accountName != null)
+            return accountName;
+        return "";
     }
 
     public String getUserUniversity() {
-        return userUniversity;
+        if (userUniversity != null)
+            return userUniversity;
+        return "";
     }
 }

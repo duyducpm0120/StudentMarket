@@ -21,7 +21,7 @@ import java.time.Duration;
 public class ProfileAvatarBottomSheet extends Fragment {
     private LinearLayout view_avatar_section;
     private LinearLayout select_avatar_section;
-    private Button testButton;
+
 
 
     @Nullable
@@ -30,7 +30,7 @@ public class ProfileAvatarBottomSheet extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile_avatart_bottom_sheet,container,false);
         view_avatar_section = view.findViewById(R.id.view_avatar_section);
         select_avatar_section = view.findViewById(R.id.select_avatar_section);
-        testButton = view.findViewById(R.id.buttonTest);
+
 
         view_avatar_section.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,14 +41,7 @@ public class ProfileAvatarBottomSheet extends Fragment {
             }
         });
 
-        testButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("click view avatar","clicked");
-                Toast toast = Toast.makeText(getContext(), "abc", Toast.LENGTH_LONG);
-                toast.show();
-            }
-        });
+
         return view;
     }
 }

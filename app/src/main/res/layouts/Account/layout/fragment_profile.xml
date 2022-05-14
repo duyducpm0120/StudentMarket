@@ -126,7 +126,6 @@
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/profile_fragmentContainerView"
-                android:name="com.example.studentmarket.Controller.Account.ProfileInfo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
