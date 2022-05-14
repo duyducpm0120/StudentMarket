@@ -3,6 +3,7 @@ package com.example.studentmarket.Services;
 import static com.example.studentmarket.Constants.EndpointConstant.FORGOT_PASSWORD_PREFIX_URL;
 import static com.example.studentmarket.Constants.EndpointConstant.LOGIN_URL;
 import static com.example.studentmarket.Constants.EndpointConstant.SIGNUP_URL;
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,11 +14,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
-import com.example.studentmarket.Helper.VolleyErrorHelper;
+import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Models.LoginResponse;
 import com.example.studentmarket.Store.SharedStorage;
-import com.example.studentmarket.Store.StorageKeyConstant;
-import com.google.gson.Gson;
+import com.example.studentmarket.Constants.StorageKeyConstant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -71,8 +71,10 @@ public class AccountService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void Login(String accountName, String password) throws JSONException {
+    public void Login(String accountName, String password, VolleyCallback callback) throws JSONException {
         String url = LOGIN_URL;
+
+        LoginResponse res;
 
         JSONObject requestBody = new JSONObject();
 
@@ -82,22 +84,14 @@ public class AccountService {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
-                        //textView.setText("Response: " + response.toString());
-
-                        LoginResponse loginResponse = new Gson().fromJson(String.valueOf(response), LoginResponse.class);
-                        Log.d("Login response token", loginResponse.getToken());
-                        SharedStorage storage = new SharedStorage(context);
-                        storage.saveValue(new StorageKeyConstant().getTokenIdKey(),loginResponse.getToken());
+                        callback.onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        VolleyErrorHelper helper = new VolleyErrorHelper(context);
-                        helper.parseVolleyError(error,"Sai tên đăng nhập hoặc mật khẩu. Vui lòng thử lại sau");
+                        callback.onError(error);
                     }
 
                 });
@@ -138,7 +132,7 @@ public class AccountService {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 SharedStorage st = new SharedStorage(context);
                 StorageKeyConstant storageKeyConstant = new StorageKeyConstant();
-                headers.put("Authorization", "Bearer" + st.getValue(storageKeyConstant.getTokenIdKey()));
+                headers.put("Authorization", "Bearer" + st.getValue(TOKEN_ID_KEY));
                 return headers;
             }
         };

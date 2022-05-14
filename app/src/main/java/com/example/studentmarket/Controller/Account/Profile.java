@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.studentmarket.Models.UserProfile;
 import com.example.studentmarket.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
@@ -25,7 +26,11 @@ public class Profile extends Fragment {
     private Fragment profile_info_fragment;
     private Fragment profile_post_fragment;
     private AvatarView profile_avatar;
+    private UserProfile userProfile;
 
+    public Profile(UserProfile userProfile) {
+        this.userProfile = userProfile;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

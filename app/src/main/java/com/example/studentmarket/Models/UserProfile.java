@@ -6,6 +6,11 @@ public class UserProfile {
     private String userEmail;
     private String userPhone;
     private String userUniversity;
+    private String user_pic;
+
+    public String getUser_pic() {
+        return user_pic;
+    }
 
     public String getUserId() {
         return userId;

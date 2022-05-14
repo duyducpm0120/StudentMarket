@@ -133,15 +133,7 @@ public class Account extends Fragment {
             }
         });
 
-        Button profileButton = v.findViewById(R.id.button_profile);
-        profileButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Profile());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
+
         return v;
     }
 }

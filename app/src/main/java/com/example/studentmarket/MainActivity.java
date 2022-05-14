@@ -1,5 +1,7 @@
 package com.example.studentmarket;
 
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -16,6 +18,7 @@ import com.example.studentmarket.Controller.Account.Account;
 import com.example.studentmarket.Controller.Message.Message;
 import com.example.studentmarket.Controller.Favorite.Favorite;
 import com.example.studentmarket.Controller.Home.Home;
+import com.example.studentmarket.Store.SharedStorage;
 import com.example.studentmarket.databinding.ActivityMainBinding;
 
 
@@ -85,4 +88,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedStorage sharedStorage = new SharedStorage(getApplicationContext());
+        sharedStorage.removeValue(TOKEN_ID_KEY);
+    }
 }
