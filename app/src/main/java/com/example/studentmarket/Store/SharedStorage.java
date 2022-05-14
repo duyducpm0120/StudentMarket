@@ -27,4 +27,9 @@ public class SharedStorage {
         String value = sh.getString(key, "");
         return value;
     }
+
+    public void removeValue(String key) {
+        SharedPreferences settings = context.getSharedPreferences(key, Context.MODE_PRIVATE);
+        settings.edit().remove(key).commit();
+    }
 }

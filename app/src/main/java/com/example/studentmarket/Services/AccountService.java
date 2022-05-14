@@ -3,6 +3,7 @@ package com.example.studentmarket.Services;
 import static com.example.studentmarket.Constants.EndpointConstant.FORGOT_PASSWORD_PREFIX_URL;
 import static com.example.studentmarket.Constants.EndpointConstant.LOGIN_URL;
 import static com.example.studentmarket.Constants.EndpointConstant.SIGNUP_URL;
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
 
 import android.content.Context;
 import android.util.Log;
@@ -14,11 +15,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
-import com.example.studentmarket.Helper.VolleyErrorHelper;
 import com.example.studentmarket.Models.LoginResponse;
 import com.example.studentmarket.Store.SharedStorage;
-import com.example.studentmarket.Store.StorageKeyConstant;
-import com.google.gson.Gson;
+import com.example.studentmarket.Constants.StorageKeyConstant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -133,7 +132,7 @@ public class AccountService {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 SharedStorage st = new SharedStorage(context);
                 StorageKeyConstant storageKeyConstant = new StorageKeyConstant();
-                headers.put("Authorization", "Bearer" + st.getValue(storageKeyConstant.getTokenIdKey()));
+                headers.put("Authorization", "Bearer" + st.getValue(TOKEN_ID_KEY));
                 return headers;
             }
         };

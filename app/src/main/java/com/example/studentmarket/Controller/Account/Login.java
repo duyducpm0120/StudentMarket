@@ -24,13 +24,11 @@ import com.example.studentmarket.Models.UserProfile;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.AccountService;
 import com.example.studentmarket.Store.SharedStorage;
-import com.example.studentmarket.Store.StorageKeyConstant;
+import com.example.studentmarket.Constants.StorageKeyConstant;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -171,12 +169,12 @@ public class Login extends Fragment {
                 public void onError(VolleyError error) {
                     // TODO: Handle error
                     VolleyErrorHelper helper = new VolleyErrorHelper(getContext());
-                    helper.parseVolleyError(error,"Sai tên đăng nhập hoặc mật khẩu. Vui lòng thử lại sau");
+                    helper.parseVolleyError(error,"Sai tên đăng nhập hoặc mật khẩu. Vui lòng thử lại");
                 }
             });
 
         } catch (JSONException err) {
-            PopupHelper popup = new PopupHelper(getContext(), "Đăng nhập không thành công", "");
+            PopupHelper popup = new PopupHelper(getContext(), "Có lỗi xảy ra. Vui lòng thừ lại", "");
             popup.Show();
         }
     }
