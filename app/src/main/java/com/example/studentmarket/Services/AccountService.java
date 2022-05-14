@@ -13,6 +13,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
+import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Helper.VolleyErrorHelper;
 import com.example.studentmarket.Models.LoginResponse;
 import com.example.studentmarket.Store.SharedStorage;
@@ -71,8 +72,10 @@ public class AccountService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void Login(String accountName, String password) throws JSONException {
+    public void Login(String accountName, String password, VolleyCallback callback) throws JSONException {
         String url = LOGIN_URL;
+
+        LoginResponse res;
 
         JSONObject requestBody = new JSONObject();
 
@@ -82,22 +85,14 @@ public class AccountService {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
-                        //textView.setText("Response: " + response.toString());
-
-                        LoginResponse loginResponse = new Gson().fromJson(String.valueOf(response), LoginResponse.class);
-                        Log.d("Login response token", loginResponse.getToken());
-                        SharedStorage storage = new SharedStorage(context);
-                        storage.saveValue(new StorageKeyConstant().getTokenIdKey(),loginResponse.getToken());
+                        callback.onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        VolleyErrorHelper helper = new VolleyErrorHelper(context);
-                        helper.parseVolleyError(error,"Sai tên đăng nhập hoặc mật khẩu. Vui lòng thử lại sau");
+                        callback.onError(error);
                     }
 
                 });

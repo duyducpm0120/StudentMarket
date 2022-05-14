@@ -15,14 +15,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.VolleyError;
 import com.example.studentmarket.Helper.Popup.PopupHelper;
+import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
+import com.example.studentmarket.Helper.VolleyErrorHelper;
+import com.example.studentmarket.Models.LoginResponse;
 import com.example.studentmarket.Models.UserProfile;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.AccountService;
 import com.example.studentmarket.Store.SharedStorage;
 import com.example.studentmarket.Store.StorageKeyConstant;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
@@ -143,14 +149,32 @@ public class Login extends Fragment {
     public void login(String accountName, String password) {
         AccountService accountService = new AccountService(getContext());
         try {
-            accountService.Login(accountName, password);
-            String key = new SharedStorage(getContext()).getValue(new StorageKeyConstant().getTokenIdKey());
-            if(key != "") {
-                UserProfile userProfile = new UserProfile("111","aaa", "email", "0123", "123123");
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Profile(userProfile));
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
+            accountService.Login(accountName, password, new VolleyCallback() {
+                @Override
+                public void onSuccess(JSONObject response) {
+                    //textView.setText("Response: " + response.toString());
+                    LoginResponse loginResponse = new Gson().fromJson(String.valueOf(response), LoginResponse.class);
+                    Log.d("Login response token", loginResponse.getToken());
+                    SharedStorage storage = new SharedStorage(getContext());
+                    storage.saveValue(new StorageKeyConstant().getTokenIdKey(),loginResponse.getToken());
+
+                    //navigate
+                    String key = loginResponse.getToken();
+                    if(key != "") {
+                        UserProfile userProfile = new UserProfile("111","aaa", "email", "0123", "123123");
+                        fragmentTransaction.replace(R.id.fragmentContainerView,new Profile(userProfile));
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
+                    }
+                }
+                @Override
+                public void onError(VolleyError error) {
+                    // TODO: Handle error
+                    VolleyErrorHelper helper = new VolleyErrorHelper(getContext());
+                    helper.parseVolleyError(error,"Sai tên đăng nhập hoặc mật khẩu. Vui lòng thử lại sau");
+                }
+            });
+
         } catch (JSONException err) {
             PopupHelper popup = new PopupHelper(getContext(), "Đăng nhập không thành công", "");
             popup.Show();

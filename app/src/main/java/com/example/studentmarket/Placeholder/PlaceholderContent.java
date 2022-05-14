@@ -1,4 +1,4 @@
-package com.example.studentmarket.placeholder;
+package com.example.studentmarket.Placeholder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
