@@ -2,21 +2,26 @@ package com.example.studentmarket.Controller.Account;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.studentmarket.Helper.CircleTransform.CircleTransform;
 import com.example.studentmarket.Models.UserProfile;
 import com.example.studentmarket.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
+import com.squareup.picasso.Picasso;
 
 import io.getstream.avatarview.AvatarView;
 
@@ -26,10 +31,12 @@ public class Profile extends Fragment {
     private Fragment profile_info_fragment;
     private Fragment profile_post_fragment;
     private AvatarView profile_avatar;
+
     private UserProfile userProfile;
 
     public Profile(UserProfile userProfile) {
         this.userProfile = userProfile;
+        Log.d("profile accnamne", userProfile.getAccountName());
     }
 
     @Override
@@ -45,10 +52,12 @@ public class Profile extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         //init
-        profile_info_fragment = new ProfileInfo();
+        profile_info_fragment = new ProfileInfo(userProfile);
         profile_post_fragment = new ProfilePost();
         profile_avatar = view.findViewById(R.id.profile_avatar);
 
+        // set values
+        Picasso.get().load(userProfile.getUserPic()).resize(110, 110).centerCrop().transform(new CircleTransform()).into(profile_avatar);
 
         //Call TabLayout
         tabLayout = view.findViewById(R.id.profile_tab_layout);
@@ -82,14 +91,6 @@ public class Profile extends Fragment {
 //                profileBottomSheet.show(getActivity().getSupportFragmentManager(),"TAG");
                 BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
                 View bottomSheetView = inflater.inflate(R.layout.fragment_profile_avatart_bottom_sheet, view.findViewById(R.id.bottom_sheet_id), false);
-                Button buttonTest = bottomSheetView.findViewById(R.id.buttonTest);
-                buttonTest.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        AvatarView avatar = view.findViewById(R.id.profile_avatar);
-                        navigateToViewAvatar(view, avatar.getBackground());
-                    }
-                });
                 bottomSheetDialog.setContentView(bottomSheetView);
                 bottomSheetDialog.show();
 

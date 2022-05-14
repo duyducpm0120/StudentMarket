@@ -95,8 +95,9 @@
         <entry key="app/src/main/res/layouts/Account/layout/fragment_forgot_password.xml" value="0.19947916666666668" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_login.xml" value="0.13" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_pre_register.xml" value="0.225" />
-        <entry key="app/src/main/res/layouts/Account/layout/fragment_profile.xml" value="0.18" />
-        <entry key="app/src/main/res/layouts/Account/layout/fragment_profile_info.xml" value="0.13269927536231885" />
+        <entry key="app/src/main/res/layouts/Account/layout/fragment_profile.xml" value="0.22" />
+        <entry key="app/src/main/res/layouts/Account/layout/fragment_profile_avatart_bottom_sheet.xml" value="0.14492753623188406" />
+        <entry key="app/src/main/res/layouts/Account/layout/fragment_profile_info.xml" value="0.18" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_profile_post.xml" value="0.13269927536231885" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_register.xml" value="0.18" />
         <entry key="app/src/main/res/layouts/Favorite/drawable/common_header.xml" value="0.1165" />
