@@ -91,7 +91,7 @@ public class VolleyErrorHelper {
 //    private static boolean isNetworkProblem (Object error){
 //        return (error instanceof NetworkError || error instanceof NoConnectionError);
 //    }
-    public void parseVolleyError(VolleyError error, String errorTitle) {
+    public void showVolleyError(VolleyError error, String errorTitle) {
         try {
 //            String responseBody = new String(error.networkResponse.data, "utf-8");
 //            JSONObject data = new JSONObject(responseBody);

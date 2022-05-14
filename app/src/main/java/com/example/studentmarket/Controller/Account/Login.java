@@ -1,5 +1,7 @@
 package com.example.studentmarket.Controller.Account;
 
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,8 +25,8 @@ import com.example.studentmarket.Models.LoginResponse;
 import com.example.studentmarket.Models.UserProfile;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.AccountService;
+import com.example.studentmarket.Services.ProfileService;
 import com.example.studentmarket.Store.SharedStorage;
-import com.example.studentmarket.Constants.StorageKeyConstant;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -113,7 +115,7 @@ public class Login extends Fragment {
         loginToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Pre_register());
+                fragmentTransaction.replace(R.id.fragmentContainerView, new Pre_register());
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
@@ -122,7 +124,7 @@ public class Login extends Fragment {
         loginForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Forgot_password());
+                fragmentTransaction.replace(R.id.fragmentContainerView, new Forgot_password());
                 fragmentTransaction.addToBackStack(null);
             }
         });
@@ -150,26 +152,20 @@ public class Login extends Fragment {
             accountService.Login(accountName, password, new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONObject response) {
-                    //textView.setText("Response: " + response.toString());
+
+                    //save token
                     LoginResponse loginResponse = new Gson().fromJson(String.valueOf(response), LoginResponse.class);
                     Log.d("Login response token", loginResponse.getToken());
                     SharedStorage storage = new SharedStorage(getContext());
-                    storage.saveValue(new StorageKeyConstant().getTokenIdKey(),loginResponse.getToken());
-
-                    //navigate
-                    String key = loginResponse.getToken();
-                    if(key != "") {
-                        UserProfile userProfile = new UserProfile("111","aaa", "email", "0123", "123123");
-                        fragmentTransaction.replace(R.id.fragmentContainerView,new Profile(userProfile));
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
-                    }
+                    storage.saveValue(TOKEN_ID_KEY, loginResponse.getToken());
+                    getMyProfileAndNavigate();
                 }
+
                 @Override
                 public void onError(VolleyError error) {
                     // TODO: Handle error
                     VolleyErrorHelper helper = new VolleyErrorHelper(getContext());
-                    helper.parseVolleyError(error,"Sai tên đăng nhập hoặc mật khẩu. Vui lòng thử lại");
+                    helper.showVolleyError(error, "Sai tên đăng nhập hoặc mật khẩu. Vui lòng thử lại");
                 }
             });
 
@@ -178,5 +174,30 @@ public class Login extends Fragment {
             popup.Show();
         }
     }
+
+
+    private void getMyProfileAndNavigate() {
+        ProfileService profileService = new ProfileService(getContext());
+        profileService.getMyProfile(new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                //textView.setText("Response: " + response.toString());
+                Log.d("get profile response",response.toString());
+                UserProfile userProfile = new Gson().fromJson(String.valueOf(response), UserProfile.class);
+                // navigate
+                fragmentTransaction.replace(R.id.fragmentContainerView, new Profile(userProfile));
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Log.d("Load profile fail", error.toString());
+                VolleyErrorHelper volleyErrorHelper = new VolleyErrorHelper(getContext());
+                volleyErrorHelper.showVolleyError(error, "Profile loaded fail");
+            }
+        });
+    }
+
 
 }

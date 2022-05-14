@@ -1,48 +1,66 @@
 package com.example.studentmarket.Models;
 
+import java.util.ArrayList;
+
 public class UserProfile {
-    private String userId;
-    private String userFullName;
-    private String userEmail;
-    private String userPhone;
-    private String userUniversity;
-    private String user_pic;
+    public int userId;
+    public String userAddress;
+    public String userEmail;
+    public String userFullName;
+    public String userPhone;
+    public String userPic;
+    public String role;
+    public ArrayList<String> authorities;
+    public boolean isActive;
+    public boolean isNotLocked;
+    public String accountName;
+    public String userUniversity;
 
-    public String getUser_pic() {
-        return user_pic;
-    }
-
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public String getUserFullName() {
-        return userFullName;
+    public String getUserAddress() {
+        return userAddress;
     }
 
     public String getUserEmail() {
         return userEmail;
     }
 
+    public String getUserFullName() {
+        return userFullName;
+    }
+
     public String getUserPhone() {
         return userPhone;
     }
 
-    public String getUserUniversity() {
-        return userUniversity;
+    public String getUserPic() {
+        return userPic;
     }
 
-    public UserProfile(
-            String userId,
-            String userFullName,
-            String userEmail,
-            String userPhone,
-            String userUniversity
-    ) {
-        this.userId = userId;
-        this.userFullName = userFullName;
-        this.userEmail = userEmail;
-        this.userPhone = userPhone;
-        this.userUniversity = userUniversity;
+    public String getRole() {
+        return role;
+    }
+
+    public ArrayList<String> getAuthorities() {
+        return authorities;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public boolean isNotLocked() {
+        return isNotLocked;
+    }
+
+    public String getAccountName() {
+        return accountName;
+    }
+
+    public String getUserUniversity() {
+        return userUniversity;
     }
 }

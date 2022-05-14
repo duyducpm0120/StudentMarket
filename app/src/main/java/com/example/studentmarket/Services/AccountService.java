@@ -3,7 +3,6 @@ package com.example.studentmarket.Services;
 import static com.example.studentmarket.Constants.EndpointConstant.FORGOT_PASSWORD_PREFIX_URL;
 import static com.example.studentmarket.Constants.EndpointConstant.LOGIN_URL;
 import static com.example.studentmarket.Constants.EndpointConstant.SIGNUP_URL;
-import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
 
 import android.content.Context;
 import android.util.Log;
@@ -13,16 +12,14 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.studentmarket.Helper.ServiceHeaderHelper.ServiceHeaderHelper;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Models.LoginResponse;
-import com.example.studentmarket.Store.SharedStorage;
-import com.example.studentmarket.Constants.StorageKeyConstant;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class AccountService {
@@ -113,7 +110,6 @@ public class AccountService {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
@@ -129,11 +125,7 @@ public class AccountService {
                 }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                SharedStorage st = new SharedStorage(context);
-                StorageKeyConstant storageKeyConstant = new StorageKeyConstant();
-                headers.put("Authorization", "Bearer" + st.getValue(TOKEN_ID_KEY));
-                return headers;
+                return new ServiceHeaderHelper(context).getHeadersWithToken();
             }
         };
         // Access the RequestQueue through your singleton class.

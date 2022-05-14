@@ -2,7 +2,9 @@ package com.example.studentmarket.Controller.Account;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +15,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.studentmarket.Helper.CircleTransform.CircleTransform;
 import com.example.studentmarket.Models.UserProfile;
 import com.example.studentmarket.R;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
+import com.squareup.picasso.Picasso;
 
 import io.getstream.avatarview.AvatarView;
 
@@ -30,6 +34,7 @@ public class Profile extends Fragment {
 
     public Profile(UserProfile userProfile) {
         this.userProfile = userProfile;
+        //Log.d("profile", userProfile.getUser_pic());
     }
 
     @Override
@@ -48,6 +53,10 @@ public class Profile extends Fragment {
         profile_info_fragment = new ProfileInfo();
         profile_post_fragment = new ProfilePost();
         profile_avatar = view.findViewById(R.id.profile_avatar);
+
+
+
+        Picasso.get().load(userProfile.getUserPic()).resize(110, 110).centerCrop().transform(new CircleTransform()).into(profile_avatar);
 
 
         //Call TabLayout
