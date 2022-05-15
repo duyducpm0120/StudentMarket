@@ -174,7 +174,7 @@ public class Register extends Fragment {
         AccountService accountService = new AccountService(this.getContext());
         try {
             accountService.SignUp(email, username, userFullName, phoneNumber, password);
-            PopupHelper popup = new PopupHelper(getContext(),"Đăng ký thành công. Quay lại đăng nhập để tiếp tục.","");
+            PopupHelper popup = new PopupHelper(getContext(),"Thông báo","Đăng ký thành công. Quay lại đăng nhập để tiếp tục.");
             popup.Show();
 
         } catch (Exception err) {

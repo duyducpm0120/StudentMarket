@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="110dp"
@@ -34,11 +33,15 @@
                 android:backgroundTint="#fff"
                 android:src="@drawable/bell" />
         </LinearLayout>
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_marginTop="110dp"
+            android:layout_height="match_parent">
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="110dp"
             android:background="@drawable/gradient_background"
             android:orientation="vertical">
 
@@ -87,12 +90,15 @@
                 android:textStyle="bold" />
 
             <GridView
+                android:nestedScrollingEnabled="false"
                 android:id="@+id/home_list_products"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:numColumns="2"
                 android:verticalSpacing="25dp" />
         </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
 
         <EditText
             android:id="@+id/home_edittext_search"
@@ -104,6 +110,7 @@
             android:inputType="text"
             android:maxLines="1" />
     </RelativeLayout>
+
     <!-- TODO: Update blank fragment layout -->
 
 

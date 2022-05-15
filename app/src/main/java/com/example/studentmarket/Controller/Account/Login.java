@@ -118,6 +118,7 @@ public class Login extends Fragment {
             public void onClick(View v) {
                 fragmentTransaction.replace(R.id.fragmentContainerView,new Forgot_password());
                 fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         loginButton = view.findViewById(R.id.login_button_login);
@@ -144,9 +145,8 @@ public class Login extends Fragment {
         AccountService accountService = new AccountService(getContext());
         try {
             accountService.Login(accountName, password);
-            Log.d("catch login err", "cant catch");
+
         } catch (Exception err) {
-            PopupHelper popup = new PopupHelper(getContext(), "Đăng nhập thành công", "");
             Log.d("catch login err", "catched");
         }
     }

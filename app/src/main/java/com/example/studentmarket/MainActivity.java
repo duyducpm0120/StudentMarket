@@ -13,7 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.studentmarket.Controller.Account.Account;
-import com.example.studentmarket.Controller.Message.Message;
+import com.example.studentmarket.Controller.Message.DialogList;
 import com.example.studentmarket.Controller.Favorite.Favorite;
 import com.example.studentmarket.Controller.Home.Home;
 import com.example.studentmarket.databinding.ActivityMainBinding;
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new Home());
                     break;
                 case R.id.category:
-                    replaceFragment(new Message());
+                    replaceFragment(new DialogList());
                     break;
                 case R.id.favorite:
                     replaceFragment(new Favorite());

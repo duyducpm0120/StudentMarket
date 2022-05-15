@@ -2,6 +2,7 @@ package com.example.studentmarket.Controller.Common;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,6 +79,7 @@ public class productAdater extends BaseAdapter {
                 myIntent.putExtra("price", product.getPrice());
                 myIntent.putExtra("image", product.getImage());
                 myIntent.putExtra("body", product.getBody());
+                myIntent.putExtra("id",product.getId());
                 context.startActivity(myIntent);
             }
         });

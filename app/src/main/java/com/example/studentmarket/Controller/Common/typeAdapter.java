@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studentmarket.R;
-import static com.example.studentmarket.Controller.Common.IndexCategory.*;
+import static com.example.studentmarket.Helper.globalValue.*;
 
 
 import java.util.List;
