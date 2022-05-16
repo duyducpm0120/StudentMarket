@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.studentmarket"
-        minSdk 24
+        minSdk 28
         targetSdk 31
         versionCode 1
         versionName "1.0"
@@ -34,7 +34,7 @@ android {
     sourceSets {
         main {
             res {
-                srcDirs 'src\\main\\res', 'src\\main\\res\\layouts\\Account', 'src\\main\\res\\layouts\\Profile', 'src\\main\\res\\layouts\\Product', 'src\\main\\res\\layouts\\Home', 'src\\main\\res\\layouts\\Favorite'
+                srcDirs 'src\\main\\res', 'src\\main\\res\\layouts\\Account', 'src\\main\\res\\layouts\\Profile', 'src\\main\\res\\layouts\\Chat', 'src\\main\\res\\layouts\\Home', 'src\\main\\res\\layouts\\Favorite'
             }
         }
     }
@@ -57,6 +57,7 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     implementation "io.getstream:avatarview-coil:1.0.5"
     implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'com.github.stfalcon-studio:Chatkit:v0.4.1'
     implementation 'com.squareup.picasso:picasso:2.8'
 
 

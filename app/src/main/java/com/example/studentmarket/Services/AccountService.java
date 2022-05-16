@@ -21,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
+import static com.example.studentmarket.Helper.globalValue.*;
 
 public class AccountService {
     private Context context;
@@ -83,11 +84,23 @@ public class AccountService {
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        //textView.setText("Response: " + response.toString());
+//                         Log.d("login response", response.toString());
+//                         setUsername(accountName);
+//                         setToken(response.toString());
+//                         PopupHelper popup = new PopupHelper(context,"Thông báo", "Đăng nhập thành công");
+//                         popup.Show();
                         callback.onSuccess(response);
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+//                         // TODO: Handle error
+//                         Log.d("response err", error.toString());
+//                         PopupHelper popup = new PopupHelper(context, "Thông báo","Đăng nhập thất bại, vui lòng thử lại");
+//                         Toast.makeText(context,"Login err", Toast.LENGTH_LONG).show();
+//                         popup.Show();
+
                         callback.onError(error);
                     }
 

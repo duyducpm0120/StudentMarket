@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,12 @@ import com.example.studentmarket.Controller.Common.productAdater;
 import com.example.studentmarket.Controller.Common.type;
 import com.example.studentmarket.Controller.Common.typeAdapter;
 import com.example.studentmarket.R;
-import static com.example.studentmarket.Controller.Common.IndexCategory.*;
+import static com.example.studentmarket.Helper.globalValue.*;
+
+import com.example.studentmarket.Services.ProductService;
+import com.example.studentmarket.Services.ProductService.*;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -96,13 +102,20 @@ public class Home extends Fragment {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        productAdater = new productAdater(getContext(), R.layout.product, getListProduct());
+        homeListProduct.setAdapter(productAdater);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         homeTextViewSeeMore = (TextView) view.findViewById(R.id.home_textview_see_more);
         homeEdittextSearch = view.findViewById(R.id.home_edittext_search);
-
+        
         fragmentManager = getParentFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -113,6 +126,9 @@ public class Home extends Fragment {
         MappingType(view);
         typeAdapter = new typeAdapter(arrayType, 1);
         homeListType.setAdapter(typeAdapter);
+        setGridViewHeightBasedOnChildren(homeListProduct,2,productAdater);
+        LoadListProduct();
+
 
         homeTextViewSeeMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +167,15 @@ public class Home extends Fragment {
         return view;
     }
 
+    private void LoadListProduct() {
+        ProductService productService = new ProductService(getContext());
+        try {
+            productService.GetListProduct(10,1, new int[]{1},"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJTRTMzMCIsInN1YiI6IjUiLCJpc3MiOiJVSVQsIEhDTVZOVSIsIkF1dGhvcml0aWVzIjpbInVzZXI6cmVhZCJdLCJleHAiOjE2NTMwMjgwOTgsImlhdCI6MTY1MjU5NjA5OH0.V3mRajHfw8RQVHVlGwed3tx0OM0PGIJ1l4ejC7OteiPUkZLYb9diYvKWiUwUBDw9uoGlQJvrfg6Xvi64pNsMVw");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void MappingProduct(View view) {
         homeListProduct = (GridView) view.findViewById(R.id.home_list_products);
         arrayProduct = new ArrayList<>();
@@ -159,7 +184,7 @@ public class Home extends Fragment {
                     "https://product.hstatic.net/200000260587/product/zve03357_9bb9116b5f3341059fba977d701403f2_grande.png",
                     "timestapm", "DKNY t-shirt - colour block front logo" + i, i, i, "3" + i + ".000 VND", true));
         }
-
+        setListProduct(arrayProduct);
     }
 
     private void MappingType(View view) {
@@ -181,4 +206,33 @@ public class Home extends Fragment {
             }
         }
     };
+
+
+    public void setGridViewHeightBasedOnChildren(GridView gridView, int columns,productAdater adapter) {
+        productAdater listAdapter = adapter;
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        int items = listAdapter.getCount();
+        int rows = 0;
+
+        View listItem = listAdapter.getView(0, null, gridView);
+        listItem.measure(0, 0);
+        totalHeight = listItem.getMeasuredHeight();
+
+        float x = 1;
+        if( items > columns ){
+            x = items/columns;
+            rows = (int) (x + 1);
+            totalHeight *= rows;
+        }
+
+        ViewGroup.LayoutParams params = gridView.getLayoutParams();
+        params.height = totalHeight;
+        gridView.setLayoutParams(params);
+
+    }
 }

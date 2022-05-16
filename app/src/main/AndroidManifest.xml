@@ -3,6 +3,7 @@
     package="com.example.studentmarket">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/darkTextStatusBar"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:windowSoftInputMode="adjustResize">
+        <activity
+            android:name=".Controller.Message.ListMessages"
+            android:exported="false" />
         <activity
             android:name=".Controller.Account.Post"
             android:exported="false" />
@@ -32,8 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".Controller.Account.ViewAvatar"></activity>
+        <activity android:name=".Controller.Account.ViewAvatar" />
 
         <service
             android:name=".Services.MyFirebaseService"

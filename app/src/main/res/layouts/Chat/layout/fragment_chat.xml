@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Controller.Message.DialogList">
+
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:background="@drawable/gradient_background_header_home"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="40dp"
+                android:text="@string/Appname"
+                android:textSize="32dp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/chat_button_notice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-15dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:backgroundTint="#fff"
+                android:src="@drawable/bell" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="110dp"
+            android:orientation="vertical"
+            android:background="@drawable/gradient_background">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="40dp"
+                android:scrollbars="none"
+                android:layout_marginHorizontal="24dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:id="@+id/chat_list_friend"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/chat_edittext_search"
+            style="@style/editTextSearchStyle"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginHorizontal="27dp"
+            android:hint="Tìm kiếm"
+            android:inputType="text"
+            android:maxLines="1" />
+    </RelativeLayout>
+
+</FrameLayout>

@@ -7,6 +7,11 @@ public class EndpointConstant {
     public static final String RATING_USER_PREFIX_URL = ENDPOINT_PREFIX + "ratings/rate/";
     public static final String CHANGE_PASSWORD_URL = ENDPOINT_PREFIX + "/user/updatePassword";
     public static final String FORGOT_PASSWORD_PREFIX_URL = ENDPOINT_PREFIX + "/user/resetPassword/";
+    public static final String GET_USER_PROFILE_PREFIX_URL = ENDPOINT_PREFIX + "users/findById/";
+    public static final String GET_LIST_PRODUCT = ENDPOINT_PREFIX+"listings/";
+    public static final String SEARCH_PRODUCT = ENDPOINT_PREFIX+"search/";
+    public static final String POST_PRODUCT = ENDPOINT_PREFIX+"post/";
+    public static final String GET_LIST_CATEGORY = ENDPOINT_PREFIX+"listcate/";
     public static final String GET_USER_PROFILE_PREFIX_URL = ENDPOINT_PREFIX + "user/findById/";
     public static final String GET_MY_PROFILE = ENDPOINT_PREFIX + "user/getMyProfile";
 }

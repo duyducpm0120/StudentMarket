@@ -12,9 +12,9 @@
         tools:layout="@layout/fragment_favorite" />
     <fragment
         android:id="@+id/category"
-        android:name="com.example.studentmarket.Controller.Message.Message"
+        android:name="com.example.studentmarket.Controller.Message.DialogList"
         android:label="fragment_category"
-        tools:layout="@layout/fragment_category" />
+        tools:layout="@layout/fragment_chat" />
     <navigation
         android:id="@+id/accountNav"
         app:startDestination="@id/account">

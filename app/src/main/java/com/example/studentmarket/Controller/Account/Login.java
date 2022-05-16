@@ -126,6 +126,7 @@ public class Login extends Fragment {
             public void onClick(View v) {
                 fragmentTransaction.replace(R.id.fragmentContainerView, new Forgot_password());
                 fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         loginButton = view.findViewById(R.id.login_button_login);

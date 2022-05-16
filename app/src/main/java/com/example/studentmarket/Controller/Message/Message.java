@@ -1,66 +1,60 @@
 package com.example.studentmarket.Controller.Message;
 
-import android.os.Bundle;
+import com.stfalcon.chatkit.commons.models.IMessage;
+import com.stfalcon.chatkit.commons.models.IUser;
 
-import androidx.fragment.app.Fragment;
+import java.util.Date;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+public class Message implements IMessage {
+    private String id;
+    private String text;
+    private Author user;
+    private Date date;
 
-import com.example.studentmarket.R;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Message#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class Message extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public Message() {
-        // Required empty public constructor
+    public Message(String id, String text, Author user, Date date) {
+        this.id = id;
+        this.text = text;
+        this.user = user;
+        this.date = date;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Category.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Message newInstance(String param1, String param2) {
-        Message fragment = new Message();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setUser(Author user) {
+        this.user = user;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+    public String getId() {
+        return id;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_category, container, false);
+    public String getText() {
+        return text;
+    }
+
+    @Override
+    public Author getUser() {
+        return user;
+    }
+
+    @Override
+    public Date getCreatedAt() {
+        return date;
     }
 }

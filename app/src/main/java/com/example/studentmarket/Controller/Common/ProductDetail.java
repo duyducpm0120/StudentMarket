@@ -2,12 +2,16 @@ package com.example.studentmarket.Controller.Common;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.studentmarket.Controller.Account.Post;
+import com.example.studentmarket.Controller.Message.ListMessages;
 import com.example.studentmarket.Helper.DownloadImageTask.DownloadImageTask;
+import com.example.studentmarket.Helper.Popup.PopupHelper;
 import com.example.studentmarket.R;
 
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -38,6 +42,7 @@ public class ProductDetail extends AppCompatActivity {
         String productPrice = myIntent.getStringExtra("price");
         String productImage = myIntent.getStringExtra("image");
         String productBody = myIntent.getStringExtra("body");
+        int id=myIntent.getIntExtra("id",0);
         detailProductName = findViewById(R.id.product_detail_textview_name_product);
         detailProductPrice = findViewById(R.id.product_detail_price);
         detailProductDescriptions = findViewById(R.id.product_detail_description);
@@ -62,6 +67,31 @@ public class ProductDetail extends AppCompatActivity {
         });
         new DownloadImageTask(detailProductImage).execute(productImage);
 
+        detailProductRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupHelper popupHelper = new PopupHelper(ProductDetail.this,id,"Thông báo","Bạn chắc chắn muốn xóa bài đăng này",true,"Huỷ","Xoá");
+                popupHelper.Show();
+            }
+        });
+
+        detailProductEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(getApplicationContext(), Post.class);
+                myIntent.putExtra("name","test");
+                ProductDetail.this.startActivity(myIntent);
+            }
+        });
+
+        detailProductChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(ProductDetail.this, ListMessages.class);
+                myIntent.putExtra("name","avatar");
+                ProductDetail.this.startActivity(myIntent);
+            }
+        });
 
     }
 }
