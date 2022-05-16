@@ -24,6 +24,7 @@
             android:paddingBottom="50dp">
 
             <TextView
+                android:id="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
@@ -31,7 +32,31 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/account_name_text_box"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/edittextstyle"
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="textNoSuggestions|textPersonName"
+                android:text="AAAAA"
+                android:textColor="@color/black"
+                android:textColorHighlight="@color/primary"
+                android:textColorHint="@color/gray"
+                android:textColorLink="@color/primary"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:text="@string/name"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/name_text_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -55,7 +80,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/university_text_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -78,7 +103,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName3"
+                android:id="@+id/phone_text_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -101,7 +126,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName4"
+                android:id="@+id/email_text_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -124,7 +149,7 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName5"
+                android:id="@+id/password_text_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

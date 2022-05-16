@@ -78,14 +78,14 @@ public class Account extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =  inflater.inflate(R.layout.fragment_account, container, false);
+        View v = inflater.inflate(R.layout.fragment_account, container, false);
         accountButtonLogin = (Button) v.findViewById(R.id.button);
         fragmentManager = getParentFragmentManager();
-        fragmentTransaction= fragmentManager.beginTransaction();
+        fragmentTransaction = fragmentManager.beginTransaction();
         accountButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Login());
+                fragmentTransaction.replace(R.id.fragmentContainerView, new Login());
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
@@ -94,7 +94,7 @@ public class Account extends Fragment {
         accountButotnForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Change_password());
+                fragmentTransaction.replace(R.id.fragmentContainerView, new Change_password());
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
             }
@@ -119,7 +119,7 @@ public class Account extends Fragment {
                 title.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
                 builder.setCustomTitle(title);
                 AlertDialog alertDialog = builder.show();
-                TextView messageText = (TextView)alertDialog.findViewById(android.R.id.message);
+                TextView messageText = (TextView) alertDialog.findViewById(android.R.id.message);
                 messageText.setGravity(Gravity.CENTER);
                 alertDialog.show();
             }
@@ -128,20 +128,12 @@ public class Account extends Fragment {
         accountPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(getContext(),Post.class);
+                Intent myIntent = new Intent(getContext(), Post.class);
                 startActivity(myIntent);
             }
         });
 
-        Button profileButton = v.findViewById(R.id.button_profile);
-        profileButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                fragmentTransaction.replace(R.id.fragmentContainerView,new Profile());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
+
         return v;
     }
 }

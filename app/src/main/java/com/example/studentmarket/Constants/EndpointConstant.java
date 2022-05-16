@@ -12,4 +12,6 @@ public class EndpointConstant {
     public static final String SEARCH_PRODUCT = ENDPOINT_PREFIX+"search/";
     public static final String POST_PRODUCT = ENDPOINT_PREFIX+"post/";
     public static final String GET_LIST_CATEGORY = ENDPOINT_PREFIX+"listcate/";
+    public static final String GET_USER_PROFILE_PREFIX_URL = ENDPOINT_PREFIX + "user/findById/";
+    public static final String GET_MY_PROFILE = ENDPOINT_PREFIX + "user/getMyProfile";
 }
