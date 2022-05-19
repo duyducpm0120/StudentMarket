@@ -43,5 +43,9 @@
     <string name="describer">Mô tả chi tiết</string>
     <string name="error">Có lỗi trong quá trình xử lý. Vui lòng thử lại</string>
     <string name="name">Họ và tên</string>
+    <string name="title_activity_edit_profile">EditProfile</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 </resources>

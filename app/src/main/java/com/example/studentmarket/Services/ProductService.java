@@ -52,12 +52,12 @@ public class ProductService {
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
                         Log.d("response err", error.toString());
-                        PopupHelper popup = new PopupHelper(context,"Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
-                        Toast.makeText(context,"Login err", Toast.LENGTH_LONG).show();
+                        PopupHelper popup = new PopupHelper(context, "Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
+                        Toast.makeText(context, "Login err", Toast.LENGTH_LONG).show();
 
                     }
 
-                }){
+                }) {
 
             /**
              * Passing some request headers
@@ -65,17 +65,18 @@ public class ProductService {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer "+token);
+                headers.put("Authorization", "Bearer " + token);
                 return headers;
             }
-        };;
+        };
+        ;
 
 
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void GetListProduct(int PageSize,int PageIndex,int[] listCategoyIds,String token) throws JSONException {
+    public void GetListProduct(int PageSize, int PageIndex, int[] listCategoyIds, String token) throws JSONException {
         String url = GET_LIST_PRODUCT;
 
         JSONObject requestBody = new JSONObject();
@@ -84,7 +85,7 @@ public class ProductService {
 
         requestBody.put("pageIndex", PageIndex);
 
-        requestBody.put("listingCategoriesIds",listCategoyIds);
+        requestBody.put("listingCategoriesIds", listCategoyIds);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
@@ -99,12 +100,12 @@ public class ProductService {
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
                         Log.d("response err", error.toString());
-                        PopupHelper popup = new PopupHelper(context,"Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
-                        Toast.makeText(context,"Login err", Toast.LENGTH_LONG).show();
+                        PopupHelper popup = new PopupHelper(context, "Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
+                        Toast.makeText(context, "Login err", Toast.LENGTH_LONG).show();
 
                     }
 
-                }){
+                }) {
 
             /**
              * Passing some request headers
@@ -112,16 +113,18 @@ public class ProductService {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer "+token);
+                headers.put("Authorization", "Bearer " + token);
                 return headers;
             }
-        };;
+        };
+        ;
 
 
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
-    public void SearchProduct(String search,String token) throws JSONException {
+
+    public void SearchProduct(String search, String token) throws JSONException {
         String url = SEARCH_PRODUCT;
 
         JSONObject requestBody = new JSONObject();
@@ -140,12 +143,12 @@ public class ProductService {
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
                         Log.d("response err", error.toString());
-                        PopupHelper popup = new PopupHelper(context,"Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
-                        Toast.makeText(context,"Login err", Toast.LENGTH_LONG).show();
+                        PopupHelper popup = new PopupHelper(context, "Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
+                        Toast.makeText(context, "Login err", Toast.LENGTH_LONG).show();
 
                     }
 
-                }){
+                }) {
 
             /**
              * Passing some request headers
@@ -153,16 +156,18 @@ public class ProductService {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer "+token);
+                headers.put("Authorization", "Bearer " + token);
                 return headers;
             }
-        };;
+        };
+        ;
 
 
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
-    public void GetListCategory(String search,String token) throws JSONException {
+
+    public void GetListCategory(String search, String token) throws JSONException {
         String url = GET_LIST_CATEGORY;
 
         JSONObject requestBody = new JSONObject();
@@ -181,12 +186,12 @@ public class ProductService {
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
                         Log.d("response err", error.toString());
-                        PopupHelper popup = new PopupHelper(context,"Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
-                        Toast.makeText(context,"Login err", Toast.LENGTH_LONG).show();
+                        PopupHelper popup = new PopupHelper(context, "Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
+                        Toast.makeText(context, "Login err", Toast.LENGTH_LONG).show();
 
                     }
 
-                }){
+                }) {
 
             /**
              * Passing some request headers
@@ -194,10 +199,11 @@ public class ProductService {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer "+token);
+                headers.put("Authorization", "Bearer " + token);
                 return headers;
             }
-        };;
+        };
+        ;
 
 
         // Access the RequestQueue through your singleton class.

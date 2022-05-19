@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,7 +19,9 @@ import com.example.studentmarket.Controller.Account.Account;
 import com.example.studentmarket.Controller.Message.DialogList;
 import com.example.studentmarket.Controller.Favorite.Favorite;
 import com.example.studentmarket.Controller.Home.Home;
+import com.example.studentmarket.Models.UserProfile;
 import com.example.studentmarket.Store.SharedStorage;
+import com.example.studentmarket.Store.UserProfileHolder;
 import com.example.studentmarket.databinding.ActivityMainBinding;
 
 
@@ -34,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new Home());
+        UserProfileHolder.getInstance().setData(new UserProfile());
+        Account account = new Account();
         binding.bottomNavigationView.setOnItemSelectedListener(item ->{
 
             switch (item.getItemId()){
@@ -47,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new Favorite());
                     break;
                 case R.id.account:
-                    replaceFragment(new Account());
+                    replaceFragment(account.getInstance());
                     break;
                 default:
                     return Boolean.parseBoolean(null); // Problem occurs at this condition!
