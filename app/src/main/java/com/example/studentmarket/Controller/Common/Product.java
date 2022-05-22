@@ -12,6 +12,7 @@ public class Product {
     private String price;
     private boolean heart;
 
+
     public Product(int id, String address, String body, String image, String timeStamp, String title, int status,
                    int poster, String price, boolean heart) {
         this.id = id;

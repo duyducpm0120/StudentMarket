@@ -33,70 +33,72 @@
                 android:backgroundTint="#fff"
                 android:src="@drawable/bell" />
         </LinearLayout>
+
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_marginTop="110dp"
-            android:layout_height="match_parent">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/gradient_background"
-            android:orientation="vertical">
+            android:layout_marginTop="110dp">
 
-            <RelativeLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp">
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_background"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="32dp"
+                        android:text="Danh mục"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/home_textview_see_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:clickable="true"
+                        android:text="Xem tất cả >"
+                        android:textColor="#ACACAC" />
+                </RelativeLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/home_list_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="7dp"
+                    android:orientation="horizontal"
+                    android:scrollbars="none"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
-                    android:text="Danh mục"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="12dp"
+                    android:text="Sản phẩm"
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/home_textview_see_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp"
-                    android:clickable="true"
-                    android:text="Xem tất cả >"
-                    android:textColor="#ACACAC" />
-            </RelativeLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/home_list_type"
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="7dp"
-                android:scrollbars="none"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="32dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="12dp"
-                android:text="Sản phẩm"
-                android:textSize="18dp"
-                android:textStyle="bold" />
-
-            <GridView
-                android:nestedScrollingEnabled="false"
-                android:id="@+id/home_list_products"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:numColumns="2"
-                android:verticalSpacing="25dp" />
-        </LinearLayout>
+                <GridView
+                    android:id="@+id/home_list_products"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:nestedScrollingEnabled="false"
+                    android:numColumns="2"
+                    android:scrollbars="none"
+                    android:verticalSpacing="25dp" />
+            </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
 
@@ -109,6 +111,30 @@
             android:hint="Tìm kiếm"
             android:inputType="text"
             android:maxLines="1" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:id="@+id/home_empty_search"
+            android:visibility="invisible"
+            android:background="@drawable/gradient_background"
+            android:layout_marginTop="110dp"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="28dp"
+                android:layout_marginTop="57dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/empty_search"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="@string/empty_search"
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/primary"/>
+        </LinearLayout>
     </RelativeLayout>
 
     <!-- TODO: Update blank fragment layout -->

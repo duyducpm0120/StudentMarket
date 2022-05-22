@@ -39,9 +39,10 @@
     <string name="previous">Previous</string>
     <string name="view_avatar">Xem ảnh đại diện</string>
     <string name="select_avatar">Chọn ảnh đại diện</string>
-    <string name="describe_test">Polo Ralph Lauren. Button neck with spread collar. Zip placket. Embroidered logo to chest and cuff Side pockets/ Elasticated hem. Regular fit. True to size. Model wears: UK S/ EU S/ US</string>
+    <string name="describe_test">Polo Ralph Lauren. Button neck with spread collar. Zip placket. Embroidered logo to chest and cuff Side pockets/ Elasticated hem. Regular fit. True to size. Model wears: UK S/ EU S/ USgvvvvvvvvvvvvv</string>
     <string name="describer">Mô tả chi tiết</string>
     <string name="error">Có lỗi trong quá trình xử lý. Vui lòng thử lại</string>
     <string name="name">Họ và tên</string>
+    <string name="empty_search">Không tim thấy kết quả nào</string>
 
 </resources>

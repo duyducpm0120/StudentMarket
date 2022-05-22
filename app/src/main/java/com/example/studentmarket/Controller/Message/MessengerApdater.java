@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studentmarket.Helper.DownloadImageTask.DownloadImageTask;
 import com.example.studentmarket.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -43,7 +44,8 @@ public class MessengerApdater extends RecyclerView.Adapter<MessengerApdater.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Messenger msgValue = listMessenger.get(position);
         holder.name.setText(msgValue.getName());
-        new DownloadImageTask(holder.avatar).execute(msgValue.getImageUrl());
+//        new DownloadImageTask(holder.avatar).execute(msgValue.getImageUrl());
+        Picasso.get().load(msgValue.getImageUrl()).into(holder.avatar);
         holder.msg.setText(msgValue.getMsg());
         holder.time.setText(msgValue.getTime());
         holder.messenger_clickable.setOnClickListener(new View.OnClickListener() {

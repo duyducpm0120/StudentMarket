@@ -4,17 +4,25 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studentmarket.Helper.DownloadImageTask.DownloadImageTask;
 import com.example.studentmarket.R;
+import com.squareup.picasso.Picasso;
 import com.stfalcon.chatkit.commons.ImageLoader;
+import com.stfalcon.chatkit.commons.ViewHolder;
 import com.stfalcon.chatkit.messages.MessageInput;
 import com.stfalcon.chatkit.messages.MessagesList;
 import com.stfalcon.chatkit.messages.MessagesListAdapter;
@@ -27,6 +35,7 @@ public class ListMessages extends AppCompatActivity {
     private MessageInput inputView;
     private ImageButton goBackButton;
     private TextView listMessagesChatName;
+    private MessagesListAdapter<Message> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +46,13 @@ public class ListMessages extends AppCompatActivity {
         ImageLoader imageLoader = new ImageLoader() {
             @Override
             public void loadImage(ImageView imageView, @Nullable String url, @Nullable Object payload) {
-                new DownloadImageTask(imageView).execute(url);
-
+//                DisplayMetrics displayMetrics = new DisplayMetrics();
+//                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+//                int height = displayMetrics.heightPixels;
+//                int width = displayMetrics.widthPixels;
+//                imageView.getLayoutParams().width = (int) (width*0.8);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                Picasso.get().load(url).into(imageView);
             }
         };
 
@@ -53,9 +67,18 @@ public class ListMessages extends AppCompatActivity {
                 Toast.makeText(ListMessages.this, "test", Toast.LENGTH_SHORT).show();
             }
         });
-        String senderId = "test";
+        String senderId = "test1";
         messagesList = findViewById(R.id.message_list);
-        MessagesListAdapter<Message> adapter = new MessagesListAdapter<>(senderId, imageLoader);
+        adapter = new MessagesListAdapter<Message>(senderId, imageLoader){
+            @Override
+            public void onBindViewHolder(ViewHolder holder, int position) {
+                super.onBindViewHolder(holder, position);
+                if (holder.getItemViewType() == -132) { // -132 is an outgoing picture message
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.itemView.findViewById(com.stfalcon.chatkit.R.id.image).getLayoutParams();
+                    params.addRule(RelativeLayout.ALIGN_PARENT_END);
+                }
+            }
+        };
         messagesList.setAdapter(adapter);
         initViews(adapter);
         inputView.setAttachmentsListener(new MessageInput.AttachmentsListener() {
@@ -90,11 +113,16 @@ public class ListMessages extends AppCompatActivity {
             }
         });
     }
+    private String id;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @javax.annotation.Nullable Intent data){
         super.onActivityResult(requestCode,resultCode,data);
         if (requestCode ==1 && resultCode==-1){
+            id = id=="test1" ? "test" : "test1";
             Uri uri = data.getData();
+            Author author = new Author(id,"test","https://i.pinimg.com/236x/c1/c8/49/c1c8498d9aec3d4e6c894ddba7882031.jpg");
+            Message message = new Message(id,author,new Date(),uri.toString());
+            adapter.addToStart(message,true);
         }
     }
 }
