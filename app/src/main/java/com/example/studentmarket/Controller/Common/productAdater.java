@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.studentmarket.Helper.DownloadImageTask.DownloadImageTask;
 import com.example.studentmarket.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class productAdater extends BaseAdapter {
 
         Product product = productList.get(position);
         // holder.imgProduct.setImageResource(product.get());
-        new DownloadImageTask(holder.imgProduct).execute(product.getImage());
+        Picasso.get().load(product.getImage()).into(holder.imgProduct);
         holder.imgProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +81,7 @@ public class productAdater extends BaseAdapter {
                 myIntent.putExtra("image", product.getImage());
                 myIntent.putExtra("body", product.getBody());
                 myIntent.putExtra("id",product.getId());
+                myIntent.putExtra("isHeart",product.isHeart());
                 context.startActivity(myIntent);
             }
         });

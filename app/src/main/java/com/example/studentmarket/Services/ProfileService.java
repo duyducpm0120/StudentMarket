@@ -18,6 +18,7 @@ import com.example.studentmarket.Helper.VolleyErrorHelper;
 import com.example.studentmarket.Models.UserProfile;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -41,7 +42,11 @@ public class ProfileService {
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
 
-                        callback.onSuccess(response);
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -70,7 +75,11 @@ public class ProfileService {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        callback.onSuccess(response);
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override

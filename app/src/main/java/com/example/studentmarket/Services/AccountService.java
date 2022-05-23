@@ -90,7 +90,11 @@ public class AccountService {
 //                         setToken(response.toString());
 //                         PopupHelper popup = new PopupHelper(context,"Thông báo", "Đăng nhập thành công");
 //                         popup.Show();
-                        callback.onSuccess(response);
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override

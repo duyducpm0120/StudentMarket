@@ -17,22 +17,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
+import com.example.studentmarket.Controller.Common.NotifyClass;
+import com.example.studentmarket.Controller.Common.NotifyScreen;
 import com.example.studentmarket.Controller.Common.Product;
 import com.example.studentmarket.Controller.Common.productAdater;
 import com.example.studentmarket.Controller.Common.type;
 import com.example.studentmarket.Controller.Common.typeAdapter;
+import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
 import static com.example.studentmarket.Helper.globalValue.*;
 
 import com.example.studentmarket.Services.ProductService;
 import com.example.studentmarket.Services.ProductService.*;
+import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,9 +70,13 @@ public class Home extends Fragment {
 
     private TextView homeTextViewSeeMore;
     private EditText homeEdittextSearch;
+    private ImageButton goToNotify;
+    private LinearLayout emptySearch;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
+
+    private ProductService productService;
 
     long delay = 1000; // 1 seconds after user stops typing
     long last_text_edit = 0;
@@ -104,8 +118,7 @@ public class Home extends Fragment {
     @Override
     public void onResume(){
         super.onResume();
-        productAdater = new productAdater(getContext(), R.layout.product, getListProduct());
-        homeListProduct.setAdapter(productAdater);
+        refresh();
     }
 
     @Override
@@ -115,21 +128,13 @@ public class Home extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         homeTextViewSeeMore = (TextView) view.findViewById(R.id.home_textview_see_more);
         homeEdittextSearch = view.findViewById(R.id.home_edittext_search);
-        
+        goToNotify = view.findViewById(R.id.home_button_notice);
+        productService = new ProductService(getContext());
         fragmentManager = getParentFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
-
-        MappingProduct(view);
-        productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
-        homeListProduct.setAdapter(productAdater);
-
-        MappingType(view);
-        typeAdapter = new typeAdapter(arrayType, 1);
-        homeListType.setAdapter(typeAdapter);
-        setGridViewHeightBasedOnChildren(homeListProduct,2,productAdater);
-        LoadListProduct();
-
-
+        emptySearch = view.findViewById(R.id.home_empty_search);
+        LoadListProduct(view);
+        getListCategory(view);
         homeTextViewSeeMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,26 +164,68 @@ public class Home extends Fragment {
                     last_text_edit = System.currentTimeMillis();
                     handler.postDelayed(input_finish_checker, delay);
                 } else {
-
+                    refresh();
                 }
+            }
+        });
+
+        goToNotify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(getContext(), NotifyScreen.class);
+                getContext().startActivity(myIntent);
             }
         });
 
         return view;
     }
 
-    private void LoadListProduct() {
-        ProductService productService = new ProductService(getContext());
+    private void LoadListProduct(View view) {
+        homeListProduct = (GridView) view.findViewById(R.id.home_list_products);
+        arrayProduct = new ArrayList<>();
+        int[] arr= new int[1];
+        arr[0]=1;
         try {
-            productService.GetListProduct(10,1, new int[]{1},"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJhdWQiOiJTRTMzMCIsInN1YiI6IjUiLCJpc3MiOiJVSVQsIEhDTVZOVSIsIkF1dGhvcml0aWVzIjpbInVzZXI6cmVhZCJdLCJleHAiOjE2NTMwMjgwOTgsImlhdCI6MTY1MjU5NjA5OH0.V3mRajHfw8RQVHVlGwed3tx0OM0PGIJ1l4ejC7OteiPUkZLYb9diYvKWiUwUBDw9uoGlQJvrfg6Xvi64pNsMVw");
+            productService.GetListProduct(11, 1, arr, new VolleyCallback() {
+                @Override
+                public void onSuccess(JSONObject response) {
+                    try {
+                        JSONArray listingPage = response.getJSONArray("listingPage");
+                        if (listingPage!=null){
+                            for (int i=0;i<listingPage.length();i++){
+    //                            arrayProduct.add(gson.fromJson(listingPage.getString(i),Product.class));
+                                JSONObject jsonObject = listingPage.getJSONObject(i);
+                                arrayProduct.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
+                                jsonObject.getString("listingImage"),
+                                jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), true));
+                            }
+                            productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
+                            homeListProduct.setAdapter(productAdater);
+                            setListProduct(arrayProduct);
+                            setGridViewHeightBasedOnChildren(homeListProduct,2,productAdater);
+                            emptySearch.setVisibility(View.INVISIBLE);
+                        }
+
+
+                    }
+                    catch (JSONException jsonException){
+                        Log.d("json",jsonException.toString());
+                    }
+
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    MappingProduct(view);
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
+            MappingProduct(view);
         }
     }
 
     private void MappingProduct(View view) {
-        homeListProduct = (GridView) view.findViewById(R.id.home_list_products);
-        arrayProduct = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             arrayProduct.add(new Product(i, "Address", "body",
                     "https://product.hstatic.net/200000260587/product/zve03357_9bb9116b5f3341059fba977d701403f2_grande.png",
@@ -187,13 +234,23 @@ public class Home extends Fragment {
         setListProduct(arrayProduct);
     }
 
-    private void MappingType(View view) {
-        homeListType = (RecyclerView) view.findViewById(R.id.home_list_type);
-        arrayType = new ArrayList<>();
-        for (int i = 0; i < listName.length; i++) {
-            arrayType.add(new type(listName[i], R.drawable.type, false));
+    private void MappingType(View view,JSONObject res) {
+        try {
+            JSONArray listCate = res.getJSONArray("categories");
+            if (listCate!=null){
+                homeListType = (RecyclerView) view.findViewById(R.id.home_list_type);
+                arrayType = new ArrayList<>();
+                for (int i = 0; i < listCate.length(); i++) {
+                    JSONObject jsonObject = listCate.getJSONObject(i);
+                    arrayType.add(new type(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), R.drawable.type, false));
+                }
+                typeAdapter = new typeAdapter(arrayType, 1);
+                homeListType.setAdapter(typeAdapter);
+                setIndex(-1);
+            }
+        } catch (JSONException err){
+            Log.d("conver list category err",err.toString());
         }
-        setIndex(-1);
     }
 
     private Runnable input_finish_checker = new Runnable() {
@@ -202,37 +259,96 @@ public class Home extends Fragment {
                 // TODO: do what you need here
                 // ............
                 // ............
-                Toast.makeText(getContext(), searchText, Toast.LENGTH_SHORT).show();
+                try {
+                    productService.SearchProduct(searchText, new VolleyCallback() {
+                        @Override
+                        public void onSuccess(JSONObject response) throws JSONException {
+                            JSONArray listSearch = response.getJSONArray("listingPage");
+                            if (listSearch!=null && listSearch.length()!=0){
+                                ArrayList<Product> arrSearch = new ArrayList<>();
+                                for (int i=0;i<listSearch.length();i++){
+                                    JSONObject jsonObject = listSearch.getJSONObject(i);
+                                    arrSearch.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
+                                            jsonObject.getString("listingImage"),
+                                            jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), true));
+                                    productAdater = new productAdater(getContext(), R.layout.product, arrSearch);
+                                    homeListProduct.setAdapter(productAdater);
+                                    setGridViewHeightBasedOnChildren(homeListProduct,2,productAdater);
+                                    emptySearch.setVisibility(View.INVISIBLE);
+                                }
+                            } else {
+                                emptySearch.setVisibility(View.VISIBLE);
+                            }
+                        }
+
+                        @Override
+                        public void onError(VolleyError error) {
+                            emptySearch.setVisibility(View.VISIBLE);
+                        }
+                    });
+                } catch (JSONException jsonException) {
+                    jsonException.printStackTrace();
+                }
             }
         }
     };
 
 
     public void setGridViewHeightBasedOnChildren(GridView gridView, int columns,productAdater adapter) {
-        productAdater listAdapter = adapter;
-        if (listAdapter == null) {
-            // pre-condition
-            return;
+        try {
+            productAdater listAdapter = adapter;
+            if (listAdapter == null) {
+                // pre-condition
+                return;
+            }
+
+            int totalHeight = 0;
+            int items = listAdapter.getCount();
+            int rows = 0;
+
+            View listItem = listAdapter.getView(0, null, gridView);
+            listItem.measure(0, 0);
+            totalHeight = listItem.getMeasuredHeight();
+
+            float x = 1;
+            if( items > columns ){
+                x = items/columns;
+                rows = (int) (x + 1);
+                totalHeight *= rows;
+            }
+            ViewGroup.LayoutParams params = gridView.getLayoutParams();
+            int plusHeight = items%2!=0?280:-200;
+            params.height = totalHeight+plusHeight;
+            gridView.setLayoutParams(params);
         }
-
-        int totalHeight = 0;
-        int items = listAdapter.getCount();
-        int rows = 0;
-
-        View listItem = listAdapter.getView(0, null, gridView);
-        listItem.measure(0, 0);
-        totalHeight = listItem.getMeasuredHeight();
-
-        float x = 1;
-        if( items > columns ){
-            x = items/columns;
-            rows = (int) (x + 1);
-            totalHeight *= rows;
+        catch (NullPointerException err){
+            Log.d("NullPointerException",err.toString());
         }
+    }
+    private void getListCategory(View view){
+        try {
+        productService.GetListCategory(new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) throws JSONException {
+                MappingType(view,response);
+            }
 
-        ViewGroup.LayoutParams params = gridView.getLayoutParams();
-        params.height = totalHeight;
-        gridView.setLayoutParams(params);
+            @Override
+            public void onError(VolleyError error) {
+                Log.d("load list category err",error.toString());
+            }
+        });
+        } catch (JSONException exception){
+            Log.d("err",exception.toString());
+        }
+    }
 
+    private void refresh(){
+        if (getListProduct() != null){
+            productAdater = new productAdater(getContext(), R.layout.product, getListProduct());
+            homeListProduct.setAdapter(productAdater);
+            setGridViewHeightBasedOnChildren(homeListProduct,2,productAdater);
+        }
+        emptySearch.setVisibility(View.INVISIBLE);
     }
 }
