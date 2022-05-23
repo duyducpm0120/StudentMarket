@@ -7,6 +7,7 @@ import com.example.studentmarket.Controller.Message.ListMessages;
 import com.example.studentmarket.Helper.DownloadImageTask.DownloadImageTask;
 import com.example.studentmarket.Helper.Popup.PopupHelper;
 import com.example.studentmarket.R;
+import com.squareup.picasso.Picasso;
 
 
 import android.content.Intent;
@@ -16,6 +17,10 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+import static com.example.studentmarket.Helper.globalValue.*;
+
+import java.util.ArrayList;
 
 
 public class ProductDetail extends AppCompatActivity {
@@ -42,6 +47,7 @@ public class ProductDetail extends AppCompatActivity {
         String productPrice = myIntent.getStringExtra("price");
         String productImage = myIntent.getStringExtra("image");
         String productBody = myIntent.getStringExtra("body");
+        final boolean[] isHeart = {myIntent.getBooleanExtra("isHeart", false)};
         int id=myIntent.getIntExtra("id",0);
         detailProductName = findViewById(R.id.product_detail_textview_name_product);
         detailProductPrice = findViewById(R.id.product_detail_price);
@@ -65,7 +71,7 @@ public class ProductDetail extends AppCompatActivity {
                 finish();
             }
         });
-        new DownloadImageTask(detailProductImage).execute(productImage);
+        Picasso.get().load(productImage).into(detailProductImage);
 
         detailProductRemove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +98,38 @@ public class ProductDetail extends AppCompatActivity {
                 ProductDetail.this.startActivity(myIntent);
             }
         });
+//        detailProductDescriptions.setText(productBody);
+        String text = detailProductDescriptions.getText().toString();
+        detailProductDescriptions.setText(text+text+text+text+text+text+text);
 
+        if (isHeart[0]){
+            detailProductHeart.setColorFilter(getColor(R.color.secondary));
+        }
+        else {
+            detailProductHeart.setColorFilter(getColor(R.color.gray));
+        }
+
+        ArrayList<Product> listProduct = new ArrayList<>();
+        listProduct = getListProduct();
+        ArrayList<Product> finalListProduct = listProduct;
+        detailProductHeart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isHeart[0]){
+                    detailProductHeart.setColorFilter(getColor(R.color.gray));
+
+                } else {
+                    detailProductHeart.setColorFilter(getColor(R.color.secondary));
+                }
+                isHeart[0] = !isHeart[0];
+                for (int i=0;i< finalListProduct.size();i++){
+                    if (finalListProduct.get(i).getId()==id){
+                        finalListProduct.get(i).setHeart(isHeart[0]);
+                        break;
+                    }
+                }
+                setListProduct(finalListProduct);
+            }
+        });
     }
 }

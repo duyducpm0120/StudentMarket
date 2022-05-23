@@ -1,11 +1,13 @@
 package com.example.studentmarket.Controller.Common;
 
 public class type {
+    private String id;
     private String name;
     private int image;
     private boolean show;
 
-    public type(String name, int image,boolean show) {
+    public type(String id,String name, int image,boolean show) {
+        this.id = id;
         this.name = name;
         this.image = image;
         this.show = show;
@@ -33,5 +35,13 @@ public class type {
 
     public void setShow(boolean show) {
         this.show = show;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

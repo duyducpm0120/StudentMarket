@@ -26,6 +26,7 @@
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/drawable/type_press_state.xml" value="0.1685" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/activity_list_category.xml" value="0.2164855072463768" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/activity_notify.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/activity_post.xml" value="0.2164855072463768" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/activity_product_detail.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/content_list_categoty.xml" value="0.2164855072463768" />
@@ -45,6 +46,8 @@
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_login.xml" value="0.264" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_pre_register.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_register.xml" value="0.25" />
+        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Chat/layout/fragment_chat.xml" value="0.25" />
+        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Chat/layout/messenger.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Favorite/drawable/ic_baseline_arrow_back_24.xml" value="0.248" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Favorite/drawable/ic_baseline_keyboard_arrow_down_24.xml" value="0.248" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Favorite/drawable/ic_search.xml" value="0.202" />
@@ -52,6 +55,7 @@
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Home/layout/category.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Home/layout/fragment_home.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Home/layout/fragment_list_category.xml" value="0.25" />
+        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Home/layout/notify.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Home/layout/product.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Home/layout/type.xml" value="0.264" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layouts/Home/layout/type2.xml" value="0.25" />

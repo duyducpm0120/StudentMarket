@@ -1,10 +1,14 @@
 package com.example.studentmarket.Services;
 
 import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_CATEGORY;
+import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_FAVORITE;
 import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_PRODUCT;
 import static com.example.studentmarket.Constants.EndpointConstant.LOGIN_URL;
 import static com.example.studentmarket.Constants.EndpointConstant.POST_PRODUCT;
+import static com.example.studentmarket.Constants.EndpointConstant.SAVE_PRODUCT_FAVORITE;
 import static com.example.studentmarket.Constants.EndpointConstant.SEARCH_PRODUCT;
+import static com.example.studentmarket.Constants.EndpointConstant.UNSAVE_PRODUCT_FAVORITE;
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
 
 import android.content.Context;
 import android.util.Log;
@@ -18,10 +22,15 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.studentmarket.Helper.Popup.PopupHelper;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
+import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
+import com.example.studentmarket.Store.SharedStorage;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -76,8 +85,12 @@ public class ProductService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void GetListProduct(int PageSize, int PageIndex, int[] listCategoyIds, String token) throws JSONException {
+    public void GetListProduct(int PageSize, int PageIndex, int[] listCategoyIds, VolleyCallback callback) throws JSONException {
         String url = GET_LIST_PRODUCT;
+
+        ArrayList<Integer> value = new ArrayList<Integer>();
+        value.add(1);
+        JSONArray arrjs = new JSONArray(value);
 
         JSONObject requestBody = new JSONObject();
 
@@ -85,7 +98,7 @@ public class ProductService {
 
         requestBody.put("pageIndex", PageIndex);
 
-        requestBody.put("listingCategoriesIds", listCategoyIds);
+        requestBody.put("listingCategoriesIds", arrjs);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
@@ -93,16 +106,19 @@ public class ProductService {
                     @Override
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
-                        Log.d("login response", response.toString());
+                        Log.d("listProduct", response.toString());
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
                         Log.d("response err", error.toString());
-                        PopupHelper popup = new PopupHelper(context, "Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
-                        Toast.makeText(context, "Login err", Toast.LENGTH_LONG).show();
-
+                        callback.onError(error);
                     }
 
                 }) {
@@ -113,7 +129,8 @@ public class ProductService {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer " + token);
+                headers.put("Authorization", "Bearer "+new SharedStorage(context).getValue(TOKEN_ID_KEY));
+                headers.put("Content-Type", "application/json");
                 return headers;
             }
         };
@@ -123,11 +140,15 @@ public class ProductService {
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
-
-    public void SearchProduct(String search, String token) throws JSONException {
+    public void SearchProduct(String search,VolleyCallback callback) throws JSONException {
         String url = SEARCH_PRODUCT;
 
         JSONObject requestBody = new JSONObject();
+        requestBody.put("pageSize", 11);
+
+        requestBody.put("pageIndex", 1);
+
+        requestBody.put("searchString", search);
 
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -136,16 +157,19 @@ public class ProductService {
                     @Override
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
-                        Log.d("login response", response.toString());
+                        Log.d("search result", response.toString());
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Log.d("response err", error.toString());
-                        PopupHelper popup = new PopupHelper(context, "Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
-                        Toast.makeText(context, "Login err", Toast.LENGTH_LONG).show();
-
+                        Log.d("search err", error.toString());
+                        callback.onError(error);
                     }
 
                 }) {
@@ -156,7 +180,8 @@ public class ProductService {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer " + token);
+                headers.put("Authorization", "Bearer "+new SharedStorage(context).getValue(TOKEN_ID_KEY));
+                headers.put("Content-Type", "application/json; charset=utf-8");
                 return headers;
             }
         };
@@ -166,46 +191,154 @@ public class ProductService {
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
-
-    public void GetListCategory(String search, String token) throws JSONException {
+    public void GetListCategory(VolleyCallback
+                                 callback) throws JSONException {
         String url = GET_LIST_CATEGORY;
 
-        JSONObject requestBody = new JSONObject();
-
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
-                        Log.d("login response", response.toString());
+                        Log.d("listCategory", response.toString());
+                        Log.d("token",new SharedStorage(context).getValue(TOKEN_ID_KEY));
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
                         Log.d("response err", error.toString());
-                        PopupHelper popup = new PopupHelper(context, "Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
-                        Toast.makeText(context, "Login err", Toast.LENGTH_LONG).show();
-
+                        callback.onError(error);
                     }
 
-                }) {
-
-            /**
-             * Passing some request headers
-             */
+                }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer " + token);
+                headers.put("Authorization", "Bearer "+new SharedStorage(context).getValue(TOKEN_ID_KEY));
                 return headers;
             }
-        };
-        ;
+        };;
 
 
+        // Access the RequestQueue through your singleton class.
+        ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+    public void GetListFavorite(VolleyCallback
+                                 callback) throws JSONException {
+        String url = GET_LIST_FAVORITE;
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //textView.setText("Response: " + response.toString());
+                        Log.d("listFavorite", response.toString());
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.d("response get favorite err", error.toString());
+                        callback.onError(error);
+                    }
+
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer "+new SharedStorage(context).getValue(TOKEN_ID_KEY));
+                return headers;
+            }
+        };;
+
+
+        // Access the RequestQueue through your singleton class.
+        ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+    public void SaveFavorite(String id,VolleyCallback
+                                        callback) throws JSONException {
+        String url = SAVE_PRODUCT_FAVORITE;
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("favoriteId", id);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, requestBody, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //textView.setText("Response: " + response.toString());
+                        Log.d("saveFavorite", response.toString());
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.d("response save favorite err", error.toString());
+                        callback.onError(error);
+                    }
+
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer "+new SharedStorage(context).getValue(TOKEN_ID_KEY));
+                return headers;
+            }
+        };;
+        // Access the RequestQueue through your singleton class.
+        ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+    public void UnsaveFavorite(String id,VolleyCallback
+            callback) throws JSONException {
+        String url = UNSAVE_PRODUCT_FAVORITE;
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("favoriteId", id);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, requestBody, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //textView.setText("Response: " + response.toString());
+                        Log.d("unsaveFavorite", response.toString());
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.d("response unsave favorite err", error.toString());
+                        callback.onError(error);
+                    }
+
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer "+new SharedStorage(context).getValue(TOKEN_ID_KEY));
+                return headers;
+            }
+        };;
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
