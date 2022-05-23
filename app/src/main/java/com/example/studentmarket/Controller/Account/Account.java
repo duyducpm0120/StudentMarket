@@ -1,5 +1,7 @@
 package com.example.studentmarket.Controller.Account;
 
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -10,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +20,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.studentmarket.Models.UserProfile;
 import com.example.studentmarket.R;
+import com.example.studentmarket.Store.SharedStorage;
+import com.example.studentmarket.Store.UserProfileHolder;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 /**
@@ -40,7 +46,14 @@ public class Account extends Fragment {
     private Button accountNotice;
     private Button accountPost;
     private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
+    private FragmentTransaction fragmentTransaction ;
+
+    private static final Account account = new Account();
+
+    public Account getInstance () {
+        if (account != null) return account;
+        return new Account();
+    }
 
 
     public Account() {
@@ -72,14 +85,32 @@ public class Account extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String token = new SharedStorage(getContext()).getValue(TOKEN_ID_KEY);
+        Log.d("@@@@@@@@@@token", token);
+        if(token != "") {
+            UserProfile userProfile = UserProfileHolder.getInstance().getData();
+            if(userProfile!= null) {}
+            fragmentTransaction.replace(R.id.fragmentContainerView, new Profile(userProfile));
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_account, container, false);
-        accountButtonLogin = (Button) v.findViewById(R.id.button);
+        View view = inflater.inflate(R.layout.fragment_account, container, false);
+
+
+
+        accountButtonLogin = (Button) view.findViewById(R.id.button);
         fragmentManager = getParentFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         accountButtonLogin.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +121,7 @@ public class Account extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-        accountButotnForgotPass = (Button) v.findViewById(R.id.button1);
+        accountButotnForgotPass = (Button) view.findViewById(R.id.button1);
         accountButotnForgotPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,7 +130,7 @@ public class Account extends Fragment {
                 fragmentTransaction.commit();
             }
         });
-        accountNotice = (Button) v.findViewById(R.id.button2);
+        accountNotice = (Button) view.findViewById(R.id.button2);
         accountNotice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -124,7 +155,7 @@ public class Account extends Fragment {
                 alertDialog.show();
             }
         });
-        accountPost = v.findViewById(R.id.button_post);
+        accountPost = view.findViewById(R.id.button_post);
         accountPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,6 +165,6 @@ public class Account extends Fragment {
         });
 
 
-        return v;
+        return view;
     }
 }

@@ -17,7 +17,7 @@ import com.example.studentmarket.R;
 public class ProfileInfo extends Fragment {
 
     private EditText accountNameEditText;
-    private EditText userNameEditText;
+
     private EditText universityEditText;
     private EditText phoneEditText;
     private EditText emailEditText;
@@ -37,7 +37,7 @@ public class ProfileInfo extends Fragment {
 
         //init
         accountNameEditText = view.findViewById(R.id.account_name_text_box);
-        userNameEditText  = view.findViewById(R.id.name_text_box);;
+
         universityEditText  = view.findViewById(R.id.university_text_box);;
         phoneEditText  = view.findViewById(R.id.phone_text_box);;
         emailEditText  = view.findViewById(R.id.email_text_box);;
@@ -46,7 +46,6 @@ public class ProfileInfo extends Fragment {
 
         //set values
         accountNameEditText.setText(userProfile.getAccountName());
-        userNameEditText.setText(userProfile.getUserFullName());
         universityEditText.setText(userProfile.getUserUniversity());
         phoneEditText.setText(userProfile.getUserPhone());
         emailEditText.setText(userProfile.getUserEmail());

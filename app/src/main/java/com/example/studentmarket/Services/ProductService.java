@@ -61,12 +61,12 @@ public class ProductService {
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
                         Log.d("response err", error.toString());
-                        PopupHelper popup = new PopupHelper(context,"Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
-                        Toast.makeText(context,"Login err", Toast.LENGTH_LONG).show();
+                        PopupHelper popup = new PopupHelper(context, "Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
+                        Toast.makeText(context, "Login err", Toast.LENGTH_LONG).show();
 
                     }
 
-                }){
+                }) {
 
             /**
              * Passing some request headers
@@ -74,10 +74,11 @@ public class ProductService {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer "+token);
+                headers.put("Authorization", "Bearer " + token);
                 return headers;
             }
-        };;
+        };
+        ;
 
 
         // Access the RequestQueue through your singleton class.
@@ -120,7 +121,7 @@ public class ProductService {
                         callback.onError(error);
                     }
 
-                }){
+                }) {
 
             /**
              * Passing some request headers
@@ -132,7 +133,8 @@ public class ProductService {
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
-        };;
+        };
+        ;
 
 
         // Access the RequestQueue through your singleton class.
@@ -170,7 +172,7 @@ public class ProductService {
                         callback.onError(error);
                     }
 
-                }){
+                }) {
 
             /**
              * Passing some request headers
@@ -182,7 +184,8 @@ public class ProductService {
                 headers.put("Content-Type", "application/json; charset=utf-8");
                 return headers;
             }
-        };;
+        };
+        ;
 
 
         // Access the RequestQueue through your singleton class.

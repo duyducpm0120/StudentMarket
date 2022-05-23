@@ -16,6 +16,7 @@ public class UserProfile {
     public String accountName;
     public String userUniversity;
 
+
     public String getUserId() {
         if (userId != null)
             return userId;

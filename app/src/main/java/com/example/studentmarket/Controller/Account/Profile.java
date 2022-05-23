@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -31,6 +32,7 @@ public class Profile extends Fragment {
     private Fragment profile_info_fragment;
     private Fragment profile_post_fragment;
     private AvatarView profile_avatar;
+    private TextView profile_name_text_view;
 
     private UserProfile userProfile;
 
@@ -55,10 +57,11 @@ public class Profile extends Fragment {
         profile_info_fragment = new ProfileInfo(userProfile);
         profile_post_fragment = new ProfilePost();
         profile_avatar = view.findViewById(R.id.profile_avatar);
+        profile_name_text_view = view.findViewById(R.id.profile_name_text_view);
 
         // set values
         Picasso.get().load(userProfile.getUserPic()).resize(110, 110).centerCrop().transform(new CircleTransform()).into(profile_avatar);
-
+        profile_name_text_view.setText(userProfile.getUserFullName());
         //Call TabLayout
         tabLayout = view.findViewById(R.id.profile_tab_layout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
