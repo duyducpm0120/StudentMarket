@@ -105,10 +105,8 @@ public class ProfileService {
         JSONObject requestBody = new JSONObject();
 
         requestBody.put("userFullName", userProfile.getUserFullName());
-        requestBody.put("university", userProfile.getUserUniversity());
+        requestBody.put("userAddress", "");
         requestBody.put("userPhone", userProfile.getUserPhone());
-        requestBody.put("userEmail", userProfile.getUserEmail());
-
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {

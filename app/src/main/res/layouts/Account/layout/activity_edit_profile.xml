@@ -30,7 +30,9 @@
                 android:layout_width="110dp"
                 android:layout_height="110dp"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="false"
                 android:layout_marginTop="50dp"
+                android:foregroundGravity="center"
                 app:avatarViewBorderColor="@color/white"
                 app:avatarViewBorderWidth="3dp"
                 app:avatarViewShape="circle" />
@@ -55,7 +57,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/textView17"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
@@ -63,7 +65,7 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/edit_profile_account_name_text_box"
+                    android:id="@+id/edit_profile_user_name_text_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -83,25 +85,27 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/textView11"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="@string/university"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/user_name"
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/edit_profile_university_text_box"
+                    android:id="@+id/edit_profile_account_name_text_box"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/edittextstyle"
-                    android:clickable="true"
-                    android:editable="true"
+                    android:clickable="false"
+                    android:editable="false"
                     android:ems="10"
-                    android:enabled="true"
+                    android:enabled="false"
                     android:focusable="auto"
                     android:inputType="textNoSuggestions|textPersonName"
+                    android:text="AAAAA"
                     android:textColor="@color/black"
                     android:textColorHighlight="@color/primary"
                     android:textColorHint="@color/gray"
@@ -135,6 +139,32 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/university"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/edit_profile_university_text_box"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/edittextstyle"
+                    android:clickable="false"
+                    android:editable="false"
+                    android:ems="10"
+                    android:enabled="false"
+                    android:focusable="auto"
+                    android:inputType="textNoSuggestions|textPersonName"
+                    android:textColor="@color/black"
+                    android:textColorHighlight="@color/primary"
+                    android:textColorHint="@color/gray"
+                    android:textColorLink="@color/primary"
+                    android:textSize="16sp" />
+
+                <TextView
                     android:id="@+id/textView14"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -148,10 +178,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/edittextstyle"
-                    android:clickable="true"
-                    android:editable="true"
+                    android:clickable="false"
+                    android:editable="false"
                     android:ems="10"
-                    android:enabled="true"
+                    android:enabled="false"
                     android:focusable="auto"
                     android:inputType="textNoSuggestions|textPersonName|textEmailAddress"
                     android:textColor="@color/black"
@@ -174,8 +204,8 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/edittextstyle"
-                    android:clickable="true"
-                    android:editable="true"
+                    android:clickable="false"
+                    android:editable="false"
                     android:ems="10"
                     android:enabled="true"
                     android:focusable="auto"

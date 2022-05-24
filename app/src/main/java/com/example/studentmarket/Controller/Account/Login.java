@@ -154,7 +154,6 @@ public class Login extends Fragment {
             accountService.Login(accountName, password, new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONObject response) {
-
                     //save token
                     LoginResponse loginResponse = new Gson().fromJson(String.valueOf(response), LoginResponse.class);
                     Log.d("Login response token", loginResponse.getToken());

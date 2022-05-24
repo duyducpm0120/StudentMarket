@@ -40,7 +40,7 @@
                     android:layout_marginTop="50dp"
                     app:avatarViewBorderColor="@color/white"
                     app:avatarViewBorderWidth="3dp"
-                    app:avatarViewShape="circle"/>
+                    app:avatarViewShape="circle" />
 
                 <TextView
                     android:id="@+id/profile_name_text_view"

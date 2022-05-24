@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize">
         <activity
+            android:name=".Controller.Common.NotifyScreen"
+            android:exported="false" />
+        <activity
             android:name=".Controller.Account.EditProfile"
             android:exported="false" />
         <activity
