@@ -28,11 +28,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
-                android:text="@string/account_name"
+                android:text="@string/user_name"
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/account_name_text_box"
+                android:id="@+id/edit_profile_account_name_text_box"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -147,7 +147,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/profile_info_edit_profile_button"
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
                     android:backgroundTint="@color/secondary"

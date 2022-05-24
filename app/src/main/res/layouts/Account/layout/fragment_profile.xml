@@ -33,14 +33,14 @@
                     android:orientation="horizontal"></LinearLayout>
 
                 <io.getstream.avatarview.AvatarView
-                    android:id="@+id/profile_avatar"
+                    android:id="@+id/edit_profile_profile_avatar"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="50dp"
                     app:avatarViewBorderColor="@color/white"
                     app:avatarViewBorderWidth="3dp"
-                    app:avatarViewShape="circle"/>
+                    app:avatarViewShape="circle" />
 
                 <TextView
                     android:id="@+id/profile_name_text_view"

@@ -27,6 +27,7 @@ import com.example.studentmarket.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -34,14 +35,17 @@ public class MainActivity extends AppCompatActivity {
 //        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
+
+        removeToken();
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new Home());
-        UserProfileHolder.getInstance().setData(new UserProfile());
+        initUserProfile();
         Account account = new Account();
-        binding.bottomNavigationView.setOnItemSelectedListener(item ->{
+        binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
-            switch (item.getItemId()){
+            switch (item.getItemId()) {
                 case R.id.home:
                     replaceFragment(new Home());
                     break;
@@ -61,13 +65,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-        private void replaceFragment(Fragment fr){
+
+    private void replaceFragment(Fragment fr) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction =fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentContainerView,fr);
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainerView, fr);
         fragmentTransaction.commit();
 
     }
+
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
         Window win = activity.getWindow();
         WindowManager.LayoutParams winParams = win.getAttributes();
@@ -79,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         win.setAttributes(winParams);
 
     }
+
     @Override
     public void onBackPressed() {
 
@@ -96,7 +103,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        removeToken();
+    }
+
+    private void removeToken() {
         SharedStorage sharedStorage = new SharedStorage(getApplicationContext());
         sharedStorage.removeValue(TOKEN_ID_KEY);
+    }
+
+    private void initUserProfile () {
+        UserProfileHolder.getInstance().setData(new UserProfile());
     }
 }

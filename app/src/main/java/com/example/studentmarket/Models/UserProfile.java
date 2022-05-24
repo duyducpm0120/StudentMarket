@@ -1,8 +1,9 @@
 package com.example.studentmarket.Models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UserProfile {
+public class UserProfile implements Serializable {
     public String userId;
     public String userAddress;
     public String userEmail;
@@ -16,6 +17,53 @@ public class UserProfile {
     public String accountName;
     public String userUniversity;
 
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public void setUserFullName(String userFullName) {
+        this.userFullName = userFullName;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
+
+    public void setUserPic(String userPic) {
+        this.userPic = userPic;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setAuthorities(ArrayList<String> authorities) {
+        this.authorities = authorities;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public void setNotLocked(boolean notLocked) {
+        isNotLocked = notLocked;
+    }
+
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
+    }
+
+    public void setUserUniversity(String userUniversity) {
+        this.userUniversity = userUniversity;
+    }
 
     public String getUserId() {
         if (userId != null)

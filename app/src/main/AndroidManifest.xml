@@ -16,10 +16,11 @@
         android:usesCleartextTraffic="true"
         android:windowSoftInputMode="adjustResize">
         <activity
+            android:name=".Controller.Common.NotifyScreen"
+            android:exported="false" />
+        <activity
             android:name=".Controller.Account.EditProfile"
-            android:exported="false"
-            android:label="@string/title_activity_edit_profile"
-            android:theme="@style/darkTextStatusBar.NoActionBar" />
+            android:exported="false" />
         <activity
             android:name=".Controller.Message.ListMessages"
             android:exported="false" />

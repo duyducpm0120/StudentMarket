@@ -2,14 +2,11 @@ package com.example.studentmarket.Controller.Account;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -25,6 +22,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.squareup.picasso.Picasso;
 
 import io.getstream.avatarview.AvatarView;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
 public class Profile extends Fragment {
@@ -56,11 +54,11 @@ public class Profile extends Fragment {
         //init
         profile_info_fragment = new ProfileInfo(userProfile);
         profile_post_fragment = new ProfilePost();
-        profile_avatar = view.findViewById(R.id.profile_avatar);
+        profile_avatar = view.findViewById(R.id.edit_profile_profile_avatar);
         profile_name_text_view = view.findViewById(R.id.profile_name_text_view);
 
         // set values
-        Picasso.get().load(userProfile.getUserPic()).resize(110, 110).centerCrop().transform(new CircleTransform()).into(profile_avatar);
+        Picasso.get().load(userProfile.getUserPic()).resize(110, 110).centerCrop().transform(new CropCircleTransformation()).into(profile_avatar);
         profile_name_text_view.setText(userProfile.getUserFullName());
         //Call TabLayout
         tabLayout = view.findViewById(R.id.profile_tab_layout);
