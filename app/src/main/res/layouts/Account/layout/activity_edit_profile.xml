@@ -40,7 +40,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="110dp"
+                android:foregroundGravity="center"
+                android:gravity="center"
                 android:orientation="vertical"
                 android:paddingHorizontal="20dp"
                 android:paddingTop="50dp">

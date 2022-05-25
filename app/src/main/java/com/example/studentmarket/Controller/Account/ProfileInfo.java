@@ -51,10 +51,14 @@ public class ProfileInfo extends Fragment {
         //init
         accountNameEditText = view.findViewById(R.id.edit_profile_account_name_text_box);
 
-        universityEditText  = view.findViewById(R.id.university_text_box);;
-        phoneEditText  = view.findViewById(R.id.phone_text_box);;
-        emailEditText  = view.findViewById(R.id.email_text_box);;
-        passwordEditText  = view.findViewById(R.id.password_text_box);;
+        universityEditText = view.findViewById(R.id.university_text_box);
+        ;
+        phoneEditText = view.findViewById(R.id.phone_text_box);
+        ;
+        emailEditText = view.findViewById(R.id.email_text_box);
+        ;
+        passwordEditText = view.findViewById(R.id.password_text_box);
+        ;
         editProfileButton = view.findViewById(R.id.profile_info_edit_profile_button);
 
         setValues();
@@ -64,7 +68,7 @@ public class ProfileInfo extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getContext(), EditProfile.class);
-                myIntent.putExtra("userProfile",userProfile);
+                myIntent.putExtra("userProfile", userProfile);
                 getContext().startActivity(myIntent);
             }
         });
@@ -80,7 +84,7 @@ public class ProfileInfo extends Fragment {
             @Override
             public void onSuccess(JSONObject response) {
                 //textView.setText("Response: " + response.toString());
-                Log.d("reload profile response",response.toString());
+                Log.d("reload profile response", response.toString());
                 UserProfile userProfile = new Gson().fromJson(String.valueOf(response), UserProfile.class);
                 UserProfileHolder.getInstance().setData(userProfile);
             }
@@ -94,7 +98,7 @@ public class ProfileInfo extends Fragment {
         });
     }
 
-    private void setValues () {
+    private void setValues() {
         Log.d("user profile name", userProfile.getUserFullName());
         //set values
         accountNameEditText.setText(userProfile.getAccountName());
@@ -109,7 +113,7 @@ public class ProfileInfo extends Fragment {
         super.onResume();
         updateUserProfileHolder();
         FragmentManager fragmentManager;
-        FragmentTransaction fragmentTransaction ;
+        FragmentTransaction fragmentTransaction;
         fragmentManager = getParentFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.detach(this).attach(this).commit();
