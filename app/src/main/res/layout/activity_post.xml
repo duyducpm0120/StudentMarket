@@ -11,80 +11,90 @@
         android:orientation="vertical"
         android:background="@drawable/gradient_background"
         android:layout_height="match_parent">
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="vertical"
-                    android:layout_marginHorizontal="25dp"
-                    android:layout_height="match_parent">
-                    <ImageButton
-                        android:id="@+id/post_close_button"
-                        android:layout_width="wrap_content"
-                        android:layout_gravity="right"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:backgroundTint="#fff"
-                        android:src="@drawable/ic_close" />
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Bài đăng"
-                        android:textSize="32dp"
-                        android:layout_marginBottom="17dp"
-                        android:textStyle="bold"
-                        />
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_marginBottom="21dp"
-                        android:background="@drawable/edittextstyle"
-                        android:layout_height="wrap_content">
-                        <com.example.studentmarket.Component.MultiSpinner
-                            android:id="@+id/post_dropdown"
-                            android:layout_width="match_parent"
-                            android:layout_height="30dp"
-                            style="@style/SpinnerTheme" />
-                    </FrameLayout>
-                    <androidx.cardview.widget.CardView
-                        android:layout_marginBottom="21dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:cardCornerRadius="10dp">
-                        <ImageView
-                            android:id="@+id/post_upload_image"
-                            android:layout_width="match_parent"
-                            android:src="@drawable/imageupload"
-                            android:scaleType="fitXY"
-                            android:layout_height="200dp"/>
-                    </androidx.cardview.widget.CardView>
-                    <EditText
-                        android:id="@+id/post_title"
-                        android:layout_marginBottom="21dp"
-                        android:layout_width="match_parent"
-                        android:hint="Tiêu đề *"
-                        android:background="@drawable/edittextstyle"
-                        android:layout_height="wrap_content"/>
-                    <EditText
-                        android:id="@+id/post_price"
-                        android:layout_width="match_parent"
-                        android:layout_marginBottom="21dp"
-                        android:hint="Giá (VND) *"
-                        android:inputType="number"
-                        android:background="@drawable/edittextstyle"
-                        android:layout_height="wrap_content"/>
-                    <EditText
-                        android:id="@+id/post_body"
-                        android:layout_width="match_parent"
-                        android:gravity="top"
-                        android:hint="Mô tả chi tiết *"
-                        android:layout_marginBottom="100dp"
-                        android:background="@drawable/edittextstyle"
-                        android:layout_height="200dp"/>
 
-                </LinearLayout>
-            </ScrollView>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="25dp"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/post_close_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="24dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:backgroundTint="#fff"
+                    android:src="@drawable/ic_close" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="17dp"
+                    android:text="Bài đăng"
+                    android:textSize="32dp"
+                    android:textStyle="bold" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="21dp"
+                    android:background="@drawable/edittextstyle">
+
+                    <com.example.studentmarket.Component.MultiSpinner
+                        android:id="@+id/post_dropdown"
+                        style="@style/SpinnerTheme"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp" />
+                </FrameLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="21dp"
+                    app:cardCornerRadius="10dp">
+
+                    <ImageView
+                        android:id="@+id/post_upload_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/imageupload" />
+                </androidx.cardview.widget.CardView>
+
+                <EditText
+                    android:id="@+id/post_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="21dp"
+                    android:background="@drawable/edittextstyle"
+                    android:hint="Tiêu đề *" />
+
+                <EditText
+                    android:id="@+id/post_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="21dp"
+                    android:background="@drawable/edittextstyle"
+                    android:hint="Giá (VND) *"
+                    android:inputType="number" />
+
+                <EditText
+                    android:id="@+id/post_body"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginBottom="100dp"
+                    android:background="@drawable/edittextstyle"
+                    android:gravity="top"
+                    android:hint="Mô tả chi tiết *" />
+
+            </LinearLayout>
+        </ScrollView>
 
         <Button
             android:id="@+id/post_post"
