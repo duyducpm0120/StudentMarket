@@ -87,6 +87,7 @@ public class ProfileInfo extends Fragment {
                 Log.d("reload profile response", response.toString());
                 UserProfile userProfile = new Gson().fromJson(String.valueOf(response), UserProfile.class);
                 UserProfileHolder.getInstance().setData(userProfile);
+                Log.d("reload profile response user pic", userProfile.getUserPic());
             }
 
             @Override
@@ -108,14 +109,14 @@ public class ProfileInfo extends Fragment {
         passwordEditText.setText("***ADASDAS**");
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        updateUserProfileHolder();
-        FragmentManager fragmentManager;
-        FragmentTransaction fragmentTransaction;
-        fragmentManager = getParentFragmentManager();
-        fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.detach(this).attach(this).commit();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        updateUserProfileHolder();
+//        FragmentManager fragmentManager;
+//        FragmentTransaction fragmentTransaction;
+//        fragmentManager = getParentFragmentManager();
+//        fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.detach(this).attach(this).commit();
+//    }
 }

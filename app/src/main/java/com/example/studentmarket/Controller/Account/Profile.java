@@ -14,12 +14,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.VolleyError;
 import com.example.studentmarket.Helper.CircleTransform.CircleTransform;
+import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
+import com.example.studentmarket.Helper.VolleyErrorHelper;
 import com.example.studentmarket.Models.UserProfile;
 import com.example.studentmarket.R;
+import com.example.studentmarket.Services.ProfileService;
+import com.example.studentmarket.Store.UserProfileHolder;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import io.getstream.avatarview.AvatarView;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -113,5 +121,37 @@ public class Profile extends Fragment {
         Intent intent = new Intent(view.getContext(), ViewAvatar.class);
         intent.putExtra("avatar", "aaa");
         startActivity(intent);
+    }
+    private void updateUserProfileHolder() {
+//        UserProfileHolder.getInstance().updateUserData(getContext());
+//        this.userProfile = UserProfileHolder.getInstance().getData();
+        ProfileService profileService = new ProfileService(getContext());
+        profileService.getMyProfile(new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                //textView.setText("Response: " + response.toString());
+                Log.d("reload profile response", response.toString());
+                UserProfile userProfile = new Gson().fromJson(String.valueOf(response), UserProfile.class);
+                UserProfileHolder.getInstance().setData(userProfile);
+                Log.d("reload profile response user pic", userProfile.getUserPic());
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+                Log.d("reLoad profile fail", error.toString());
+                VolleyErrorHelper volleyErrorHelper = new VolleyErrorHelper(getContext());
+                volleyErrorHelper.showVolleyError(error, "Profile loaded fail");
+            }
+        });
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUserProfileHolder();
+        FragmentManager fragmentManager;
+        FragmentTransaction fragmentTransaction;
+        fragmentManager = getParentFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.detach(this).attach(this).commit();
     }
 }
