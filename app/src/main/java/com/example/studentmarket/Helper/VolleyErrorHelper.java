@@ -102,7 +102,7 @@ public class VolleyErrorHelper {
             JSONObject data = new JSONObject(responseBody);
             String message = data.optString("message");
             Log.d("parse err ", message);
-            PopupHelper popup = new PopupHelper(context, errorTitle, "aaa");
+            PopupHelper popup = new PopupHelper(context, "Thông Báo", errorTitle);
             popup.Show();
         } catch (JSONException e) {
             Log.d("JSONException err", e.toString());

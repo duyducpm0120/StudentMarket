@@ -84,12 +84,10 @@ public class ProductService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void GetListProduct(int PageSize, int PageIndex, int[] listCategoyIds, VolleyCallback callback) throws JSONException {
+    public void GetListProduct(int PageSize, int PageIndex, ArrayList<Integer> listCategoyIds, VolleyCallback callback) throws JSONException {
         String url = GET_LIST_PRODUCT;
 
-        ArrayList<Integer> value = new ArrayList<Integer>();
-        value.add(1);
-        JSONArray arrjs = new JSONArray(value);
+        JSONArray arrjs = new JSONArray(listCategoyIds);
 
         JSONObject requestBody = new JSONObject();
 
@@ -98,14 +96,13 @@ public class ProductService {
         requestBody.put("pageIndex", PageIndex);
 
         requestBody.put("listingCategoriesIds", arrjs);
-
+        Log.d("rq",requestBody.toString());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
-                        Log.d("listProduct", response.toString());
                         try {
                             callback.onSuccess(response);
                         } catch (JSONException e) {

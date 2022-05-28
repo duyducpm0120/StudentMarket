@@ -5,12 +5,20 @@ import static com.example.studentmarket.Helper.globalValue.setIndex;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.example.studentmarket.Component.categoryInterface;
 import com.example.studentmarket.Controller.Common.type;
 import com.example.studentmarket.Controller.Common.typeAdapter;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
@@ -22,15 +30,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Locale;
+
+import com.example.studentmarket.Helper.Utils;
 
 
 public class ListCategory extends AppCompatActivity {
     private RecyclerView listCategory;
     private ArrayList<type> arrayCategory;
     private com.example.studentmarket.Controller.Common.typeAdapter typeAdapter;
+    private typeAdapter typeAdapterSearch;
     private String[] listName = {"All Woments","New Collection","Active / Sports","Luxury","Swimwear","Casual"};
     private ProductService productService;
     private ImageButton listCategoryGoBack;
+    private EditText listCategorySearch;
+    private LinearLayout listCategoryEmtySearch;
 
 
     @Override
@@ -40,16 +54,64 @@ public class ListCategory extends AppCompatActivity {
         setContentView(R.layout.activity_list_category);
         listCategoryGoBack = findViewById(R.id.list_category_goback);
         productService = new ProductService(this);
+        listCategorySearch = findViewById(R.id.list_category_edittext_search);
+        listCategoryEmtySearch = findViewById(R.id.list_category_empty_search);
+        Utils utils = new Utils();
         listCategoryGoBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        listCategorySearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().trim().length()>0){
+                    String rawInput = utils.stripAccents(s.toString());
+                    ArrayList<type> listSearch = new ArrayList<>();
+                    for (int i=0;i<arrayCategory.size();i++){
+                        type arrayCategoryItem = arrayCategory.get(i);
+                        String rawName = utils.stripAccents(arrayCategoryItem.getName());
+                        if (rawName.toLowerCase().contains(rawInput.toLowerCase())){
+                            listSearch.add(arrayCategoryItem);
+                        }
+                    }
+                    if (listSearch.size()>0){
+                        listCategoryEmtySearch.setVisibility(View.INVISIBLE);
+                        typeAdapterSearch = new typeAdapter(listSearch, 2, new categoryInterface() {
+                            @Override
+                            public void action(int index) {
+                                Intent resultIntent = new Intent();
+                                resultIntent.putExtra("index", String.valueOf(index));
+                                setResult(Activity.RESULT_OK, resultIntent);
+                                finish();
+                            }
+                        });
+                        listCategory.setAdapter(typeAdapterSearch);
+                    } else {
+                        listCategoryEmtySearch.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    listCategoryEmtySearch.setVisibility(View.INVISIBLE);
+                    listCategory.setAdapter(typeAdapter);
+                }
+
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         getListCategory();
-//        typeAdapter = new typeAdapter(arrayCategory,2);
-//        listCategory.setAdapter(typeAdapter);
     }
     private void MappingType(JSONObject res) {
         listCategory = (RecyclerView) findViewById(R.id.list_category);
@@ -61,7 +123,15 @@ public class ListCategory extends AppCompatActivity {
                     JSONObject jsonObject = listCate.getJSONObject(i);
                     arrayCategory.add(new type(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), R.drawable.type, false));
                 }
-                typeAdapter = new typeAdapter(arrayCategory, 2);
+                typeAdapter = new typeAdapter(arrayCategory, 2, new categoryInterface() {
+                    @Override
+                    public void action(int index) {
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("index", String.valueOf(index));
+                        setResult(Activity.RESULT_OK, resultIntent);
+                        finish();
+                    }
+                });
                 listCategory.setAdapter(typeAdapter);
                 setIndex(-1);
             }

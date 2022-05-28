@@ -14,9 +14,12 @@ import android.widget.Toast;
 
 import com.example.studentmarket.Helper.DownloadImageTask.DownloadImageTask;
 import com.example.studentmarket.R;
+import com.example.studentmarket.Store.SharedStorage;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
+
 
 public class productAdater extends BaseAdapter {
     private Context context;
@@ -27,6 +30,10 @@ public class productAdater extends BaseAdapter {
         this.context = context;
         this.layout = layout;
         this.productList = productList;
+    }
+
+    public void setItem(List<Product> list){
+        this.productList = list;
     }
 
     @Override
@@ -54,6 +61,8 @@ public class productAdater extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
+        SharedStorage storage = new SharedStorage(context);
+
 
         if (convertView == null) {
             holder = new ViewHolder();
@@ -66,6 +75,10 @@ public class productAdater extends BaseAdapter {
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
+        }
+
+        if (storage.getValue(TOKEN_ID_KEY) != null){
+            holder.heartProduct.setVisibility(ImageView.VISIBLE);
         }
 
         Product product = productList.get(position);

@@ -1,8 +1,10 @@
 package com.example.studentmarket.Controller.Home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,14 +17,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.EditText;
-import android.widget.GridView;
+//import android.widget.GridView;
+import com.example.studentmarket.Component.MyGridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.example.studentmarket.Component.categoryInterface;
 import com.example.studentmarket.Controller.Common.NotifyClass;
 import com.example.studentmarket.Controller.Common.NotifyScreen;
 import com.example.studentmarket.Controller.Common.Product;
@@ -60,18 +67,22 @@ public class Home extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private GridView homeListProduct;
+    private MyGridView homeListProduct;
     private ArrayList<Product> arrayProduct;
     private com.example.studentmarket.Controller.Common.productAdater productAdater;
 
     private RecyclerView homeListType;
     private ArrayList<type> arrayType;
-    private com.example.studentmarket.Controller.Common.typeAdapter typeAdapter;
+    private com.example.studentmarket.Controller.Common.typeAdapter homeTypeAdapter;
 
     private TextView homeTextViewSeeMore;
     private EditText homeEdittextSearch;
     private ImageButton goToNotify;
     private LinearLayout emptySearch;
+    private NestedScrollView homeScroll;
+    private int indexData=1;
+    private boolean isOver = false;
+    private ArrayList<Integer> arr = new ArrayList<>();
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -131,6 +142,7 @@ public class Home extends Fragment {
         goToNotify = view.findViewById(R.id.home_button_notice);
         productService = new ProductService(getContext());
         fragmentManager = getParentFragmentManager();
+        homeScroll = view.findViewById(R.id.home_scroll);
         fragmentTransaction = fragmentManager.beginTransaction();
         emptySearch = view.findViewById(R.id.home_empty_search);
         LoadListProduct(view);
@@ -138,11 +150,9 @@ public class Home extends Fragment {
         homeTextViewSeeMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // fragmentTransaction.replace(R.id.fragmentContainerView,new ListCategory1());
-                // fragmentTransaction.addToBackStack(null);
-                // fragmentTransaction.commit();
                 Intent myIntent = new Intent(getContext(), ListCategory.class);
-                getContext().startActivity(myIntent);
+                startActivityForResult(myIntent,999);
+//                getContext().startActivity(myIntent);
             }
         });
 
@@ -176,24 +186,49 @@ public class Home extends Fragment {
                 getContext().startActivity(myIntent);
             }
         });
+        homeScroll.getViewTreeObserver()
+                .addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+                    @Override
+                    public void onScrollChanged() {
+                        if (homeScroll.getChildAt(0).getBottom()
+                                <= (homeScroll.getHeight() + homeScroll.getScrollY())) {
+                            //scroll view is at bottom
+                            if (homeEdittextSearch.getText().toString().isEmpty()){
+                                try {
+                                    if (!isOver){
+                                        if (!isFirstAcess()){
+                                            getListProductIndex();
+                                        } else {
+                                            setFirstAcess(false);
+                                        }
+                                    } else {
+                                    }
+                                }
+                                catch (NullPointerException | InterruptedException e){
+//                                Log.d("home toast err",e.toString());
+                                }
+                            }
+                        } else {
+                            //scroll view is not at bottom
+                        }
+                    }
+                });
+
 
         return view;
     }
 
     private void LoadListProduct(View view) {
-        homeListProduct = (GridView) view.findViewById(R.id.home_list_products);
+        homeListProduct = view.findViewById(R.id.home_list_products);
         arrayProduct = new ArrayList<>();
-        int[] arr= new int[1];
-        arr[0]=1;
         try {
             productService.GetListProduct(11, 1, arr, new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONObject response) {
                     try {
                         JSONArray listingPage = response.getJSONArray("listingPage");
-                        if (listingPage!=null){
+                        if (listingPage.length() != 0){
                             for (int i=0;i<listingPage.length();i++){
-    //                            arrayProduct.add(gson.fromJson(listingPage.getString(i),Product.class));
                                 JSONObject jsonObject = listingPage.getJSONObject(i);
                                 arrayProduct.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
                                 jsonObject.getString("listingImage"),
@@ -202,10 +237,12 @@ public class Home extends Fragment {
                             productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
                             homeListProduct.setAdapter(productAdater);
                             setListProduct(arrayProduct);
-                            setGridViewHeightBasedOnChildren(homeListProduct,2,productAdater);
                             emptySearch.setVisibility(View.INVISIBLE);
+                            indexData++;
                         }
-
+                        else {
+                            isOver = true;
+                        }
 
                     }
                     catch (JSONException jsonException){
@@ -222,6 +259,46 @@ public class Home extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
             MappingProduct(view);
+        }
+    }
+
+    private void getListProductIndex() throws InterruptedException {
+        Thread.sleep(1000);
+        try {
+            productService.GetListProduct(11, indexData, arr, new VolleyCallback() {
+                @Override
+                public void onSuccess(JSONObject response) {
+                    try {
+                        JSONArray listingPage = response.getJSONArray("listingPage");
+                        if (listingPage.length() != 0){
+                            for (int i=0;i<listingPage.length();i++){
+                                JSONObject jsonObject = listingPage.getJSONObject(i);
+                                arrayProduct.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
+                                        jsonObject.getString("listingImage"),
+                                        jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), true));
+                            }
+                            productAdater.setItem(arrayProduct);
+                            productAdater.notifyDataSetChanged();
+                            indexData++;
+                        }
+                        else {
+                            isOver = true;
+                        }
+
+                    }
+                    catch (JSONException jsonException){
+                        Log.d("json",jsonException.toString());
+                    }
+
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
@@ -244,8 +321,8 @@ public class Home extends Fragment {
                     JSONObject jsonObject = listCate.getJSONObject(i);
                     arrayType.add(new type(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), R.drawable.type, false));
                 }
-                typeAdapter = new typeAdapter(arrayType, 1);
-                homeListType.setAdapter(typeAdapter);
+                createTypeAdapter();
+                homeListType.setAdapter(homeTypeAdapter);
                 setIndex(-1);
             }
         } catch (JSONException err){
@@ -256,13 +333,13 @@ public class Home extends Fragment {
     private Runnable input_finish_checker = new Runnable() {
         public void run() {
             if (System.currentTimeMillis() > (last_text_edit + delay - 500)) {
-                // TODO: do what you need here
-                // ............
-                // ............
                 try {
                     productService.SearchProduct(searchText, new VolleyCallback() {
                         @Override
                         public void onSuccess(JSONObject response) throws JSONException {
+                            InputMethodManager imm = (InputMethodManager)getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(homeEdittextSearch.getWindowToken(), 0);
+                            homeScroll.scrollTo(0,0);
                             JSONArray listSearch = response.getJSONArray("listingPage");
                             if (listSearch!=null && listSearch.length()!=0){
                                 ArrayList<Product> arrSearch = new ArrayList<>();
@@ -271,9 +348,14 @@ public class Home extends Fragment {
                                     arrSearch.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
                                             jsonObject.getString("listingImage"),
                                             jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), true));
-                                    productAdater = new productAdater(getContext(), R.layout.product, arrSearch);
-                                    homeListProduct.setAdapter(productAdater);
-                                    setGridViewHeightBasedOnChildren(homeListProduct,2,productAdater);
+                                    if (productAdater!=null){
+                                        productAdater.setItem(arrSearch);
+                                        productAdater.notifyDataSetChanged();
+                                    }
+                                    else  {
+                                        productAdater = new productAdater(getContext(), R.layout.product, arrSearch);
+                                        homeListProduct.setAdapter(productAdater);
+                                    }
                                     emptySearch.setVisibility(View.INVISIBLE);
                                 }
                             } else {
@@ -293,38 +375,6 @@ public class Home extends Fragment {
         }
     };
 
-
-    public void setGridViewHeightBasedOnChildren(GridView gridView, int columns,productAdater adapter) {
-        try {
-            productAdater listAdapter = adapter;
-            if (listAdapter == null) {
-                // pre-condition
-                return;
-            }
-
-            int totalHeight = 0;
-            int items = listAdapter.getCount();
-            int rows = 0;
-
-            View listItem = listAdapter.getView(0, null, gridView);
-            listItem.measure(0, 0);
-            totalHeight = listItem.getMeasuredHeight();
-
-            float x = 1;
-            if( items > columns ){
-                x = items/columns;
-                rows = (int) (x + 1);
-                totalHeight *= rows;
-            }
-            ViewGroup.LayoutParams params = gridView.getLayoutParams();
-            int plusHeight = items%2!=0?280:-200;
-            params.height = totalHeight+plusHeight;
-            gridView.setLayoutParams(params);
-        }
-        catch (NullPointerException err){
-            Log.d("NullPointerException",err.toString());
-        }
-    }
     private void getListCategory(View view){
         try {
         productService.GetListCategory(new VolleyCallback() {
@@ -344,11 +394,107 @@ public class Home extends Fragment {
     }
 
     private void refresh(){
-        if (getListProduct() != null){
+        if (getListProduct()==null){
+            return;
+        }
+        if (productAdater!=null){
+            productAdater.setItem(getListProduct());
+            productAdater.notifyDataSetChanged();
+
+        } else {
             productAdater = new productAdater(getContext(), R.layout.product, getListProduct());
             homeListProduct.setAdapter(productAdater);
-            setGridViewHeightBasedOnChildren(homeListProduct,2,productAdater);
         }
         emptySearch.setVisibility(View.INVISIBLE);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case (999) : {
+                if (resultCode == Activity.RESULT_OK) {
+                    String newIndex = data.getStringExtra("index");
+                    int Id = Integer.parseInt(newIndex);
+                    for (int i=0;i<arrayType.size();i++){
+                        type elementTypeOfIndex = arrayType.get(i);
+                        if (elementTypeOfIndex.getId()==Id){
+                            arrayType.set(i,new type(newIndex,elementTypeOfIndex.getName(),elementTypeOfIndex.getImage(),true));
+                            setIndex(i);
+                            continue;
+                        }
+                        arrayType.set(i,new type(String.valueOf(elementTypeOfIndex.getId()),elementTypeOfIndex.getName(),elementTypeOfIndex.getImage(),false));
+                    }
+                    homeTypeAdapter.setItem(arrayType);
+                    homeListType.setAdapter(homeTypeAdapter);
+                    arr.clear();
+                    arr.add(Id);
+                    indexData=1;
+                    isOver = false;
+                    ArrayList<Product> arrayProductCate = new ArrayList<>();
+                    homeGetListProduct(arrayProductCate);
+                }
+                break;
+            }
+        }
+    }
+
+    private void createTypeAdapter(){
+        homeTypeAdapter = new typeAdapter(arrayType, 1, new categoryInterface() {
+            @Override
+            public void action(int index) {
+                arr.clear();
+                arrayProduct.clear();
+                indexData=1;
+                isOver = false;
+                if (index == -1){
+                    productAdater.setItem(getListProduct());
+                    homeListProduct.setAdapter(productAdater);
+                    return;
+                }
+                ArrayList<Product> arrayProductCate = new ArrayList<>();
+                arr.add(index);
+                homeGetListProduct(arrayProductCate);
+
+            }
+        });
+    }
+    private void homeGetListProduct(ArrayList<Product> productArrayList){
+        try {
+            productService.GetListProduct(11, indexData, arr, new VolleyCallback() {
+                @Override
+                public void onSuccess(JSONObject response) throws JSONException {
+                    HandleOnSuccessGetListProduct(response,productArrayList);
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+
+                }
+            });
+        } catch (JSONException je){
+
+        }
+    }
+    private void HandleOnSuccessGetListProduct(JSONObject response,ArrayList<Product> productArrayList){
+        try {
+            JSONArray listingPage = response.getJSONArray("listingPage");
+            if (listingPage.length() != 0){
+                for (int i=0;i<listingPage.length();i++){
+                    JSONObject jsonObject = listingPage.getJSONObject(i);
+                    productArrayList.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
+                            jsonObject.getString("listingImage"),
+                            jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), true));
+                }
+                productAdater.setItem(productArrayList);
+                homeListProduct.setAdapter(productAdater);
+            }
+            else {
+                Toast.makeText(getContext(), "Hiện không có sản phẩm nào", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+        catch (JSONException jsonException){
+            Log.d("json",jsonException.toString());
+        }
     }
 }

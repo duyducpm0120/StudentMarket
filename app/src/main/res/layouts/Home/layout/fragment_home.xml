@@ -10,31 +10,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <LinearLayout
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="110dp"
-            android:background="@drawable/gradient_background_header_home"
-            android:gravity="center">
+            android:background="@drawable/gradient_background_header_home">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="40dp"
+                    android:text="@string/Appname"
+                    android:textSize="32dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="40dp"
-                android:text="@string/Appname"
-                android:textSize="32dp"
-                android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/home_button_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-15dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="18dp"
+                android:layout_marginTop="44dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:backgroundTint="#fff"
                 android:src="@drawable/bell" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/home_scroll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="110dp">
@@ -90,7 +99,7 @@
                     android:textSize="18dp"
                     android:textStyle="bold" />
 
-                <GridView
+                <com.example.studentmarket.Component.MyGridView
                     android:id="@+id/home_list_products"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -111,29 +120,32 @@
             android:hint="Tìm kiếm"
             android:inputType="text"
             android:maxLines="1" />
+
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
             android:id="@+id/home_empty_search"
-            android:visibility="invisible"
-            android:background="@drawable/gradient_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginTop="110dp"
-            android:layout_height="match_parent">
+            android:background="@drawable/gradient_background"
+            android:orientation="vertical"
+            android:visibility="invisible">
+
             <ImageView
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="28dp"
                 android:layout_marginTop="57dp"
-                android:layout_height="wrap_content"
-                android:src="@drawable/empty_search"/>
+                android:src="@drawable/empty_search" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="18dp"
                 android:text="@string/empty_search"
+                android:textColor="@color/primary"
                 android:textSize="16sp"
-                android:layout_gravity="center"
-                android:textStyle="bold"
-                android:textColor="@color/primary"/>
+                android:textStyle="bold" />
         </LinearLayout>
     </RelativeLayout>
 
