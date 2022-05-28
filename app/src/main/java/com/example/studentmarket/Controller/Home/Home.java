@@ -277,8 +277,12 @@ public class Home extends Fragment {
                                         jsonObject.getString("listingImage"),
                                         jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), true));
                             }
-                            productAdater.setItem(arrayProduct);
-                            productAdater.notifyDataSetChanged();
+                            if (productAdater!=null){
+                                productAdater.setItem(arrayProduct);
+                                productAdater.notifyDataSetChanged();
+                            } else {
+                                productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
+                            }
                             indexData++;
                         }
                         else {
