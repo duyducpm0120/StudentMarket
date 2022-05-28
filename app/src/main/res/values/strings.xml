@@ -25,7 +25,7 @@
     <string name="Appname">STUDENTMARKET</string>
     <string name="profile_post">Bài đăng</string>
     <string name="profile_info">Thông tin</string>
-    <string name="account_name">Tên đăng nhập</string>
+    <string name="account_name">Tên tài khoản</string>
     <string name="university">Trường đại học</string>
     <string name="phone_number">Số điện thoại</string>
     <string name="email">Email</string>
@@ -43,6 +43,14 @@
     <string name="describer">Mô tả chi tiết</string>
     <string name="error">Có lỗi trong quá trình xử lý. Vui lòng thử lại</string>
     <string name="name">Họ và tên</string>
+    <string name="title_activity_edit_profile">EditProfile</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="empty_search">Không tim thấy kết quả nào</string>
+    <string name="confirm">Xác nhận</string>
+    <string name="change_avatar">Đổi ảnh đại diện</string>
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="user_name">Tên đăng nhập</string>
 
 </resources>

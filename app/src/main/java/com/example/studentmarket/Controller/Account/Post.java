@@ -35,7 +35,7 @@ public class Post extends AppCompatActivity {
     private EditText postPriceEdittext;
     private EditText postBodyEdittext;
     private Button postPostButton;
-    private String[] listName = {"All Woments","New Collection","Active / Sports","Luxury","Swimwear","Casual"};
+    private String[] listName = {"All Woments", "New Collection", "Active / Sports", "Luxury", "Swimwear", "Casual"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class Post extends AppCompatActivity {
         postDropdown.setItems(new ArrayList<String>(Arrays.asList(listName)), "Chọn danh mục", new MultiSpinner.MultiSpinnerListener() {
             @Override
             public void onItemsSelected(boolean[] selected) {
-                for (int i=0;i<selected.length;i++){
+                for (int i = 0; i < selected.length; i++) {
                     Log.d("key", String.valueOf(selected[i]));
                 }
             }
@@ -67,25 +67,23 @@ public class Post extends AppCompatActivity {
                 String price = postPriceEdittext.getText().toString();
                 String body = postBodyEdittext.getText().toString();
                 String category = postDropdown.getSelectedItem().toString();
-                long categoryId=postDropdown.getSelectedItemId();
+                long categoryId = postDropdown.getSelectedItemId();
                 //get Image
-                if (categoryId != 0){
-                    if (!title.isEmpty()){
-                        if (!price.isEmpty()){
-                            if (!body.isEmpty()){
-                                Toast.makeText(Post.this, "Bạn đã đăng bài "+postDropdown.getSelectedItem().toString()+" "+postTitleEdittext.getText()+" "+postPriceEdittext.getText()+" "+postBodyEdittext.getText(), Toast.LENGTH_SHORT).show();
-                            }else{
+                if (categoryId != 0) {
+                    if (!title.isEmpty()) {
+                        if (!price.isEmpty()) {
+                            if (!body.isEmpty()) {
+                                Toast.makeText(Post.this, "Bạn đã đăng bài " + postDropdown.getSelectedItem().toString() + " " + postTitleEdittext.getText() + " " + postPriceEdittext.getText() + " " + postBodyEdittext.getText(), Toast.LENGTH_SHORT).show();
+                            } else {
                                 Toast.makeText(Post.this, "Bạn không được để trống mô tả", Toast.LENGTH_SHORT).show();
                             }
-                        }else{
+                        } else {
                             Toast.makeText(Post.this, "Bạn không được để trống giá", Toast.LENGTH_SHORT).show();
                         }
-                    }
-                    else{
+                    } else {
                         Toast.makeText(Post.this, "Bạn không được để trống tiêu đề", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else{
+                } else {
                     Toast.makeText(Post.this, "Bạn chưa chọn danh mục", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -97,7 +95,7 @@ public class Post extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Title"),1);
+                startActivityForResult(Intent.createChooser(intent, "Title"), 1);
             }
         });
 
@@ -109,10 +107,11 @@ public class Post extends AppCompatActivity {
         });
 
     }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        if (requestCode ==1 && resultCode==-1){
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == -1) {
             Uri uri = data.getData();
             postUploadImage.setImageURI(uri);
         }

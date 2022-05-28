@@ -29,7 +29,9 @@ public class SharedStorage {
     }
 
     public void removeValue(String key) {
-        SharedPreferences settings = context.getSharedPreferences(key, Context.MODE_PRIVATE);
-        settings.edit().remove(key).commit();
+        SharedPreferences sharedPreferences = context.getSharedPreferences(key, Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+        myEdit.remove(key);
+        myEdit.commit();
     }
 }

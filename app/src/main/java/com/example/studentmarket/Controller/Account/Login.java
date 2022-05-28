@@ -27,6 +27,7 @@ import com.example.studentmarket.R;
 import com.example.studentmarket.Services.AccountService;
 import com.example.studentmarket.Services.ProfileService;
 import com.example.studentmarket.Store.SharedStorage;
+import com.example.studentmarket.Store.UserProfileHolder;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -153,7 +154,6 @@ public class Login extends Fragment {
             accountService.Login(accountName, password, new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONObject response) {
-
                     //save token
                     LoginResponse loginResponse = new Gson().fromJson(String.valueOf(response), LoginResponse.class);
                     Log.d("Login response token", loginResponse.getToken());
@@ -185,6 +185,7 @@ public class Login extends Fragment {
                 //textView.setText("Response: " + response.toString());
                 Log.d("get profile response",response.toString());
                 UserProfile userProfile = new Gson().fromJson(String.valueOf(response), UserProfile.class);
+                UserProfileHolder.getInstance().setData(userProfile);
                 // navigate
                 fragmentTransaction.replace(R.id.fragmentContainerView, new Profile(userProfile));
                 fragmentTransaction.addToBackStack(null);
