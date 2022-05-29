@@ -1,7 +1,10 @@
 package com.example.studentmarket.Controller.Common;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,10 +45,11 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
         return viewHolder;
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NotifyClass ntf = listNotify.get(position);
-        holder.notify_text.setText(ntf.getBody());
+        holder.notify_text.setText(Html.fromHtml("<b>"+ntf.getUser_name()+"</b>"+ntf.getBody(),Html.FROM_HTML_MODE_COMPACT));
 //        new DownloadImageTask(holder.notify_image).execute(ntf.getImage());
         Picasso.get().load(ntf.getImage()).into(holder.notify_image);
         holder.notify_clickable.setOnClickListener(new View.OnClickListener() {

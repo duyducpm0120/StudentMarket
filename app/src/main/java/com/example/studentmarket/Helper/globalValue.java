@@ -9,6 +9,15 @@ public class globalValue {
     private static ArrayList<Product> listProduct;
     private static String username;
     private static String token;
+    private static boolean firstAcess=true;
+
+    public static boolean isFirstAcess() {
+        return firstAcess;
+    }
+
+    public static void setFirstAcess(boolean firstAcess) {
+        globalValue.firstAcess = firstAcess;
+    }
 
     public static String getUsername() {
         return username;

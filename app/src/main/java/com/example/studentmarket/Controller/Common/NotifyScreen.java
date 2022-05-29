@@ -45,7 +45,7 @@ public class NotifyScreen extends AppCompatActivity {
     private void MappingType(){
         arrayNotify = new ArrayList<>();
         for (int i=0;i<10;i++){
-            arrayNotify.add(new NotifyClass(String.valueOf(i),"Minh Minh đã đánh giá trang cá nhân của bạn",imgUrl,"123","title","userid"));
+            arrayNotify.add(new NotifyClass(String.valueOf(i),"Minh Minh"," đã đánh giá trang cá nhân của bạn",imgUrl,"123","title","userid"));
         }
     }
 }

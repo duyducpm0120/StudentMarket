@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.studentmarket.Component.categoryInterface;
 import com.example.studentmarket.Controller.Common.type;
 import com.example.studentmarket.Controller.Common.typeAdapter;
 import com.example.studentmarket.R;
@@ -73,7 +74,12 @@ public class ListCategory1 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_list_category, container, false);
         MappingType(view);
-        typeAdapter = new typeAdapter(arrayCategory,2);
+        typeAdapter = new typeAdapter(arrayCategory, 2, new categoryInterface() {
+            @Override
+            public void action(int index) {
+
+            }
+        });
         listCategory.setAdapter(typeAdapter);
         return view;
     }
