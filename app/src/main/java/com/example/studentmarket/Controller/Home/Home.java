@@ -93,7 +93,6 @@ public class Home extends Fragment {
     long last_text_edit = 0;
     Handler handler = new Handler();
     private String searchText;
-    private String[] listName = { "All Woments", "New Collection", "Active / Sports", "Luxury", "Swimwear", "Casual" };
 
     public Home() {
         // Required empty public constructor
@@ -232,7 +231,7 @@ public class Home extends Fragment {
                                 JSONObject jsonObject = listingPage.getJSONObject(i);
                                 arrayProduct.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
                                 jsonObject.getString("listingImage"),
-                                jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), true));
+                                jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), false));
                             }
                             productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
                             homeListProduct.setAdapter(productAdater);
@@ -275,7 +274,7 @@ public class Home extends Fragment {
                                 JSONObject jsonObject = listingPage.getJSONObject(i);
                                 arrayProduct.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
                                         jsonObject.getString("listingImage"),
-                                        jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), true));
+                                        jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), false));
                             }
                             if (productAdater!=null){
                                 productAdater.setItem(arrayProduct);
@@ -351,7 +350,7 @@ public class Home extends Fragment {
                                     JSONObject jsonObject = listSearch.getJSONObject(i);
                                     arrSearch.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
                                             jsonObject.getString("listingImage"),
-                                            jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), true));
+                                            jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), false));
                                     if (productAdater!=null){
                                         productAdater.setItem(arrSearch);
                                         productAdater.notifyDataSetChanged();
@@ -452,7 +451,9 @@ public class Home extends Fragment {
                 isOver = false;
                 if (index == -1){
                     productAdater.setItem(getListProduct());
-                    homeListProduct.setAdapter(productAdater);
+                    productAdater.notifyDataSetChanged();
+//                    homeListProduct.setAdapter(productAdater);
+                    Log.d("tag", String.valueOf(index));
                     return;
                 }
                 ArrayList<Product> arrayProductCate = new ArrayList<>();
@@ -487,7 +488,7 @@ public class Home extends Fragment {
                     JSONObject jsonObject = listingPage.getJSONObject(i);
                     productArrayList.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
                             jsonObject.getString("listingImage"),
-                            jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), true));
+                            jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), false));
                 }
                 productAdater.setItem(productArrayList);
                 homeListProduct.setAdapter(productAdater);

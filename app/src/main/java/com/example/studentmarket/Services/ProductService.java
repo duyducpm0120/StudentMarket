@@ -1,5 +1,6 @@
 package com.example.studentmarket.Services;
 
+import static com.example.studentmarket.Constants.EndpointConstant.CAN_SAVE_PRODUCT_FAVORITE;
 import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_CATEGORY;
 import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_FAVORITE;
 import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_PRODUCT;
@@ -97,7 +98,6 @@ public class ProductService {
         requestBody.put("pageIndex", PageIndex);
 
         requestBody.put("listingCategoriesIds", arrjs);
-        Log.d("rq",requestBody.toString());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
 
@@ -198,8 +198,6 @@ public class ProductService {
                     @Override
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
-                        Log.d("listCategory", response.toString());
-                        Log.d("token",new SharedStorage(context).getValue(TOKEN_ID_KEY));
                         try {
                             callback.onSuccess(response);
                         } catch (JSONException jsonException) {
@@ -237,7 +235,6 @@ public class ProductService {
                     @Override
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
-                        Log.d("listFavorite", response.toString());
                         try {
                             callback.onSuccess(response);
                         } catch (JSONException jsonException) {
@@ -267,16 +264,14 @@ public class ProductService {
     }
     public void SaveFavorite(String id,VolleyCallback
                                         callback) throws JSONException {
-        String url = SAVE_PRODUCT_FAVORITE;
+        String url = SAVE_PRODUCT_FAVORITE+"/"+id;
         JSONObject requestBody = new JSONObject();
-        requestBody.put("favoriteId", id);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, requestBody, new Response.Listener<JSONObject>() {
+                (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
-                        Log.d("saveFavorite", response.toString());
                         try {
                             callback.onSuccess(response);
                         } catch (JSONException jsonException) {
@@ -304,16 +299,47 @@ public class ProductService {
     }
     public void UnsaveFavorite(String id,VolleyCallback
             callback) throws JSONException {
-        String url = UNSAVE_PRODUCT_FAVORITE;
+        String url = UNSAVE_PRODUCT_FAVORITE+"/"+id;
         JSONObject requestBody = new JSONObject();
-        requestBody.put("favoriteId", id);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.d("response unsave favorite err", error.toString());
+                        callback.onError(error);
+                    }
+
+                }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer "+new SharedStorage(context).getValue(TOKEN_ID_KEY));
+                return headers;
+            }
+        };;
+        // Access the RequestQueue through your singleton class.
+        ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+    public void CanSaveFavorite(String id,VolleyCallback
+            callback) throws JSONException {
+        String url = CAN_SAVE_PRODUCT_FAVORITE+"/"+id;
+        JSONObject requestBody = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, requestBody, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
-                        Log.d("unsaveFavorite", response.toString());
                         try {
                             callback.onSuccess(response);
                         } catch (JSONException jsonException) {

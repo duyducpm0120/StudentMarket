@@ -52,5 +52,6 @@
     <string name="change_avatar">Đổi ảnh đại diện</string>
     <string name="change_password">Đổi mật khẩu</string>
     <string name="user_name">Tên đăng nhập</string>
+    <string name="require_login_string">Bạn phải đăng nhập để sử dụng chức năng này!</string>
 
 </resources>

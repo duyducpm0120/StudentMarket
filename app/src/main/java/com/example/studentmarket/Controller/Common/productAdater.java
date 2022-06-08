@@ -12,13 +12,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.example.studentmarket.Helper.DownloadImageTask.DownloadImageTask;
+import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
+import com.example.studentmarket.Services.ProductService;
 import com.example.studentmarket.Store.SharedStorage;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class productAdater extends BaseAdapter {
@@ -62,6 +68,8 @@ public class productAdater extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         SharedStorage storage = new SharedStorage(context);
+        ProductService productService = new ProductService(context);
+
 
 
         if (convertView == null) {
@@ -77,8 +85,10 @@ public class productAdater extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if (storage.getValue(TOKEN_ID_KEY) != null){
+        if (!storage.getValue(TOKEN_ID_KEY).isEmpty()){
             holder.heartProduct.setVisibility(ImageView.VISIBLE);
+        } else {
+            holder.heartProduct.setVisibility(ImageView.INVISIBLE);
         }
 
         Product product = productList.get(position);
@@ -98,13 +108,68 @@ public class productAdater extends BaseAdapter {
                 context.startActivity(myIntent);
             }
         });
+        /////
+        try {
+            productService.CanSaveFavorite(String.valueOf(product.getId()), new VolleyCallback() {
+                @Override
+                public void onSuccess(JSONObject response) throws JSONException {
+                    Log.d("cansave",response.toString());
+                    if (response.toString()=="true"){
+                        holder.heartProduct.setColorFilter(context.getColor(R.color.secondary));
+                    } else {
+                        holder.heartProduct.setColorFilter(context.getColor(R.color.gray));
+                    }
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    Log.d("cansave",error.toString());
+
+                }
+            });
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+        }
+        ////
         holder.heartProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!product.isHeart()) {
-                    holder.heartProduct.setColorFilter(context.getColor(R.color.secondary));
+                    try {
+                        productService.SaveFavorite(String.valueOf(product.getId()), new VolleyCallback() {
+                            @Override
+                            public void onSuccess(JSONObject response) throws JSONException {
+                                Log.d("save",response.toString());
+                                holder.heartProduct.setColorFilter(context.getColor(R.color.secondary));
+                            }
+
+                            @Override
+                            public void onError(VolleyError error) {
+                                Log.d("save",error.toString());
+
+                            }
+                        });
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
+                    }
                 } else {
                     holder.heartProduct.setColorFilter(context.getColor(R.color.gray));
+                    try {
+                        productService.UnsaveFavorite(String.valueOf(product.getId()), new VolleyCallback() {
+                            @Override
+                            public void onSuccess(JSONObject response) throws JSONException {
+                                Log.d("unsave",response.toString());
+                            }
+
+                            @Override
+                            public void onError(VolleyError error) {
+                                Log.d("unsave",error.toString());
+                                holder.heartProduct.setColorFilter(context.getColor(R.color.gray));
+                            }
+                        });
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
+                    }
                 }
                 product.setHeart(!product.isHeart());
                 Toast.makeText(context,
