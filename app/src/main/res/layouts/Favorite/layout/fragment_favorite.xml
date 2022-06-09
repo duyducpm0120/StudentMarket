@@ -26,12 +26,13 @@
                 android:text="@string/Appname"/>
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="110dp"
             android:orientation="vertical"
             android:background="@drawable/gradient_background">
+
 
             <GridView
                 android:numColumns="2"
@@ -40,7 +41,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:verticalSpacing="25dp" />
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/favorite_require_login"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient_background"
+                android:orientation="vertical"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="28dp"
+                    android:layout_marginTop="57dp"
+                    android:src="@drawable/empty_search" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="18dp"
+                    android:text="@string/require_login_string"
+                    android:textColor="@color/primary"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <EditText
             android:id="@+id/favorite_edittext_search"

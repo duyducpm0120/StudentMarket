@@ -1,5 +1,7 @@
 package com.example.studentmarket.Controller.Favorite;
 
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,11 +9,15 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.studentmarket.Controller.Common.Product;
 import com.example.studentmarket.Controller.Common.productAdater;
 import com.example.studentmarket.R;
+import com.example.studentmarket.Store.SharedStorage;
 
 import java.util.ArrayList;
 
@@ -34,6 +40,8 @@ public class Favorite extends Fragment {
     private GridView homeListProduct;
     private ArrayList<Product> arrayProduct;
     private com.example.studentmarket.Controller.Common.productAdater productAdater;
+    private LinearLayout favoriteRequireLogin;
+    private EditText favoriteEdittextSearch;
 
     public Favorite() {
         // Required empty public constructor
@@ -71,6 +79,18 @@ public class Favorite extends Fragment {
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
+        favoriteRequireLogin = view.findViewById(R.id.favorite_require_login);
+        favoriteEdittextSearch = view.findViewById(R.id.favorite_edittext_search);
+
+        SharedStorage storage = new SharedStorage(getContext());
+        if (storage.getValue(TOKEN_ID_KEY).isEmpty()){
+            favoriteRequireLogin.setVisibility(View.VISIBLE);
+            favoriteEdittextSearch.setVisibility(View.INVISIBLE);
+        } else {
+            favoriteRequireLogin.setVisibility(View.INVISIBLE);
+            favoriteEdittextSearch.setVisibility(View.VISIBLE);
+        }
+
         MappingProduct(view);
         productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
         homeListProduct.setAdapter(productAdater);
