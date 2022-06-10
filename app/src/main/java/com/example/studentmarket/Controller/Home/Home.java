@@ -150,6 +150,7 @@ public class Home extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getContext(), ListCategory.class);
+                setIndex(-1);
                 startActivityForResult(myIntent,999);
 //                getContext().startActivity(myIntent);
             }
@@ -322,7 +323,7 @@ public class Home extends Fragment {
                 arrayType = new ArrayList<>();
                 for (int i = 0; i < listCate.length(); i++) {
                     JSONObject jsonObject = listCate.getJSONObject(i);
-                    arrayType.add(new type(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), R.drawable.type, false));
+                    arrayType.add(new type(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), jsonObject.getString("listingCategoryIcon"), false));
                 }
                 createTypeAdapter();
                 homeListType.setAdapter(homeTypeAdapter);
@@ -452,8 +453,6 @@ public class Home extends Fragment {
                 if (index == -1){
                     productAdater.setItem(getListProduct());
                     productAdater.notifyDataSetChanged();
-//                    homeListProduct.setAdapter(productAdater);
-                    Log.d("tag", String.valueOf(index));
                     return;
                 }
                 ArrayList<Product> arrayProductCate = new ArrayList<>();

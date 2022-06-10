@@ -108,29 +108,6 @@ public class productAdater extends BaseAdapter {
                 context.startActivity(myIntent);
             }
         });
-        /////
-        try {
-            productService.CanSaveFavorite(String.valueOf(product.getId()), new VolleyCallback() {
-                @Override
-                public void onSuccess(JSONObject response) throws JSONException {
-                    Log.d("cansave",response.toString());
-                    if (response.toString()=="true"){
-                        holder.heartProduct.setColorFilter(context.getColor(R.color.secondary));
-                    } else {
-                        holder.heartProduct.setColorFilter(context.getColor(R.color.gray));
-                    }
-                }
-
-                @Override
-                public void onError(VolleyError error) {
-                    Log.d("cansave",error.toString());
-
-                }
-            });
-        } catch (JSONException jsonException) {
-            jsonException.printStackTrace();
-        }
-        ////
         holder.heartProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

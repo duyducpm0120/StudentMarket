@@ -64,10 +64,5 @@
             android:name="com.example.studentmarket.Controller.Home.Home"
             android:label="fragment_home"
             tools:layout="@layout/fragment_home" />
-        <fragment
-            android:id="@+id/listCategory"
-            android:name="com.example.studentmarket.Controller.Home.ListCategory1"
-            android:label="fragment_list_category"
-            tools:layout="@layout/fragment_list_category" />
     </navigation>
 </navigation>

@@ -13,7 +13,7 @@ public class EndpointConstant {
     public static final String POST_PRODUCT = ENDPOINT_PREFIX+"post/";
     public static final String GET_LIST_CATEGORY = ENDPOINT_PREFIX+"listingCategories/getAll";
     public static final String GET_MY_PROFILE = ENDPOINT_PREFIX + "user/getMyProfile";
-    public static final String GET_LIST_FAVORITE = ENDPOINT_PREFIX + "listings/userSavedListing";
+    public static final String GET_LIST_FAVORITE = ENDPOINT_PREFIX + "listings/mySavedListings";
     public static final String SAVE_PRODUCT_FAVORITE = ENDPOINT_PREFIX + "listings/save";
     public static final String CAN_SAVE_PRODUCT_FAVORITE = ENDPOINT_PREFIX + "listings/canSave";
     public static final String UNSAVE_PRODUCT_FAVORITE = ENDPOINT_PREFIX + "listings/unsave";
