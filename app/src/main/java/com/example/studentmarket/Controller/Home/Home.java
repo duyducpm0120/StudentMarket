@@ -19,10 +19,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
 import android.widget.EditText;
 //import android.widget.GridView;
 import com.example.studentmarket.Component.MyGridView;
+
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,26 +30,23 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Component.categoryInterface;
-import com.example.studentmarket.Controller.Common.NotifyClass;
 import com.example.studentmarket.Controller.Common.NotifyScreen;
 import com.example.studentmarket.Controller.Common.Product;
 import com.example.studentmarket.Controller.Common.productAdater;
-import com.example.studentmarket.Controller.Common.type;
+import com.example.studentmarket.Controller.Common.CategoryType;
 import com.example.studentmarket.Controller.Common.typeAdapter;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
+
 import static com.example.studentmarket.Helper.globalValue.*;
 
 import com.example.studentmarket.Services.ProductService;
-import com.example.studentmarket.Services.ProductService.*;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,7 +69,7 @@ public class Home extends Fragment {
     private com.example.studentmarket.Controller.Common.productAdater productAdater;
 
     private RecyclerView homeListType;
-    private ArrayList<type> arrayType;
+    private ArrayList<CategoryType> arrayCategoryType;
     private com.example.studentmarket.Controller.Common.typeAdapter homeTypeAdapter;
 
     private TextView homeTextViewSeeMore;
@@ -80,7 +77,7 @@ public class Home extends Fragment {
     private ImageButton goToNotify;
     private LinearLayout emptySearch;
     private NestedScrollView homeScroll;
-    private int indexData=1;
+    private int indexData = 1;
     private boolean isOver = false;
     private ArrayList<Integer> arr = new ArrayList<>();
 
@@ -126,14 +123,14 @@ public class Home extends Fragment {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         refresh();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         homeTextViewSeeMore = (TextView) view.findViewById(R.id.home_textview_see_more);
@@ -150,7 +147,7 @@ public class Home extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getContext(), ListCategory.class);
-                startActivityForResult(myIntent,999);
+                startActivityForResult(myIntent, 999);
 //                getContext().startActivity(myIntent);
             }
         });
@@ -192,18 +189,17 @@ public class Home extends Fragment {
                         if (homeScroll.getChildAt(0).getBottom()
                                 <= (homeScroll.getHeight() + homeScroll.getScrollY())) {
                             //scroll view is at bottom
-                            if (homeEdittextSearch.getText().toString().isEmpty()){
+                            if (homeEdittextSearch.getText().toString().isEmpty()) {
                                 try {
-                                    if (!isOver){
-                                        if (!isFirstAcess()){
+                                    if (!isOver) {
+                                        if (!isFirstAcess()) {
                                             getListProductIndex();
                                         } else {
                                             setFirstAcess(false);
                                         }
                                     } else {
                                     }
-                                }
-                                catch (NullPointerException | InterruptedException e){
+                                } catch (NullPointerException | InterruptedException e) {
 //                                Log.d("home toast err",e.toString());
                                 }
                             }
@@ -226,26 +222,24 @@ public class Home extends Fragment {
                 public void onSuccess(JSONObject response) {
                     try {
                         JSONArray listingPage = response.getJSONArray("listingPage");
-                        if (listingPage.length() != 0){
-                            for (int i=0;i<listingPage.length();i++){
+                        if (listingPage.length() != 0) {
+                            for (int i = 0; i < listingPage.length(); i++) {
                                 JSONObject jsonObject = listingPage.getJSONObject(i);
                                 arrayProduct.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
-                                jsonObject.getString("listingImage"),
-                                jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), false));
+                                        jsonObject.getString("listingImage"),
+                                        jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), false));
                             }
                             productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
                             homeListProduct.setAdapter(productAdater);
                             setListProduct(arrayProduct);
                             emptySearch.setVisibility(View.INVISIBLE);
                             indexData++;
-                        }
-                        else {
+                        } else {
                             isOver = true;
                         }
 
-                    }
-                    catch (JSONException jsonException){
-                        Log.d("json",jsonException.toString());
+                    } catch (JSONException jsonException) {
+                        Log.d("json", jsonException.toString());
                     }
 
                 }
@@ -269,28 +263,26 @@ public class Home extends Fragment {
                 public void onSuccess(JSONObject response) {
                     try {
                         JSONArray listingPage = response.getJSONArray("listingPage");
-                        if (listingPage.length() != 0){
-                            for (int i=0;i<listingPage.length();i++){
+                        if (listingPage.length() != 0) {
+                            for (int i = 0; i < listingPage.length(); i++) {
                                 JSONObject jsonObject = listingPage.getJSONObject(i);
                                 arrayProduct.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
                                         jsonObject.getString("listingImage"),
                                         jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), false));
                             }
-                            if (productAdater!=null){
+                            if (productAdater != null) {
                                 productAdater.setItem(arrayProduct);
                                 productAdater.notifyDataSetChanged();
                             } else {
                                 productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
                             }
                             indexData++;
-                        }
-                        else {
+                        } else {
                             isOver = true;
                         }
 
-                    }
-                    catch (JSONException jsonException){
-                        Log.d("json",jsonException.toString());
+                    } catch (JSONException jsonException) {
+                        Log.d("json", jsonException.toString());
                     }
 
                 }
@@ -314,22 +306,22 @@ public class Home extends Fragment {
         setListProduct(arrayProduct);
     }
 
-    private void MappingType(View view,JSONObject res) {
+    private void MappingType(View view, JSONObject res) {
         try {
             JSONArray listCate = res.getJSONArray("categories");
-            if (listCate!=null){
+            if (listCate != null) {
                 homeListType = (RecyclerView) view.findViewById(R.id.home_list_type);
-                arrayType = new ArrayList<>();
+                arrayCategoryType = new ArrayList<>();
                 for (int i = 0; i < listCate.length(); i++) {
                     JSONObject jsonObject = listCate.getJSONObject(i);
-                    arrayType.add(new type(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), R.drawable.type, false));
+                    arrayCategoryType.add(new CategoryType(jsonObject.getString("listingCategoryId"), jsonObject.getString("listingCategoryName"), R.drawable.type, false));
                 }
                 createTypeAdapter();
                 homeListType.setAdapter(homeTypeAdapter);
                 setIndex(-1);
             }
-        } catch (JSONException err){
-            Log.d("conver list category err",err.toString());
+        } catch (JSONException err) {
+            Log.d("conver list category err", err.toString());
         }
     }
 
@@ -340,22 +332,21 @@ public class Home extends Fragment {
                     productService.SearchProduct(searchText, new VolleyCallback() {
                         @Override
                         public void onSuccess(JSONObject response) throws JSONException {
-                            InputMethodManager imm = (InputMethodManager)getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
+                            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(getContext().INPUT_METHOD_SERVICE);
                             imm.hideSoftInputFromWindow(homeEdittextSearch.getWindowToken(), 0);
-                            homeScroll.scrollTo(0,0);
+                            homeScroll.scrollTo(0, 0);
                             JSONArray listSearch = response.getJSONArray("listingPage");
-                            if (listSearch!=null && listSearch.length()!=0){
+                            if (listSearch != null && listSearch.length() != 0) {
                                 ArrayList<Product> arrSearch = new ArrayList<>();
-                                for (int i=0;i<listSearch.length();i++){
+                                for (int i = 0; i < listSearch.length(); i++) {
                                     JSONObject jsonObject = listSearch.getJSONObject(i);
                                     arrSearch.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
                                             jsonObject.getString("listingImage"),
                                             jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), false));
-                                    if (productAdater!=null){
+                                    if (productAdater != null) {
                                         productAdater.setItem(arrSearch);
                                         productAdater.notifyDataSetChanged();
-                                    }
-                                    else  {
+                                    } else {
                                         productAdater = new productAdater(getContext(), R.layout.product, arrSearch);
                                         homeListProduct.setAdapter(productAdater);
                                     }
@@ -378,29 +369,29 @@ public class Home extends Fragment {
         }
     };
 
-    private void getListCategory(View view){
+    private void getListCategory(View view) {
         try {
-        productService.GetListCategory(new VolleyCallback() {
-            @Override
-            public void onSuccess(JSONObject response) throws JSONException {
-                MappingType(view,response);
-            }
+            productService.GetListCategory(new VolleyCallback() {
+                @Override
+                public void onSuccess(JSONObject response) throws JSONException {
+                    MappingType(view, response);
+                }
 
-            @Override
-            public void onError(VolleyError error) {
-                Log.d("load list category err",error.toString());
-            }
-        });
-        } catch (JSONException exception){
-            Log.d("err",exception.toString());
+                @Override
+                public void onError(VolleyError error) {
+                    Log.d("load list category err", error.toString());
+                }
+            });
+        } catch (JSONException exception) {
+            Log.d("err", exception.toString());
         }
     }
 
-    private void refresh(){
-        if (getListProduct()==null){
+    private void refresh() {
+        if (getListProduct() == null) {
             return;
         }
-        if (productAdater!=null){
+        if (productAdater != null) {
             productAdater.setItem(getListProduct());
             productAdater.notifyDataSetChanged();
 
@@ -410,28 +401,29 @@ public class Home extends Fragment {
         }
         emptySearch.setVisibility(View.INVISIBLE);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch(requestCode) {
-            case (999) : {
+        switch (requestCode) {
+            case (999): {
                 if (resultCode == Activity.RESULT_OK) {
                     String newIndex = data.getStringExtra("index");
                     int Id = Integer.parseInt(newIndex);
-                    for (int i=0;i<arrayType.size();i++){
-                        type elementTypeOfIndex = arrayType.get(i);
-                        if (elementTypeOfIndex.getId()==Id){
-                            arrayType.set(i,new type(newIndex,elementTypeOfIndex.getName(),elementTypeOfIndex.getImage(),true));
+                    for (int i = 0; i < arrayCategoryType.size(); i++) {
+                        CategoryType elementCategoryTypeOfIndex = arrayCategoryType.get(i);
+                        if (elementCategoryTypeOfIndex.getId() == Id) {
+                            arrayCategoryType.set(i, new CategoryType(newIndex, elementCategoryTypeOfIndex.getName(), elementCategoryTypeOfIndex.getImage(), true));
                             setIndex(i);
                             continue;
                         }
-                        arrayType.set(i,new type(String.valueOf(elementTypeOfIndex.getId()),elementTypeOfIndex.getName(),elementTypeOfIndex.getImage(),false));
+                        arrayCategoryType.set(i, new CategoryType(String.valueOf(elementCategoryTypeOfIndex.getId()), elementCategoryTypeOfIndex.getName(), elementCategoryTypeOfIndex.getImage(), false));
                     }
-                    homeTypeAdapter.setItem(arrayType);
+                    homeTypeAdapter.setItem(arrayCategoryType);
                     homeListType.setAdapter(homeTypeAdapter);
                     arr.clear();
                     arr.add(Id);
-                    indexData=1;
+                    indexData = 1;
                     isOver = false;
                     ArrayList<Product> arrayProductCate = new ArrayList<>();
                     homeGetListProduct(arrayProductCate);
@@ -441,15 +433,15 @@ public class Home extends Fragment {
         }
     }
 
-    private void createTypeAdapter(){
-        homeTypeAdapter = new typeAdapter(arrayType, 1, new categoryInterface() {
+    private void createTypeAdapter() {
+        homeTypeAdapter = new typeAdapter(arrayCategoryType, 1, new categoryInterface() {
             @Override
             public void action(int index) {
                 arr.clear();
                 arrayProduct.clear();
-                indexData=1;
+                indexData = 1;
                 isOver = false;
-                if (index == -1){
+                if (index == -1) {
                     productAdater.setItem(getListProduct());
                     productAdater.notifyDataSetChanged();
 //                    homeListProduct.setAdapter(productAdater);
@@ -463,12 +455,13 @@ public class Home extends Fragment {
             }
         });
     }
-    private void homeGetListProduct(ArrayList<Product> productArrayList){
+
+    private void homeGetListProduct(ArrayList<Product> productArrayList) {
         try {
             productService.GetListProduct(11, indexData, arr, new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONObject response) throws JSONException {
-                    HandleOnSuccessGetListProduct(response,productArrayList);
+                    HandleOnSuccessGetListProduct(response, productArrayList);
                 }
 
                 @Override
@@ -476,15 +469,16 @@ public class Home extends Fragment {
 
                 }
             });
-        } catch (JSONException je){
+        } catch (JSONException je) {
 
         }
     }
-    private void HandleOnSuccessGetListProduct(JSONObject response,ArrayList<Product> productArrayList){
+
+    private void HandleOnSuccessGetListProduct(JSONObject response, ArrayList<Product> productArrayList) {
         try {
             JSONArray listingPage = response.getJSONArray("listingPage");
-            if (listingPage.length() != 0){
-                for (int i=0;i<listingPage.length();i++){
+            if (listingPage.length() != 0) {
+                for (int i = 0; i < listingPage.length(); i++) {
                     JSONObject jsonObject = listingPage.getJSONObject(i);
                     productArrayList.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
                             jsonObject.getString("listingImage"),
@@ -492,14 +486,12 @@ public class Home extends Fragment {
                 }
                 productAdater.setItem(productArrayList);
                 homeListProduct.setAdapter(productAdater);
-            }
-            else {
+            } else {
                 Toast.makeText(getContext(), "Hiện không có sản phẩm nào", Toast.LENGTH_SHORT).show();
             }
 
-        }
-        catch (JSONException jsonException){
-            Log.d("json",jsonException.toString());
+        } catch (JSONException jsonException) {
+            Log.d("json", jsonException.toString());
         }
     }
 }

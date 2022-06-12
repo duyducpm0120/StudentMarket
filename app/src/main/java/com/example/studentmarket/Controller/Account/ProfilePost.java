@@ -1,5 +1,6 @@
 package com.example.studentmarket.Controller.Account;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 
+import com.example.studentmarket.Constants.PostProductReasonEnum;
 import com.example.studentmarket.Controller.Common.Product;
 import com.example.studentmarket.Controller.Common.productAdater;
 import com.example.studentmarket.R;
@@ -20,6 +23,7 @@ public class ProfilePost extends Fragment {
     private GridView homeListProductGridView;
     private ArrayList<Product> arrayProduct;
     private com.example.studentmarket.Controller.Common.productAdater productAdater;
+    private Button postNewProductButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -28,6 +32,15 @@ public class ProfilePost extends Fragment {
         MappingProduct(view);
         productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
         homeListProductGridView.setAdapter(productAdater);
+        postNewProductButton = view.findViewById(R.id.profile_info_post_new_product_button);
+        postNewProductButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(getContext(), PostProduct.class);
+                myIntent.putExtra("reason", PostProductReasonEnum.POST_NEW_PRODUCT);
+                getActivity().startActivity(myIntent);
+            }
+        });
         return view;
     }
     private void MappingProduct(View view) {

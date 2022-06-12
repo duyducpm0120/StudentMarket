@@ -10,13 +10,18 @@ import static com.example.studentmarket.Constants.EndpointConstant.POST_PRODUCT;
 import static com.example.studentmarket.Constants.EndpointConstant.SAVE_PRODUCT_FAVORITE;
 import static com.example.studentmarket.Constants.EndpointConstant.SEARCH_PRODUCT;
 import static com.example.studentmarket.Constants.EndpointConstant.UNSAVE_PRODUCT_FAVORITE;
+import static com.example.studentmarket.Constants.EndpointConstant.UPDATE_USER_AVATAR;
 import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -26,12 +31,15 @@ import com.example.studentmarket.Helper.Popup.PopupHelper;
 import com.example.studentmarket.Helper.ServiceHeaderHelper.ServiceHeaderHelper;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
+import com.example.studentmarket.Helper.VolleyMultipartRequest.VolleyMultipartRequest;
 import com.example.studentmarket.Store.SharedStorage;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -45,47 +53,67 @@ public class ProductService {
         this.context = context;
     }
 
-    public void PostProduct(String token) {
+    public void PostProduct(String title, int price, String body, Bitmap image, Integer[] categories, VolleyCallback callback) {
+//
+//        "title": "girl's underwears for boys",
+//                "price": 100000,
+//                "body": "gamer girl's underwear, worn, unwashed",
+//                "pic": {
+//            "formdata": {}
+//        },
+//        "address": "UIT",
+//                "categories": []
+
         String url = POST_PRODUCT;
 
-        JSONObject requestBody = new JSONObject();
-
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
-
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, url,
+                new Response.Listener<NetworkResponse>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        //textView.setText("Response: " + response.toString());
-                        Log.d("login response", response.toString());
+                    public void onResponse(NetworkResponse response) {
+                        try {
+                            Log.d("Create post success", "");
+                            JSONObject obj = new JSONObject(new String(response.data));
+                            callback.onSuccess(obj);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }, new Response.ErrorListener() {
+                },
+                new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        Log.d("response err", error.toString());
-                        PopupHelper popup = new PopupHelper(context, "Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
-                        Toast.makeText(context, "Login err", Toast.LENGTH_LONG).show();
-
+                        Log.d("Create post error","");
+                        Log.e("Create post error", "" + error.getMessage());
+                        callback.onError(error);
                     }
-
                 }) {
 
-            /**
-             * Passing some request headers
-             */
+            @Nullable
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("listingTitle", title);
+                params.put("listingBody", body);
+                params.put("listingPrice", String.valueOf(price));
+                params.put("listingCategories", categories.toString());
+                return params;
+            }
+
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                long imagename = System.currentTimeMillis();
+                params.put("file", new DataPart(imagename + ".png", getFileDataFromDrawable(image)));
+                return params;
+            }
+
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer " + token);
-                return headers;
+                return new ServiceHeaderHelper(context).getHeadersWithToken();
             }
         };
-        ;
-
-
         // Access the RequestQueue through your singleton class.
-        ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
+        ServiceQueue.getInstance(context).addToRequestQueue(volleyMultipartRequest);
     }
 
     public void GetListProduct(int PageSize, int PageIndex, ArrayList<Integer> listCategoyIds, VolleyCallback callback) throws JSONException {
@@ -308,7 +336,7 @@ public class ProductService {
 
     public void UnsaveFavorite(String id, VolleyCallback
             callback) throws JSONException {
-        String url = UNSAVE_PRODUCT_FAVORITE+"/"+id;
+        String url = UNSAVE_PRODUCT_FAVORITE + "/" + id;
         JSONObject requestBody = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
@@ -328,20 +356,22 @@ public class ProductService {
                         callback.onError(error);
                     }
 
-                }){
+                }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer "+new SharedStorage(context).getValue(TOKEN_ID_KEY));
+                headers.put("Authorization", "Bearer " + new SharedStorage(context).getValue(TOKEN_ID_KEY));
                 return headers;
             }
-        };;
+        };
+        ;
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
-    public void CanSaveFavorite(String id,VolleyCallback
+
+    public void CanSaveFavorite(String id, VolleyCallback
             callback) throws JSONException {
-        String url = CAN_SAVE_PRODUCT_FAVORITE+"/"+id;
+        String url = CAN_SAVE_PRODUCT_FAVORITE + "/" + id;
         JSONObject requestBody = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, requestBody, new Response.Listener<JSONObject>() {
@@ -375,7 +405,8 @@ public class ProductService {
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
-    public void GetMyProductList (VolleyCallback callback) {
+
+    public void GetMyProductList(VolleyCallback callback) {
         String url = GET_MY_LIST_PRODUCT;
 
         JSONObject requestBody = new JSONObject();
@@ -412,8 +443,13 @@ public class ProductService {
 //            }
         };
 
-
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
 }

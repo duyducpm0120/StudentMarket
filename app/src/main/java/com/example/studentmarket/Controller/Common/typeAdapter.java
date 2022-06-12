@@ -1,6 +1,5 @@
 package com.example.studentmarket.Controller.Common;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,18 +20,18 @@ import com.example.studentmarket.Component.categoryInterface;
 import java.util.List;
 
 public class typeAdapter extends RecyclerView.Adapter<typeAdapter.ViewHolder> {
-    private List<type> typeList;
+    private List<CategoryType> categoryTypeList;
     private int type;
     private categoryInterface callback;
 
-    public typeAdapter(List<type> typeList, int type,categoryInterface callback) {
-        this.typeList = typeList;
+    public typeAdapter(List<CategoryType> categoryTypeList, int type, categoryInterface callback) {
+        this.categoryTypeList = categoryTypeList;
         this.type = type;
         this.callback = callback;
     }
 
-    public void setItem(List<type> typeList){
-        this.typeList = typeList;
+    public void setItem(List<CategoryType> categoryTypeList){
+        this.categoryTypeList = categoryTypeList;
     }
 
     @NonNull
@@ -53,11 +51,11 @@ public class typeAdapter extends RecyclerView.Adapter<typeAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder,int position) {
         int index =position;
-        type typeValue = typeList.get(position);
-        holder.name.setText(typeValue.getName());
-        holder.img.setImageResource(typeValue.getImage());
+        CategoryType categoryTypeValue = categoryTypeList.get(position);
+        holder.name.setText(categoryTypeValue.getName());
+        holder.img.setImageResource(categoryTypeValue.getImage());
         if (type == 1){
-            if (typeValue.isShow()==true){
+            if (categoryTypeValue.isShow()==true){
                 holder.imageLayout.setVisibility(View.VISIBLE);
             }
             else {
@@ -69,16 +67,16 @@ public class typeAdapter extends RecyclerView.Adapter<typeAdapter.ViewHolder> {
             public void onClick(View v) {
                 if (type != 2) {
                     holder.imageLayout.setVisibility(View.VISIBLE);
-                    typeValue.setShow(true);
+                    categoryTypeValue.setShow(true);
                     if (getIndex() > 0 && getIndex() != index) {
-                        typeList.get(getIndex()).setShow(false);
+                        categoryTypeList.get(getIndex()).setShow(false);
                     }
                     notifyItemChanged(getIndex());
                     setIndex(index);
                 }
-                Log.d("typeAdapter1", String.valueOf(typeValue.getId()));
+                Log.d("typeAdapter1", String.valueOf(categoryTypeValue.getId()));
 
-                callback.action(typeValue.getId());
+                callback.action(categoryTypeValue.getId());
             }
         });
         if (holder.imageLayout !=null){
@@ -86,11 +84,11 @@ public class typeAdapter extends RecyclerView.Adapter<typeAdapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     holder.imageLayout.setVisibility(View.INVISIBLE);
-                    typeValue.setShow(false);
+                    categoryTypeValue.setShow(false);
                     callback.action(-1);
                 }
             });
-            if (typeValue.isShow()==true){
+            if (categoryTypeValue.isShow()==true){
                 holder.imageLayout.setVisibility(View.VISIBLE);
             }
             else {
@@ -105,7 +103,7 @@ public class typeAdapter extends RecyclerView.Adapter<typeAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return typeList.size();
+        return categoryTypeList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

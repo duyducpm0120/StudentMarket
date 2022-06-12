@@ -15,11 +15,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Component.categoryInterface;
-import com.example.studentmarket.Controller.Common.type;
+import com.example.studentmarket.Controller.Common.CategoryType;
 import com.example.studentmarket.Controller.Common.typeAdapter;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
@@ -30,14 +29,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import com.example.studentmarket.Helper.Utils;
 
 
 public class ListCategory extends AppCompatActivity {
     private RecyclerView listCategory;
-    private ArrayList<type> arrayCategory;
+    private ArrayList<CategoryType> arrayCategory;
     private com.example.studentmarket.Controller.Common.typeAdapter typeAdapter;
     private typeAdapter typeAdapterSearch;
     private String[] listName = {"All Woments","New Collection","Active / Sports","Luxury","Swimwear","Casual"};
@@ -73,9 +71,9 @@ public class ListCategory extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().trim().length()>0){
                     String rawInput = utils.stripAccents(s.toString());
-                    ArrayList<type> listSearch = new ArrayList<>();
+                    ArrayList<CategoryType> listSearch = new ArrayList<>();
                     for (int i=0;i<arrayCategory.size();i++){
-                        type arrayCategoryItem = arrayCategory.get(i);
+                        CategoryType arrayCategoryItem = arrayCategory.get(i);
                         String rawName = utils.stripAccents(arrayCategoryItem.getName());
                         if (rawName.toLowerCase().contains(rawInput.toLowerCase())){
                             listSearch.add(arrayCategoryItem);
@@ -121,7 +119,7 @@ public class ListCategory extends AppCompatActivity {
             if (listCate!=null){
                 for (int i = 0; i < listCate.length(); i++) {
                     JSONObject jsonObject = listCate.getJSONObject(i);
-                    arrayCategory.add(new type(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), R.drawable.type, false));
+                    arrayCategory.add(new CategoryType(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), R.drawable.type, false));
                 }
                 typeAdapter = new typeAdapter(arrayCategory, 2, new categoryInterface() {
                     @Override

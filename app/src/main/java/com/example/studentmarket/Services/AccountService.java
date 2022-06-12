@@ -21,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
+
 import static com.example.studentmarket.Helper.globalValue.*;
 
 public class AccountService {
@@ -180,8 +181,5 @@ public class AccountService {
 
     public void ValidateEmail(String email) {
     }
-
-
-
 
 }

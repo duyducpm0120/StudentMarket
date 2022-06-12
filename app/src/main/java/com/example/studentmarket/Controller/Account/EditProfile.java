@@ -1,6 +1,5 @@
 package com.example.studentmarket.Controller.Account;
 
-import static com.example.studentmarket.Constants.EndpointConstant.UPDATE_USER_AVATAR;
 import static com.example.studentmarket.Constants.RequestCode.REQUEST_PERMISSIONS;
 import static com.example.studentmarket.Constants.RequestCode.SELECT_PICTURE;
 
@@ -24,14 +23,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Helper.Popup.PopupHelper;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
-import com.example.studentmarket.Helper.VolleyMultipartRequest.VolleyMultipartRequest;
-import com.example.studentmarket.MainActivity;
 import com.example.studentmarket.Models.UserProfile;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProfileService;
@@ -41,9 +35,6 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import io.getstream.avatarview.AvatarView;
@@ -146,7 +137,7 @@ public class EditProfile extends AppCompatActivity {
         emailEditText = findViewById(R.id.edit_profile_email_text_box);
         passwordEditText = findViewById(R.id.edit_profile_password_text_box);
         userNameEditText = findViewById(R.id.edit_profile_user_name_text_box);
-        confirmButton = findViewById(R.id.profile_info_edit_profile_button);
+        confirmButton = findViewById(R.id.profile_info_post_new_product_button);
         profile_avatar = findViewById(R.id.edit_profile_profile_avatar);
 
     }

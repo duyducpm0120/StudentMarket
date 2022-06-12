@@ -11,23 +11,26 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:nestedScrollingEnabled="false">
 
         <GridView
             android:id="@+id/profile_post_list_product"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="false"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:minHeight="1000dp"
+            android:nestedScrollingEnabled="true"
             android:numColumns="2"
-            android:scrollbars="none"
+            android:scrollbars="vertical"
             android:verticalSpacing="10dp" />
 
         <Button
-            android:id="@+id/profile_info_edit_profile_button"
-            android:layout_width="wrap_content"
+            android:id="@+id/profile_info_post_new_product_button"
+            android:layout_width="150dp"
             android:layout_height="60dp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="220dp"
+            android:layout_marginTop="250dp"
             android:layout_marginRight="24dp"
             android:backgroundTint="@color/primary"
             android:clickable="true"

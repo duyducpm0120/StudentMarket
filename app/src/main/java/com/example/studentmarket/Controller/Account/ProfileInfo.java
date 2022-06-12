@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,7 +57,7 @@ public class ProfileInfo extends Fragment {
         ;
         passwordEditText = view.findViewById(R.id.password_text_box);
         ;
-        editProfileButton = view.findViewById(R.id.profile_info_edit_profile_button);
+        editProfileButton = view.findViewById(R.id.profile_info_post_new_product_button);
 
         setValues();
 

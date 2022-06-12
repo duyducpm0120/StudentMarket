@@ -159,7 +159,7 @@ public class Account extends Fragment {
         accountPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(getContext(), Post.class);
+                Intent myIntent = new Intent(getContext(), PostProduct.class);
                 startActivity(myIntent);
             }
         });

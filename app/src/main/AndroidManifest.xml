@@ -31,7 +31,7 @@
             android:name=".Controller.Message.ListMessages"
             android:exported="false" />
         <activity
-            android:name=".Controller.Account.Post"
+            android:name=".Controller.Account.PostProduct"
             android:exported="false" />
         <activity
             android:name=".Controller.Home.ListCategory"
