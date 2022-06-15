@@ -3,57 +3,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="270dp"
+    android:orientation="vertical">
+
     <FrameLayout
         android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardCornerRadius="10dp">
-        <ImageView
-            android:id="@+id/image_product"
-            android:layout_width="159dp"
-            android:src="@drawable/imgdefault"
-            android:layout_height="163dp"
-            android:clickable="true"
-            android:scaleType="fitXY"
-            style="@style/conner"
-            tools:srcCompat="@tools:sample/avatars" />
+
+            <ImageView
+                android:id="@+id/image_product"
+                style="@style/conner"
+                android:layout_width="159dp"
+                android:layout_height="163dp"
+                android:clickable="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/imgdefault"
+                tools:srcCompat="@tools:sample/avatars" />
         </androidx.cardview.widget.CardView>
 
         <ImageButton
-            android:padding="10dp"
-            android:background="@drawable/circle"
             android:id="@+id/product_heart"
-            android:clickable="true"
+            style="@style/elevation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginTop="140dp"
+            android:background="@drawable/circle"
             android:backgroundTint="#fff"
-            style="@style/elevation"
+            android:clickable="true"
+            android:padding="10dp"
             android:src="@drawable/ic_heart" />
     </FrameLayout>
 
 
     <TextView
-        android:layout_gravity="start"
-        android:layout_marginLeft="20dp"
         android:id="@+id/name_product"
         android:layout_width="159dp"
         android:layout_height="wrap_content"
-        android:textSize="12.5dp"
-        android:text="TextView" />
+        android:layout_gravity="start"
+        android:layout_marginLeft="20dp"
+        android:text="TextView"
+        android:textSize="12.5dp" />
 
     <TextView
         android:id="@+id/price_product"
-        android:layout_marginLeft="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:layout_marginLeft="20dp"
         android:text="TextView"
         android:textColor="@color/secondary"
         android:textSize="13.5dp"

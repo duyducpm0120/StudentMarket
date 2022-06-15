@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,9 +26,14 @@ import com.example.studentmarket.Models.LoginResponse;
 import com.example.studentmarket.Models.UserProfile;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.AccountService;
+import com.example.studentmarket.Services.MyFirebaseService;
 import com.example.studentmarket.Services.ProfileService;
+import com.example.studentmarket.Services.PushNotificationService;
 import com.example.studentmarket.Store.SharedStorage;
 import com.example.studentmarket.Store.UserProfileHolder;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -60,6 +66,7 @@ public class Login extends Fragment {
     private EditText loginEditTextPassword;
 
     private UserProfile userProfile;
+    MyFirebaseService myFirebaseService;
 
     public Login() {
         // Required empty public constructor
@@ -159,6 +166,22 @@ public class Login extends Fragment {
                     Log.d("Login response token", loginResponse.getToken());
                     SharedStorage storage = new SharedStorage(getContext());
                     storage.saveValue(TOKEN_ID_KEY, loginResponse.getToken());
+                    myFirebaseService = new MyFirebaseService();
+                    Task<String> FCMToken =  FirebaseMessaging.getInstance().getToken()
+                            .addOnCompleteListener(new OnCompleteListener<String>() {
+                                @Override
+                                public void onComplete(@NonNull Task<String> task) {
+                                    if (!task.isSuccessful()) {
+                                        Log.d("Fetching FCM registration token failed","");
+                                        return;
+                                    }
+
+                                    // Get new FCM registration token
+                                    String token = task.getResult();
+                                    PushNotificationService pushNotificationService = new PushNotificationService(getContext());
+                                    pushNotificationService.registerDevice(token);
+                                }
+                            });
                     getMyProfileAndNavigate();
                 }
 
@@ -175,7 +198,6 @@ public class Login extends Fragment {
             popup.Show();
         }
     }
-
 
     private void getMyProfileAndNavigate() {
         ProfileService profileService = new ProfileService(getContext());
