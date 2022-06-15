@@ -47,6 +47,7 @@
                     android:layout_marginBottom="21dp"
                     android:background="@drawable/edittextstyle">
 
+<!--                        style="@style/SpinnerTheme"-->
                     <com.example.studentmarket.Component.MultiSpinner
                         android:id="@+id/category_dropdown"
                         style="@style/SpinnerTheme"

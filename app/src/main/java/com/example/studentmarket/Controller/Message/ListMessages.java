@@ -46,11 +46,6 @@ public class ListMessages extends AppCompatActivity {
         ImageLoader imageLoader = new ImageLoader() {
             @Override
             public void loadImage(ImageView imageView, @Nullable String url, @Nullable Object payload) {
-//                DisplayMetrics displayMetrics = new DisplayMetrics();
-//                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-//                int height = displayMetrics.heightPixels;
-//                int width = displayMetrics.widthPixels;
-//                imageView.getLayoutParams().width = (int) (width*0.8);
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Picasso.get().load(url).into(imageView);
             }
@@ -107,6 +102,7 @@ public class ListMessages extends AppCompatActivity {
             public boolean onSubmit(CharSequence input) {
                 Author author = new Author("test","test","https://i.pinimg.com/236x/c1/c8/49/c1c8498d9aec3d4e6c894ddba7882031.jpg");
                 Message message = new Message("test", input.toString(),author,new Date());
+                
                 //validate and send message
                 adapter.addToStart(message, true);
                 return true;

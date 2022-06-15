@@ -38,9 +38,13 @@ import com.example.studentmarket.Controller.Common.typeAdapter;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
 
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
 import static com.example.studentmarket.Helper.globalValue.*;
 
 import com.example.studentmarket.Services.ProductService;
+import com.example.studentmarket.Services.ProductService.*;
+import com.example.studentmarket.Store.SharedStorage;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -85,6 +89,7 @@ public class Home extends Fragment {
     private FragmentTransaction fragmentTransaction;
 
     private ProductService productService;
+    private SharedStorage storage;
 
     long delay = 1000; // 1 seconds after user stops typing
     long last_text_edit = 0;
@@ -133,6 +138,7 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        storage = new SharedStorage(getContext());
         homeTextViewSeeMore = (TextView) view.findViewById(R.id.home_textview_see_more);
         homeEdittextSearch = view.findViewById(R.id.home_edittext_search);
         goToNotify = view.findViewById(R.id.home_button_notice);
@@ -141,8 +147,8 @@ public class Home extends Fragment {
         homeScroll = view.findViewById(R.id.home_scroll);
         fragmentTransaction = fragmentManager.beginTransaction();
         emptySearch = view.findViewById(R.id.home_empty_search);
-        LoadListProduct(view);
-        getListCategory(view);
+            LoadListProduct(view);
+            getListCategory(view);
         homeTextViewSeeMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,7 +176,7 @@ public class Home extends Fragment {
                     last_text_edit = System.currentTimeMillis();
                     handler.postDelayed(input_finish_checker, delay);
                 } else {
-                    refresh();
+                        refresh();
                 }
             }
         });
@@ -191,8 +197,8 @@ public class Home extends Fragment {
                             //scroll view is at bottom
                             if (homeEdittextSearch.getText().toString().isEmpty()) {
                                 try {
-                                    if (!isOver) {
-                                        if (!isFirstAcess()) {
+                                        if (!isOver){
+                                        if (!isFirstAcess()){
                                             getListProductIndex();
                                         } else {
                                             setFirstAcess(false);
