@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
@@ -114,6 +115,7 @@ public class Favorite extends Fragment {
     }
 
     private void MappingProduct(View view) {
+        homeListProduct = (GridView) view.findViewById(R.id.favorite_list_product);
         arrayProduct = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             arrayProduct.add(new Product(i, "Address", "body",

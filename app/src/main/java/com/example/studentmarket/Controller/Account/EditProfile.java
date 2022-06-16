@@ -189,7 +189,7 @@ public class EditProfile extends AppCompatActivity {
         phoneEditText.setText(userProfile.getUserPhone());
         emailEditText.setText(userProfile.getUserEmail());
         passwordEditText.setText("***ADASDAS**");
-        Picasso.get().load(userProfile.getUserPic()).transform(new CropCircleTransformation()).resize(110, 110).centerInside().into(profile_avatar);
+        Picasso.get().load(userProfile.getUserPic()).resize(110, 110).transform(new CropCircleTransformation()).centerCrop().into(profile_avatar);
     }
 
     private void updateProfile() {

@@ -20,7 +20,6 @@ import com.example.studentmarket.Controller.Message.DialogList;
 import com.example.studentmarket.Controller.Favorite.Favorite;
 import com.example.studentmarket.Controller.Home.Home;
 import com.example.studentmarket.Models.UserProfile;
-import com.example.studentmarket.Services.MyFirebaseService;
 import com.example.studentmarket.Store.SharedStorage;
 import com.example.studentmarket.Store.UserProfileHolder;
 import com.example.studentmarket.databinding.ActivityMainBinding;

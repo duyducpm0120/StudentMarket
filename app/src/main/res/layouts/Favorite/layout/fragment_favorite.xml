@@ -37,11 +37,10 @@
             <GridView
                 android:numColumns="2"
                 android:layout_marginTop="40dp"
-                android:id="@+id/list_favorite"
+                android:id="@+id/favorite_list_product"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:verticalSpacing="25dp" />
-
             <LinearLayout
                 android:id="@+id/favorite_require_login"
                 android:layout_width="match_parent"

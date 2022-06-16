@@ -90,7 +90,6 @@
         <entry key="app/src/main/res/layout/activity_list_category.xml" value="0.1595744680851064" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15" />
         <entry key="app/src/main/res/layout/activity_post.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_product_detail.xml" value="0.11594202898550725" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.16757246376811594" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.14492753623188406" />
         <entry key="app/src/main/res/layout/fragment_profile2.xml" value="0.16757246376811594" />
@@ -109,13 +108,12 @@
         <entry key="app/src/main/res/layouts/Account/layout/fragment_pre_register.xml" value="0.225" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_profile.xml" value="0.22" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_profile_avatart_bottom_sheet.xml" value="0.14492753623188406" />
-        <entry key="app/src/main/res/layouts/Account/layout/fragment_profile_info.xml" value="0.25" />
-        <entry key="app/src/main/res/layouts/Account/layout/fragment_profile_post.xml" value="0.22" />
+        <entry key="app/src/main/res/layouts/Account/layout/fragment_profile_info.xml" value="0.2" />
+        <entry key="app/src/main/res/layouts/Account/layout/fragment_profile_post.xml" value="0.13269927536231885" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_register.xml" value="0.18" />
         <entry key="app/src/main/res/layouts/Favorite/drawable/common_header.xml" value="0.1165" />
-        <entry key="app/src/main/res/layouts/Favorite/layout/fragment_favorite.xml" value="0.25" />
         <entry key="app/src/main/res/layouts/Home/layout/category.xml" value="0.14492753623188406" />
-        <entry key="app/src/main/res/layouts/Home/layout/fragment_home.xml" value="0.22" />
+        <entry key="app/src/main/res/layouts/Home/layout/fragment_home.xml" value="0.5" />
         <entry key="app/src/main/res/layouts/Home/layout/fragment_list_category.xml" value="0.14628623188405798" />
         <entry key="app/src/main/res/layouts/Home/layout/notify.xml" value="0.14628623188405798" />
         <entry key="app/src/main/res/layouts/Home/layout/product.xml" value="0.14628623188405798" />

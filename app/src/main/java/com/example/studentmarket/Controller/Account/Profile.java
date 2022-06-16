@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -42,8 +41,6 @@ public class Profile extends Fragment {
     private TextView profile_name_text_view;
 
     private UserProfile userProfile;
-    FragmentManager fragmentManager;
-    FragmentTransaction transaction;
 
     public Profile(UserProfile userProfile) {
         this.userProfile = userProfile;
@@ -65,17 +62,11 @@ public class Profile extends Fragment {
         //init
         profile_info_fragment = new ProfileInfo(userProfile);
         profile_post_fragment = new ProfilePost();
-        fragmentManager = getParentFragmentManager();
-        //init first fragment is profile_post
-        transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.profile_fragmentContainerView, profile_post_fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-        ///
         profile_avatar = view.findViewById(R.id.edit_profile_profile_avatar);
         profile_name_text_view = view.findViewById(R.id.profile_name_text_view);
+
         // set values
-        Picasso.get().load(userProfile.getUserPic()).transform(new CropCircleTransformation()).resize(110, 110).centerInside().into(profile_avatar);
+        Picasso.get().load(userProfile.getUserPic()).resize(110, 110).transform(new CropCircleTransformation()).centerCrop().into(profile_avatar);
         profile_name_text_view.setText(userProfile.getUserFullName());
         //Call TabLayout
         tabLayout = view.findViewById(R.id.profile_tab_layout);
