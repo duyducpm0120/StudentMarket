@@ -19,4 +19,5 @@ public class EndpointConstant {
     public static final String UNSAVE_PRODUCT_FAVORITE = ENDPOINT_PREFIX + "listings/unsave";
     public static final String UPDATE_USER_PROFILE = ENDPOINT_PREFIX + "user/update";
     public static final String UPDATE_USER_AVATAR = ENDPOINT_PREFIX + "user/updateProfilePic";
+    public static final String GET_MY_LIST_PRODUCT = ENDPOINT_PREFIX + "listings/myListings";
 }
