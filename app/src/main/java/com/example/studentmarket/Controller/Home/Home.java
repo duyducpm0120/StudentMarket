@@ -38,13 +38,10 @@ import com.example.studentmarket.Controller.Common.typeAdapter;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
 
-import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
 import static com.example.studentmarket.Helper.globalValue.*;
 
 import com.example.studentmarket.Services.ProductService;
-import com.example.studentmarket.Services.ProductService.*;
 import com.example.studentmarket.Store.SharedStorage;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;

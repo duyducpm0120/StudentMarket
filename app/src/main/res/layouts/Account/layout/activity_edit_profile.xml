@@ -236,7 +236,7 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/profile_info_post_new_product_button"
+                        android:id="@+id/confirm_button"
                         android:layout_width="wrap_content"
                         android:layout_height="60dp"
                         android:backgroundTint="@color/secondary"

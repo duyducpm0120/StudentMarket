@@ -41,7 +41,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
 
     @Override
     public String getBodyContentType() {
-        return "multipart/form-data;boundary=" + boundary;
+        return "multipart/form-data;boundary=" + "<calculated when request is sent>";
     }
 
     @Override

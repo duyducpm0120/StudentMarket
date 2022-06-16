@@ -8,7 +8,6 @@ import static com.example.studentmarket.Constants.EndpointConstant.UPDATE_USER_P
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -19,10 +18,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.studentmarket.Helper.ServiceHeaderHelper.ServiceHeaderHelper;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
-import com.example.studentmarket.Helper.VolleyErrorHelper;
 import com.example.studentmarket.Helper.VolleyMultipartRequest.VolleyMultipartRequest;
 import com.example.studentmarket.Models.UserProfile;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;

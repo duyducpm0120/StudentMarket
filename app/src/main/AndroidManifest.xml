@@ -40,6 +40,9 @@
             android:name=".Controller.Common.ProductDetail"
             android:exported="false" />
         <activity
+            android:name=".Controller.Account.ViewAvatar"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
@@ -49,7 +52,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.Account.ViewAvatar" />
 
         <service
             android:name=".Services.MyFirebaseService"

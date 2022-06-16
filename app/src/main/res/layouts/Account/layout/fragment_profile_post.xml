@@ -26,7 +26,7 @@
             android:verticalSpacing="10dp" />
 
         <Button
-            android:id="@+id/profile_info_post_new_product_button"
+            android:id="@+id/confirm_button"
             android:layout_width="150dp"
             android:layout_height="60dp"
             android:layout_alignParentRight="true"

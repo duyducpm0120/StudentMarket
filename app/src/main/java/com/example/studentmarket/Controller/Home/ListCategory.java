@@ -2,7 +2,6 @@ package com.example.studentmarket.Controller.Home;
 
 import static com.example.studentmarket.Helper.globalValue.setIndex;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,9 +31,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import com.example.studentmarket.Helper.Utils;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 

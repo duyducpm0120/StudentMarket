@@ -137,7 +137,7 @@ public class EditProfile extends AppCompatActivity {
         emailEditText = findViewById(R.id.edit_profile_email_text_box);
         passwordEditText = findViewById(R.id.edit_profile_password_text_box);
         userNameEditText = findViewById(R.id.edit_profile_user_name_text_box);
-        confirmButton = findViewById(R.id.profile_info_post_new_product_button);
+        confirmButton = findViewById(R.id.confirm_button);
         profile_avatar = findViewById(R.id.edit_profile_profile_avatar);
 
     }
@@ -148,6 +148,7 @@ public class EditProfile extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("change avatar", "change Avatarttt");
                 updateProfile();
+                finish();
             }
         });
         changeAvatarTextView.setOnClickListener(new View.OnClickListener() {

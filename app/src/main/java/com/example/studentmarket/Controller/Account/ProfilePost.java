@@ -32,7 +32,7 @@ public class ProfilePost extends Fragment {
         MappingProduct(view);
         productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
         homeListProductGridView.setAdapter(productAdater);
-        postNewProductButton = view.findViewById(R.id.profile_info_post_new_product_button);
+        postNewProductButton = view.findViewById(R.id.confirm_button);
         postNewProductButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

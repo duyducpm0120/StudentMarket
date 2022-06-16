@@ -98,7 +98,7 @@
         <entry key="app/src/main/res/layouts/Account/drawable/rounded_avatar.xml" value="0.1165" />
         <entry key="app/src/main/res/layouts/Account/drawable/special_header.xml" value="0.1165" />
         <entry key="app/src/main/res/layouts/Account/layout/abc.xml" value="0.16757246376811594" />
-        <entry key="app/src/main/res/layouts/Account/layout/activity_edit_profile.xml" value="0.18" />
+        <entry key="app/src/main/res/layouts/Account/layout/activity_edit_profile.xml" value="0.14" />
         <entry key="app/src/main/res/layouts/Account/layout/activity_edit_profile2.xml" value="0.14628623188405798" />
         <entry key="app/src/main/res/layouts/Account/layout/activity_view_avatar.xml" value="0.1595744680851064" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_account.xml" value="0.22" />
