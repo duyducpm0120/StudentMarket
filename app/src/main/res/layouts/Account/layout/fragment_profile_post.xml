@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/Transparent"
-    tools:context=".Controller.Account.ProfilePost">
+    tools:context=".Controller.Account.ProfilePost"
+    android:background="@color/primary">
 
     <!-- TODO: Update blank fragment layout -->
-
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:nestedScrollingEnabled="false">
-
         <GridView
             android:id="@+id/profile_post_list_product"
             android:layout_width="match_parent"
@@ -50,9 +47,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical" >
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="This is profile_post fragment" />
         </LinearLayout>
-    </RelativeLayout>
+    </ScrollView>
 
 </FrameLayout>

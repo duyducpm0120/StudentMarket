@@ -8,22 +8,24 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.Button;
 import android.widget.GridView;
 
 import com.example.studentmarket.Constants.PostProductReasonEnum;
 import com.example.studentmarket.Controller.Common.Product;
 import com.example.studentmarket.Controller.Common.productAdater;
-import com.example.studentmarket.R;
 
-import java.util.ArrayList;
+import com.example.studentmarket.R;
 
 
 public class ProfilePost extends Fragment {
+
     private GridView homeListProductGridView;
     private ArrayList<Product> arrayProduct;
     private com.example.studentmarket.Controller.Common.productAdater productAdater;
     private Button postNewProductButton;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class ProfilePost extends Fragment {
                     "https://product.hstatic.net/200000260587/product/zve03357_9bb9116b5f3341059fba977d701403f2_grande.png",
                     "timestapm", "DKNY t-shirt - colour block front logo" + i, i, i, "3" + i + ".000 VND", true));
         }
+
 
     }
 }
