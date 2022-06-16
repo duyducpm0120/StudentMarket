@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.studentmarket.R;
 import static com.example.studentmarket.Helper.globalValue.*;
 import com.example.studentmarket.Component.categoryInterface;
-import com.squareup.picasso.Picasso;
 
 
 import java.util.List;
@@ -56,8 +55,7 @@ public class typeAdapter extends RecyclerView.Adapter<typeAdapter.ViewHolder> {
         int index =position;
         type typeValue = typeList.get(position);
         holder.name.setText(typeValue.getName());
-        Picasso.get().load(typeValue.getImage()).into(holder.img);
-
+        holder.img.setImageResource(typeValue.getImage());
         if (type == 1){
             if (typeValue.isShow()==true){
                 holder.imageLayout.setVisibility(View.VISIBLE);
@@ -78,6 +76,8 @@ public class typeAdapter extends RecyclerView.Adapter<typeAdapter.ViewHolder> {
                     notifyItemChanged(getIndex());
                     setIndex(index);
                 }
+                Log.d("typeAdapter1", String.valueOf(typeValue.getId()));
+
                 callback.action(typeValue.getId());
             }
         });

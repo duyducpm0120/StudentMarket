@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="40dp"
                 android:text="@string/Appname"
-                android:textSize="28sp"
+                android:textSize="32dp"
                 android:textStyle="bold" />
 
         </LinearLayout>

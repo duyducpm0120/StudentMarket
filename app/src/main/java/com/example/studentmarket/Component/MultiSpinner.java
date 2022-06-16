@@ -39,7 +39,7 @@ public class MultiSpinner extends androidx.appcompat.widget.AppCompatSpinner imp
                 total++;
             }
         }
-        if (total>10) {
+        if (total>3) {
             Toast.makeText(getContext(), "Chỉ được chọn 3 danh mục trở xuống!", Toast.LENGTH_SHORT).show();
             ((AlertDialog) dialog).getListView().setItemChecked(which,false);
             selected[which] = false;

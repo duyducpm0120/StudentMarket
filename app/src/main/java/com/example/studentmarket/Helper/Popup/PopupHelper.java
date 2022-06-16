@@ -55,17 +55,17 @@ public class PopupHelper {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (isHasCancelButton){
-//                    ArrayList<Product> listProduct = getListProduct();
-//                    for (int i=0;i<listProduct.size();i++){
-//                        if (listProduct.get(i).getId() == id){
-//                            listProduct.remove(i);
-//                            break;
-//                        }
-//                    }
-//                    setListProduct(listProduct);
-//                    dialog.cancel();
-//                    Activity activity = (Activity) context;
-//                    activity.finish();
+                    ArrayList<Product> listProduct = getListProduct();
+                    for (int i=0;i<listProduct.size();i++){
+                        if (listProduct.get(i).getId() == id){
+                            listProduct.remove(i);
+                            break;
+                        }
+                    }
+                    setListProduct(listProduct);
+                    dialog.cancel();
+                    Activity activity = (Activity) context;
+                    activity.finish();
                 }
             }
         });

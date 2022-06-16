@@ -88,7 +88,7 @@ public class ListCategory1 extends Fragment {
         listCategory = (RecyclerView) view.findViewById(R.id.list_category);
         arrayCategory = new ArrayList<>();
         for (int i=0;i<listName.length;i++){
-            arrayCategory.add(new type("1",listName[i],"",false));
+            arrayCategory.add(new type("1",listName[i],R.drawable.type,false));
         }
     }
 }
