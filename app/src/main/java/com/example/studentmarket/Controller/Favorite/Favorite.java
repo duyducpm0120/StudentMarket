@@ -98,7 +98,7 @@ public class Favorite extends Fragment {
     }
 
     private void MappingProduct(View view) {
-        homeListProduct = (GridView) view.findViewById(R.id.list_favorite);
+        homeListProduct = (GridView) view.findViewById(R.id.favorite_list_product);
         arrayProduct = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             arrayProduct.add(new Product(i, "Address", "body",
