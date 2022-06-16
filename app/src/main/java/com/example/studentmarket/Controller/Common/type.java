@@ -3,10 +3,10 @@ package com.example.studentmarket.Controller.Common;
 public class type {
     private String id;
     private String name;
-    private int image;
+    private String image;
     private boolean show;
 
-    public type(String id,String name, int image,boolean show) {
+    public type(String id,String name, String image,boolean show) {
         this.id = id;
         this.name = name;
         this.image = image;
@@ -17,7 +17,7 @@ public class type {
         return name;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
@@ -25,7 +25,7 @@ public class type {
         this.name = name;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

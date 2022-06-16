@@ -1,6 +1,9 @@
 package com.example.studentmarket.Controller.Account;
 
+import static com.example.studentmarket.Helper.globalValue.setIndex;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,9 +20,17 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.VolleyError;
 import com.example.studentmarket.Component.MultiSpinner;
+import com.example.studentmarket.Controller.Common.type;
+import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.MainActivity;
 import com.example.studentmarket.R;
+import com.example.studentmarket.Services.ProductService;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,13 +46,17 @@ public class Post extends AppCompatActivity {
     private EditText postPriceEdittext;
     private EditText postBodyEdittext;
     private Button postPostButton;
-    private String[] listName = {"All Woments", "New Collection", "Active / Sports", "Luxury", "Swimwear", "Casual"};
+    private ArrayList<type> listType;
+    private ProductService productService;
+    private String[] listName = new String[]{};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
+        productService = new ProductService(this);
         postDropdown = findViewById(R.id.post_dropdown);
         postCloseButton = findViewById(R.id.post_close_button);
         postUploadImage = findViewById(R.id.post_upload_image);
@@ -49,16 +64,8 @@ public class Post extends AppCompatActivity {
         postPriceEdittext = findViewById(R.id.post_price);
         postBodyEdittext = findViewById(R.id.post_body);
         postPostButton = findViewById(R.id.post_post);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, listName);
-//        postDropdown.setAdapter(adapter);
-        postDropdown.setItems(new ArrayList<String>(Arrays.asList(listName)), "Chọn danh mục", new MultiSpinner.MultiSpinnerListener() {
-            @Override
-            public void onItemsSelected(boolean[] selected) {
-                for (int i = 0; i < selected.length; i++) {
-                    Log.d("key", String.valueOf(selected[i]));
-                }
-            }
-        });
+
+        getListCategory();
 
         postPostButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +113,50 @@ public class Post extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getListCategory(){
+        try {
+            productService.GetListCategory(new VolleyCallback() {
+                @Override
+                public void onSuccess(JSONObject response) throws JSONException {
+                    MappingType(response);
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    Log.d("load list category err",error.toString());
+                }
+            });
+        } catch (JSONException exception){
+            Log.d("err",exception.toString());
+        }
+    }
+
+    private void MappingType(JSONObject res) {
+        try {
+            listType = new ArrayList<>();
+            JSONArray listCate = res.getJSONArray("categories");
+            if (listCate!=null){
+                listName = new String[listCate.length()];
+                for (int i = 0; i < listCate.length(); i++) {
+                    JSONObject jsonObject = listCate.getJSONObject(i);
+                    listType.add(new type(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), jsonObject.getString("listingCategoryIcon"), false));
+                    listName[i] = jsonObject.getString("listingCategoryName");
+                }
+                postDropdown.setItems(new ArrayList<String>(Arrays.asList(listName)), "Chọn danh mục", new MultiSpinner.MultiSpinnerListener() {
+                    @Override
+                    public void onItemsSelected(boolean[] selected) {
+                        for (int i = 0; i < selected.length; i++) {
+                            Log.d("key", String.valueOf(selected[i]));
+                        }
+                    }
+                });
+
+            }
+        } catch (JSONException err){
+            Log.d("conver list category err",err.toString());
+        }
     }
 
     @Override

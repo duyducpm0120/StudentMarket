@@ -38,10 +38,13 @@ import com.example.studentmarket.Controller.Common.type;
 import com.example.studentmarket.Controller.Common.typeAdapter;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
+
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
 import static com.example.studentmarket.Helper.globalValue.*;
 
 import com.example.studentmarket.Services.ProductService;
 import com.example.studentmarket.Services.ProductService.*;
+import com.example.studentmarket.Store.SharedStorage;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -88,6 +91,7 @@ public class Home extends Fragment {
     private FragmentTransaction fragmentTransaction;
 
     private ProductService productService;
+    private SharedStorage storage;
 
     long delay = 1000; // 1 seconds after user stops typing
     long last_text_edit = 0;
@@ -136,6 +140,7 @@ public class Home extends Fragment {
             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        storage = new SharedStorage(getContext());
         homeTextViewSeeMore = (TextView) view.findViewById(R.id.home_textview_see_more);
         homeEdittextSearch = view.findViewById(R.id.home_edittext_search);
         goToNotify = view.findViewById(R.id.home_button_notice);
@@ -144,12 +149,13 @@ public class Home extends Fragment {
         homeScroll = view.findViewById(R.id.home_scroll);
         fragmentTransaction = fragmentManager.beginTransaction();
         emptySearch = view.findViewById(R.id.home_empty_search);
-        LoadListProduct(view);
-        getListCategory(view);
+            LoadListProduct(view);
+            getListCategory(view);
         homeTextViewSeeMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getContext(), ListCategory.class);
+                setIndex(-1);
                 startActivityForResult(myIntent,999);
 //                getContext().startActivity(myIntent);
             }
@@ -173,7 +179,7 @@ public class Home extends Fragment {
                     last_text_edit = System.currentTimeMillis();
                     handler.postDelayed(input_finish_checker, delay);
                 } else {
-                    refresh();
+                        refresh();
                 }
             }
         });
@@ -194,7 +200,7 @@ public class Home extends Fragment {
                             //scroll view is at bottom
                             if (homeEdittextSearch.getText().toString().isEmpty()){
                                 try {
-                                    if (!isOver){
+                                        if (!isOver){
                                         if (!isFirstAcess()){
                                             getListProductIndex();
                                         } else {
@@ -322,7 +328,7 @@ public class Home extends Fragment {
                 arrayType = new ArrayList<>();
                 for (int i = 0; i < listCate.length(); i++) {
                     JSONObject jsonObject = listCate.getJSONObject(i);
-                    arrayType.add(new type(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), R.drawable.type, false));
+                    arrayType.add(new type(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), jsonObject.getString("listingCategoryIcon"), false));
                 }
                 createTypeAdapter();
                 homeListType.setAdapter(homeTypeAdapter);
@@ -452,8 +458,6 @@ public class Home extends Fragment {
                 if (index == -1){
                     productAdater.setItem(getListProduct());
                     productAdater.notifyDataSetChanged();
-//                    homeListProduct.setAdapter(productAdater);
-                    Log.d("tag", String.valueOf(index));
                     return;
                 }
                 ArrayList<Product> arrayProductCate = new ArrayList<>();

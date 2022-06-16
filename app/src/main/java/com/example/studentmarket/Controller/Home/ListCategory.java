@@ -2,6 +2,7 @@ package com.example.studentmarket.Controller.Home;
 
 import static com.example.studentmarket.Helper.globalValue.setIndex;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,6 +34,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 
 import com.example.studentmarket.Helper.Utils;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 
 
 public class ListCategory extends AppCompatActivity {
@@ -46,7 +51,8 @@ public class ListCategory extends AppCompatActivity {
     private EditText listCategorySearch;
     private LinearLayout listCategoryEmtySearch;
 
-
+    private String name="testuser12771@gmail.com";
+    private String pass="Testuser1277";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -63,6 +69,32 @@ public class ListCategory extends AppCompatActivity {
                 finish();
             }
         });
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+//        if(mAuth.getCurrentUser() == null) {
+//            // Start sign in/sign up activity
+//            mAuth.signInWithEmailAndPassword(name,pass).addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
+//                @Override
+//                public void onComplete(@NonNull Task<AuthResult> task) {
+//                    if (task.isSuccessful()){
+//                        Log.d("suc","Thành công");
+//                    } else {
+//                        mAuth.createUserWithEmailAndPassword(name,pass).addOnCompleteListener((Activity) this, new OnCompleteListener<AuthResult>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<AuthResult> task) {
+//                                if (task.isSuccessful()){
+//                                    Log.d("fail","Thất bại");
+//                                } else {
+//                                    Log.d("tk",task.getException().toString());
+//                                }
+//                            }
+//                        });
+//                    }
+//                }
+//            });
+//        } else {
+//
+//        }
         listCategorySearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -121,7 +153,7 @@ public class ListCategory extends AppCompatActivity {
             if (listCate!=null){
                 for (int i = 0; i < listCate.length(); i++) {
                     JSONObject jsonObject = listCate.getJSONObject(i);
-                    arrayCategory.add(new type(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), R.drawable.type, false));
+                    arrayCategory.add(new type(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), jsonObject.getString("listingCategoryIcon"), false));
                 }
                 typeAdapter = new typeAdapter(arrayCategory, 2, new categoryInterface() {
                     @Override
