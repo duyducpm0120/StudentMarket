@@ -15,14 +15,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.VolleyError;
-import com.example.studentmarket.Helper.CircleTransform.CircleTransform;
+import com.example.studentmarket.Constants.IntentMessage;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Helper.VolleyErrorHelper;
 import com.example.studentmarket.Models.UserProfile;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProfileService;
 import com.example.studentmarket.Store.UserProfileHolder;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -98,11 +97,14 @@ public class Profile extends Fragment {
             public void onClick(View v) {
 //                ProfileBottomSheet profileBottomSheet = new ProfileBottomSheet();
 //                profileBottomSheet.show(getActivity().getSupportFragmentManager(),"TAG");
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
-                View bottomSheetView = inflater.inflate(R.layout.fragment_profile_avatart_bottom_sheet, view.findViewById(R.id.bottom_sheet_id), false);
-                bottomSheetDialog.setContentView(bottomSheetView);
-                bottomSheetDialog.show();
 
+//                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+//                View bottomSheetView = inflater.inflate(R.layout.fragment_profile_avatart_bottom_sheet, view.findViewById(R.id.bottom_sheet_id), false);
+//                bottomSheetDialog.setContentView(bottomSheetView);
+//                bottomSheetDialog.show();
+                Intent myIntent = new Intent(getContext(), ViewAvatar.class);
+                myIntent.putExtra(IntentMessage.VIEW_AVATAR, userProfile.getUserPic());
+                getContext().startActivity(myIntent);
             }
         });
 
@@ -122,6 +124,7 @@ public class Profile extends Fragment {
         intent.putExtra("avatar", "aaa");
         startActivity(intent);
     }
+
     private void updateUserProfileHolder() {
 //        UserProfileHolder.getInstance().updateUserData(getContext());
 //        this.userProfile = UserProfileHolder.getInstance().getData();
@@ -144,6 +147,7 @@ public class Profile extends Fragment {
             }
         });
     }
+
     @Override
     public void onResume() {
         super.onResume();

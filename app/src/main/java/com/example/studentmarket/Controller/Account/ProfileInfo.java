@@ -57,7 +57,7 @@ public class ProfileInfo extends Fragment {
         ;
         passwordEditText = view.findViewById(R.id.password_text_box);
         ;
-        editProfileButton = view.findViewById(R.id.profile_info_post_new_product_button);
+        editProfileButton = view.findViewById(R.id.confirm_button);
 
         setValues();
 

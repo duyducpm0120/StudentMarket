@@ -22,8 +22,6 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
-import static com.example.studentmarket.Helper.globalValue.*;
-
 public class AccountService {
     private Context context;
 

@@ -41,6 +41,7 @@ import com.example.studentmarket.R;
 import static com.example.studentmarket.Helper.globalValue.*;
 
 import com.example.studentmarket.Services.ProductService;
+import com.example.studentmarket.Store.SharedStorage;
 
 import org.json.JSONArray;
 import org.json.JSONException;

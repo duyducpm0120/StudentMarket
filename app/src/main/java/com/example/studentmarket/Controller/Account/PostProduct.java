@@ -20,6 +20,7 @@ import com.example.studentmarket.Component.MultiSpinner;
 import com.example.studentmarket.Constants.RequestCode;
 import com.example.studentmarket.Controller.Common.CategoryType;
 import com.example.studentmarket.Helper.BitmapConverter;
+import com.example.studentmarket.Helper.RetrofitHelper.RetrofitCallback;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProductService;
@@ -51,6 +52,7 @@ public class PostProduct extends AppCompatActivity {
     private ArrayList<Integer> categoryIdListToRequest = new ArrayList<>();
     ProductService productService = new ProductService(this);
     Bitmap productImageBitmap;
+    Uri avatarUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,18 +88,18 @@ public class PostProduct extends AppCompatActivity {
                     if (!title.isEmpty()) {
                         if (price != 0) {
                             if (!body.isEmpty()) {
-                                Toast.makeText(PostProduct.this, "Bạn đã đăng bài " + categoryDropdown.getSelectedItem().toString() + " " + postTitleEdittext.getText() + " " + postPriceEdittext.getText() + " " + postBodyEdittext.getText(), Toast.LENGTH_SHORT).show();
                                 Integer[] categoryIdList = new Integer[categoryIdListToRequest.size()];
                                 categoryIdList = categoryIdListToRequest.toArray(categoryIdList);
-                                productService.PostProduct(title, price, body, productImageBitmap, categoryIdList, new VolleyCallback(){
+                                productService.PostProduct(title, price, body, avatarUri, categoryIdList, new RetrofitCallback() {
                                     @Override
-                                    public void onSuccess(JSONObject response) throws JSONException {
-                                        return;
+                                    public void onSuccess(Object response) throws JSONException {
+                                        Log.d("retrofit success","aaaa");
+                                        Toast.makeText(PostProduct.this, "Bạn đã đăng bài " + categoryDropdown.getSelectedItem().toString() + " " + postTitleEdittext.getText() + " " + postPriceEdittext.getText() + " " + postBodyEdittext.getText(), Toast.LENGTH_SHORT).show();
                                     }
 
                                     @Override
-                                    public void onError(VolleyError error) {
-                                        return;
+                                    public void onError(Object error) {
+                                        Log.d("retrofit fail","aaaa");
                                     }
                                 });
                             } else {
@@ -153,6 +155,7 @@ public class PostProduct extends AppCompatActivity {
             Picasso.get().load(uri).transform(new CropCircleTransformation()).resize(180, 180).centerInside().into(postUploadImage);
             Uri picUri = data.getData();
             productImageBitmap = new BitmapConverter(this).convertUriToBitMap(uri);
+            avatarUri = picUri;
         }
     }
 
