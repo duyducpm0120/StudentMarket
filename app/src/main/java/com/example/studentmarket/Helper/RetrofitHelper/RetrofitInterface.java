@@ -2,6 +2,7 @@ package com.example.studentmarket.Helper.RetrofitHelper;
 
 import com.example.studentmarket.Constants.EndpointConstant;
 import com.example.studentmarket.Models.PostProductResponse;
+import com.example.studentmarket.Models.ProductBodyRequest;
 
 
 import okhttp3.MultipartBody;
@@ -18,9 +19,9 @@ public interface RetrofitInterface {
     String BASE_URL = EndpointConstant.ENDPOINT_PREFIX;
 //    @GET("marvel")
 //    Call<List<results>> getsuperHeroes();
-    @POST("listings/createListing")
+    @POST("listings/createListing/")
     @Multipart
     Call<PostProductResponse> postProduct(@Header("Authorization") String authorization,
                                           @Part MultipartBody.Part img,
-                                          @Part MultipartBody.Part body);
+                                          @Part("body") ProductBodyRequest body);
 }

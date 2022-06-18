@@ -95,6 +95,7 @@ public class PostProduct extends AppCompatActivity {
                                     public void onSuccess(Object response) throws JSONException {
                                         Log.d("retrofit success","aaaa");
                                         Toast.makeText(PostProduct.this, "Bạn đã đăng bài " + categoryDropdown.getSelectedItem().toString() + " " + postTitleEdittext.getText() + " " + postPriceEdittext.getText() + " " + postBodyEdittext.getText(), Toast.LENGTH_SHORT).show();
+                                        finish();
                                     }
 
                                     @Override
@@ -152,7 +153,7 @@ public class PostProduct extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RequestCode.SELECT_PICTURE && resultCode == -1) {
             Uri uri = data.getData();
-            Picasso.get().load(uri).transform(new CropCircleTransformation()).resize(180, 180).centerInside().into(postUploadImage);
+            Picasso.get().load(uri).resize(180, 180).centerInside().into(postUploadImage);
             Uri picUri = data.getData();
             productImageBitmap = new BitmapConverter(this).convertUriToBitMap(uri);
             avatarUri = picUri;

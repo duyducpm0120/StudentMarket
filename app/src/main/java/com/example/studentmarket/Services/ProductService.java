@@ -14,7 +14,6 @@ import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KE
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -29,8 +28,9 @@ import com.example.studentmarket.Helper.Utils;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Models.FileRequestBody;
 import com.example.studentmarket.Models.PostProductResponse;
+import com.example.studentmarket.Models.ProductBodyRequest;
 import com.example.studentmarket.Store.SharedStorage;
-
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,7 +39,6 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +48,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.http.Body;
 
 public class ProductService {
 
@@ -70,29 +70,19 @@ public class ProductService {
 //                "categories": []
 
 
-        JSONObject jsonBody = new JSONObject();
-
-        try {
-            jsonBody.put("listingTitle", title);
-            jsonBody.put("listingBody", body);
-            jsonBody.put("listingPrice", String.valueOf(price));
-            jsonBody.put("listingCategories", categories.toString());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
         File file = new File(imageUri.getPath());
         String contentType = new Utils().getContentType(imageUri, context);
         FileRequestBody fileRequestBody = null;
         try {
-             fileRequestBody = new FileRequestBody(context.getContentResolver().openInputStream(imageUri), contentType);
+            fileRequestBody = new FileRequestBody(context.getContentResolver().openInputStream(imageUri), contentType);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         MultipartBody.Part img = MultipartBody.Part.createFormData("img", file.getName(), fileRequestBody);
-        MultipartBody.Part requestBody = MultipartBody.Part.createFormData("body", String.valueOf(jsonBody));
-        Call<PostProductResponse> call = RetrofitClient.getInstance().getMyApi().postProduct("Bearer " + new SharedStorage(context).getValue(TOKEN_ID_KEY), img, requestBody);
+
+        ProductBodyRequest productBodyRequest = new ProductBodyRequest(title, price, body, categories);
+
+        Call<PostProductResponse> call = RetrofitClient.getInstance().getMyApi().postProduct("Bearer " + new SharedStorage(context).getValue(TOKEN_ID_KEY), img, productBodyRequest);
         call.enqueue(new Callback<PostProductResponse>() {
             @Override
             public void onResponse(Call<PostProductResponse> call, retrofit2.Response<PostProductResponse> response) {
@@ -102,14 +92,16 @@ public class ProductService {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Log.d("retrofit response message", response.message());
 
             }
 
             @Override
             public void onFailure(Call<PostProductResponse> call, Throwable t) {
-                Log.d("retrofit fail message", t.getMessage());
+                Log.e("retrofit fail message", t.getMessage());
                 callback.onError(call);
             }
+
         });
     }
 
