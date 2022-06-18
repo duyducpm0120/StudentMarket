@@ -160,7 +160,7 @@ public class ProfileService {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Update avatar error","");
+                        Log.e("Update avatar error","");
                         Log.e("Update avatar error", "" + error.getMessage());
                         callback.onError(error);
                     }

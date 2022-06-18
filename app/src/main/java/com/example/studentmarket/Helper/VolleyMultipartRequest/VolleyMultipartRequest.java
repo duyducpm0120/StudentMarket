@@ -19,7 +19,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
 
     private final String twoHyphens = "--";
     private final String lineEnd = "\r\n";
-    private final String boundary = "apiclient-" + System.currentTimeMillis();
+    private final String boundary = "<calculated when request is sent>";
 
     private Response.Listener<NetworkResponse> mListener;
     private Response.ErrorListener mErrorListener;

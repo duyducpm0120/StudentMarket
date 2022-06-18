@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.studentmarket.Constants.IntentMessage;
 import com.example.studentmarket.Constants.RequestCode;
 import com.example.studentmarket.R;
+import com.example.studentmarket.Store.UserProfileHolder;
 import com.squareup.picasso.Picasso;
 
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -27,9 +28,10 @@ public class ViewAvatar extends AppCompatActivity {
 
     }
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_view_avatar);
         goBackButton = findViewById(R.id.view_avatar_goback_button);
         goBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,12 +40,11 @@ public class ViewAvatar extends AppCompatActivity {
             }
         });
         avatar = findViewById(R.id.view_avatart_avatar_image_view);
-//        Intent intent = getIntent();
-//        String avatar_url = intent.getStringExtra(IntentMessage.VIEW_AVATAR);
-//
-//        Picasso.get().load(avatar_url).transform(new CropCircleTransformation()).resize(110, 110).centerInside().into(avatar);
 
-        setContentView(R.layout.activity_view_avatar);
+        Intent intent = getIntent();
+//        String avatar_url = intent.getStringExtra(IntentMessage.VIEW_AVATAR);
+        String avatar_url = UserProfileHolder.getInstance().getData().userPic;
+        Picasso.get().load(avatar_url).transform(new CropCircleTransformation()).resize(200, 200).centerInside().into(avatar);
     }
 
 
