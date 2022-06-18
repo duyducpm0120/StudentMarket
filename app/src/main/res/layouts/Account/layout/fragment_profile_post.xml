@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/Transparent"
+    android:layout_height="1000dp"
+    android:background="#00000000"
     tools:context=".Controller.Account.ProfilePost">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,12 +12,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#00000000"
         android:nestedScrollingEnabled="false">
 
         <GridView
             android:id="@+id/profile_post_list_product"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="1000dp"
+            android:background="#00000000"
             android:clickable="true"
             android:minHeight="1000dp"
             android:nestedScrollingEnabled="true"
@@ -25,34 +27,35 @@
             android:scrollbars="vertical"
             android:verticalSpacing="10dp" />
 
-        <Button
-            android:id="@+id/confirm_button"
-            android:layout_width="150dp"
-            android:layout_height="60dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="250dp"
-            android:layout_marginRight="24dp"
-            android:backgroundTint="@color/primary"
-            android:clickable="true"
-            android:elevation="2dp"
-            android:shadowColor="@color/gray"
-            android:shadowRadius="8"
-            android:text="@string/add"
-            android:textColorHighlight="@color/primary"
-            android:textColorHint="@color/primary"
-            android:textColorLink="@color/primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:translationZ="2dp"
-            app:cornerRadius="8dp"
-            app:rippleColor="@color/primary" />
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:gravity="bottom|right"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingBottom="20dp">
 
+            <Button
+                android:id="@+id/confirm_button"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:backgroundTint="@color/primary"
+                android:clickable="true"
+                android:elevation="2dp"
+                android:foregroundGravity="right"
+                android:shadowColor="@color/gray"
+                android:shadowRadius="8"
+                android:text="@string/add"
+                android:textColorHighlight="@color/primary"
+                android:textColorHint="@color/primary"
+                android:textColorLink="@color/primary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:translationZ="2dp"
+                app:cornerRadius="8dp"
+                app:rippleColor="@color/primary" />
         </LinearLayout>
+
     </RelativeLayout>
 
 </FrameLayout>
