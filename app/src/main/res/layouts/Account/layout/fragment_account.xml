@@ -43,6 +43,12 @@
             android:layout_height="wrap_content"
             style="@style/myButton"
             android:text="Post" />
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/myButton"
+            android:text="Post" />
     </LinearLayout>
 
 </FrameLayout>

@@ -24,7 +24,7 @@ import com.example.studentmarket.Store.UserProfileHolder;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
-
+import static com.example.studentmarket.Helper.globalValue.*;
 
 public class ProfileInfo extends Fragment {
 
@@ -86,6 +86,7 @@ public class ProfileInfo extends Fragment {
                 //textView.setText("Response: " + response.toString());
                 Log.d("reload profile response", response.toString());
                 UserProfile userProfile = new Gson().fromJson(String.valueOf(response), UserProfile.class);
+                setUserId(userProfile.getUserId());
                 UserProfileHolder.getInstance().setData(userProfile);
                 Log.d("reload profile response user pic", userProfile.getUserPic());
             }

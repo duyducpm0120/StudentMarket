@@ -50,9 +50,6 @@ public class ListCategory extends AppCompatActivity {
     private ImageButton listCategoryGoBack;
     private EditText listCategorySearch;
     private LinearLayout listCategoryEmtySearch;
-
-    private String name="testuser12771@gmail.com";
-    private String pass="Testuser1277";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -69,32 +66,6 @@ public class ListCategory extends AppCompatActivity {
                 finish();
             }
         });
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-//        if(mAuth.getCurrentUser() == null) {
-//            // Start sign in/sign up activity
-//            mAuth.signInWithEmailAndPassword(name,pass).addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
-//                @Override
-//                public void onComplete(@NonNull Task<AuthResult> task) {
-//                    if (task.isSuccessful()){
-//                        Log.d("suc","Thành công");
-//                    } else {
-//                        mAuth.createUserWithEmailAndPassword(name,pass).addOnCompleteListener((Activity) this, new OnCompleteListener<AuthResult>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<AuthResult> task) {
-//                                if (task.isSuccessful()){
-//                                    Log.d("fail","Thất bại");
-//                                } else {
-//                                    Log.d("tk",task.getException().toString());
-//                                }
-//                            }
-//                        });
-//                    }
-//                }
-//            });
-//        } else {
-//
-//        }
         listCategorySearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

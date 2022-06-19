@@ -10,6 +10,7 @@ public class globalValue {
     private static String username;
     private static String token;
     private static boolean firstAcess=true;
+    private static String userId;
 
     public static boolean isFirstAcess() {
         return firstAcess;
@@ -49,5 +50,13 @@ public class globalValue {
 
     public static void setListProduct(ArrayList<Product> listProduct) {
         globalValue.listProduct = listProduct;
+    }
+
+    public static String getUserId() {
+        return userId;
+    }
+
+    public static void setUserId(String userId) {
+        globalValue.userId = userId;
     }
 }
