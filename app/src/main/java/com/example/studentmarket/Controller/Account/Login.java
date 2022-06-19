@@ -28,6 +28,7 @@ import com.example.studentmarket.R;
 import com.example.studentmarket.Services.AccountService;
 import com.example.studentmarket.Services.MyFirebaseService;
 import com.example.studentmarket.Services.ProfileService;
+import com.example.studentmarket.Services.PushNotificationService;
 import com.example.studentmarket.Store.SharedStorage;
 import com.example.studentmarket.Store.UserProfileHolder;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -165,6 +166,22 @@ public class Login extends Fragment {
                     Log.d("Login response token", loginResponse.getToken());
                     SharedStorage storage = new SharedStorage(getContext());
                     storage.saveValue(TOKEN_ID_KEY, loginResponse.getToken());
+                    myFirebaseService = new MyFirebaseService();
+                    Task<String> FCMToken =  FirebaseMessaging.getInstance().getToken()
+                            .addOnCompleteListener(new OnCompleteListener<String>() {
+                                @Override
+                                public void onComplete(@NonNull Task<String> task) {
+                                    if (!task.isSuccessful()) {
+                                        Log.d("Fetching FCM registration token failed","");
+                                        return;
+                                    }
+
+                                    // Get new FCM registration token
+                                    String token = task.getResult();
+                                    PushNotificationService pushNotificationService = new PushNotificationService(getContext());
+                                    pushNotificationService.registerDevice(token);
+                                }
+                            });
                     getMyProfileAndNavigate();
                 }
 
