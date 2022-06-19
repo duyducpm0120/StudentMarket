@@ -15,7 +15,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.studentmarket.Helper.ServiceHeaderHelper.ServiceHeaderHelper;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
-import com.example.studentmarket.Models.LoginResponse;
+import com.example.studentmarket.Models.response.LoginResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -18,7 +18,7 @@ import com.android.volley.VolleyError;
 import com.example.studentmarket.Constants.IntentMessage;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Helper.VolleyErrorHelper;
-import com.example.studentmarket.Models.UserProfile;
+import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProfileService;
 import com.example.studentmarket.Store.UserProfileHolder;
@@ -39,11 +39,11 @@ public class Profile extends Fragment {
     private AvatarView profile_avatar;
     private TextView profile_name_text_view;
 
-    private UserProfile userProfile;
+    private UserProfileModel userProfile;
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
 
-    public Profile(UserProfile userProfile) {
+    public Profile(UserProfileModel userProfile) {
         this.userProfile = userProfile;
         Log.d("profile accnamne", userProfile.getAccountName());
     }
@@ -142,7 +142,7 @@ public class Profile extends Fragment {
             public void onSuccess(JSONObject response) {
                 //textView.setText("Response: " + response.toString());
                 Log.d("reload profile response", response.toString());
-                UserProfile userProfile = new Gson().fromJson(String.valueOf(response), UserProfile.class);
+                UserProfileModel userProfile = new Gson().fromJson(String.valueOf(response), UserProfileModel.class);
                 UserProfileHolder.getInstance().setData(userProfile);
                 Log.d("reload profile response user pic", userProfile.getUserPic());
             }

@@ -19,7 +19,7 @@ import com.example.studentmarket.Helper.ServiceHeaderHelper.ServiceHeaderHelper;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Helper.VolleyMultipartRequest.VolleyMultipartRequest;
-import com.example.studentmarket.Models.UserProfile;
+import com.example.studentmarket.Models.UserProfileModel;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -103,7 +103,7 @@ public class ProfileService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void updateUserProfile(UserProfile userProfile, VolleyCallback callback) throws JSONException {
+    public void updateUserProfile(UserProfileModel userProfile, VolleyCallback callback) throws JSONException {
         String url = UPDATE_USER_PROFILE;
 
         JSONObject requestBody = new JSONObject();

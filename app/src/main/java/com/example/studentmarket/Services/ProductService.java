@@ -26,11 +26,10 @@ import com.example.studentmarket.Helper.RetrofitHelper.RetrofitClient;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
 import com.example.studentmarket.Helper.Utils;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
-import com.example.studentmarket.Models.FileRequestBody;
-import com.example.studentmarket.Models.PostProductResponse;
-import com.example.studentmarket.Models.ProductBodyRequest;
+import com.example.studentmarket.Models.request.FileRequestBody;
+import com.example.studentmarket.Models.request.ProductBodyRequest;
+import com.example.studentmarket.Models.ProductModel;
 import com.example.studentmarket.Store.SharedStorage;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,12 +42,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.http.Body;
 
 public class ProductService {
 
@@ -82,10 +78,10 @@ public class ProductService {
 
         ProductBodyRequest productBodyRequest = new ProductBodyRequest(title, price, body, categories);
 
-        Call<PostProductResponse> call = RetrofitClient.getInstance().getMyApi().postProduct("Bearer " + new SharedStorage(context).getValue(TOKEN_ID_KEY), img, productBodyRequest);
-        call.enqueue(new Callback<PostProductResponse>() {
+        Call<ProductModel> call = RetrofitClient.getInstance().getMyApi().postProduct("Bearer " + new SharedStorage(context).getValue(TOKEN_ID_KEY), img, productBodyRequest);
+        call.enqueue(new Callback<ProductModel>() {
             @Override
-            public void onResponse(Call<PostProductResponse> call, retrofit2.Response<PostProductResponse> response) {
+            public void onResponse(Call<ProductModel> call, retrofit2.Response<ProductModel> response) {
 
                 try {
                     callback.onSuccess(response);
@@ -97,7 +93,7 @@ public class ProductService {
             }
 
             @Override
-            public void onFailure(Call<PostProductResponse> call, Throwable t) {
+            public void onFailure(Call<ProductModel> call, Throwable t) {
                 Log.e("retrofit fail message", t.getMessage());
                 callback.onError(call);
             }
@@ -288,7 +284,7 @@ public class ProductService {
 
     public void SaveFavorite(String id, VolleyCallback
             callback) throws JSONException {
-        String url = SAVE_PRODUCT_FAVORITE;
+        String url = SAVE_PRODUCT_FAVORITE + "/" + id;
         JSONObject requestBody = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
@@ -400,13 +396,13 @@ public class ProductService {
 
         JSONObject requestBody = new JSONObject();
 
-        Log.d("rq", requestBody.toString());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, url, requestBody, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
+                        Log.d("get my product list response", response.toString());
                         try {
                             callback.onSuccess(response);
                         } catch (JSONException jsonException) {
@@ -417,7 +413,7 @@ public class ProductService {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Log.d("response get favorite err", error.toString());
+                        Log.d("get my product list err", error.getMessage());
                         callback.onError(error);
                     }
 

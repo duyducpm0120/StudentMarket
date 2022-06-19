@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Helper.Popup.PopupHelper;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
-import com.example.studentmarket.Models.UserProfile;
+import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProfileService;
 import com.example.studentmarket.Store.UserProfileHolder;
@@ -52,7 +52,7 @@ public class EditProfile extends AppCompatActivity {
     private Button confirmButton;
     private AvatarView profile_avatar;
 
-    private UserProfile userProfile;
+    private UserProfileModel userProfile;
 
     private Bitmap bitmap;
     private String filePath;
@@ -185,7 +185,7 @@ public class EditProfile extends AppCompatActivity {
     }
 
     private void updateProfile() {
-        UserProfile newUserProfile = userProfile;
+        UserProfileModel newUserProfile = userProfile;
         newUserProfile.setUserFullName(userNameEditText.getText().toString());
         newUserProfile.setUserPhone(phoneEditText.getText().toString());
         ProfileService profileService = new ProfileService(this);

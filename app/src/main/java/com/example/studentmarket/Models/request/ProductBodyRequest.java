@@ -1,4 +1,4 @@
-package com.example.studentmarket.Models;
+package com.example.studentmarket.Models.request;
 
 import com.google.gson.annotations.Expose;
 

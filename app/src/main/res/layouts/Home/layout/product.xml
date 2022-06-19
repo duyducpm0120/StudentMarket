@@ -19,8 +19,8 @@
             <ImageView
                 android:id="@+id/image_product"
                 style="@style/conner"
-                android:layout_width="159dp"
-                android:layout_height="163dp"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
                 android:clickable="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/imgdefault"

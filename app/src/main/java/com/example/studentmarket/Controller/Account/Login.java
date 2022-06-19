@@ -22,8 +22,8 @@ import com.android.volley.VolleyError;
 import com.example.studentmarket.Helper.Popup.PopupHelper;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Helper.VolleyErrorHelper;
-import com.example.studentmarket.Models.LoginResponse;
-import com.example.studentmarket.Models.UserProfile;
+import com.example.studentmarket.Models.response.LoginResponse;
+import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.AccountService;
 import com.example.studentmarket.Services.MyFirebaseService;
@@ -65,7 +65,7 @@ public class Login extends Fragment {
     private EditText loginEditTextEmail;
     private EditText loginEditTextPassword;
 
-    private UserProfile userProfile;
+    private UserProfileModel userProfile;
     MyFirebaseService myFirebaseService;
 
     public Login() {
@@ -206,7 +206,7 @@ public class Login extends Fragment {
             public void onSuccess(JSONObject response) {
                 //textView.setText("Response: " + response.toString());
                 Log.d("get profile response",response.toString());
-                UserProfile userProfile = new Gson().fromJson(String.valueOf(response), UserProfile.class);
+                UserProfileModel userProfile = new Gson().fromJson(String.valueOf(response), UserProfileModel.class);
                 UserProfileHolder.getInstance().setData(userProfile);
                 // navigate
                 fragmentTransaction.replace(R.id.fragmentContainerView, new Profile(userProfile));

@@ -71,7 +71,7 @@
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layout/test_layout2.xml" value="0.24230072463768115" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/activity_view_avatar.xml" value="0.176" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_login.xml" value="0.1828125" />
-        <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_profile.xml" value="0.1068840579710145" />
+        <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_profile.xml" value="0.2" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_profile_avatart_bottom_sheet.xml" value="0.2" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_profile_bottom_sheet.xml" value="0.2" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_profile_info.xml" value="0.136" />
@@ -81,6 +81,7 @@
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Authentication/layout/fragment_login.xml" value="0.10885416666666667" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Authentication/layout/fragment_pre_register.xml" value="0.10885416666666667" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Authentication/layout/fragment_register.xml" value="0.24230072463768115" />
+        <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Home/layout/product.xml" value="0.14322916666666666" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/menu/bottom_menu.xml" value="0.12685185185185185" />
         <entry key="app/src/main/res/drawable/accounticon.xml" value="0.21" />
         <entry key="app/src/main/res/drawable/button_color.xml" value="0.21" />

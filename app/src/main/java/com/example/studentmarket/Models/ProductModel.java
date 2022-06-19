@@ -2,24 +2,43 @@ package com.example.studentmarket.Models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PostProductResponse {
-    @SerializedName("listingId")
-    private float listingId;
-    @SerializedName("listingAddress")
+public class ProductModel {
+
+    private int listingId;
+
     private String listingAddress;
-    @SerializedName("listingBody")
+
     private String listingBody;
-    @SerializedName("listingImage")
+
     private String listingImage;
-    @SerializedName("listingTimestamp")
+
     private String listingTimestamp;
-    @SerializedName("listingTitle")
+
     private String listingTitle;
-    @SerializedName("listingPrice")
-    private float listingPrice;
 
+    private int listingPrice;
 
-    // Getter Methods
+//    private boolean listingIsLoved;
+
+    public ProductModel(int listingId, String listingAddress, String listingBody, String listingImage, String listingTimestamp, String listingTitle, int listingPrice) {
+        this.listingId = listingId;
+        this.listingAddress = listingAddress;
+        this.listingBody = listingBody;
+        this.listingImage = listingImage;
+        this.listingTimestamp = listingTimestamp;
+        this.listingTitle = listingTitle;
+        this.listingPrice = listingPrice;
+
+    }
+
+//    public boolean getListingIsLoved() {
+//        return listingIsLoved;
+//    }
+//
+//    public void setListingIsLoved(boolean listingIsLoved) {
+//        this.listingIsLoved = listingIsLoved;
+//    }
+// Getter Methods
 
     public float getListingId() {
         return listingId;
@@ -51,7 +70,7 @@ public class PostProductResponse {
 
     // Setter Methods
 
-    public void setListingId(float listingId) {
+    public void setListingId(int listingId) {
         this.listingId = listingId;
     }
 
@@ -75,7 +94,7 @@ public class PostProductResponse {
         this.listingTitle = listingTitle;
     }
 
-    public void setListingPrice(float listingPrice) {
+    public void setListingPrice(int listingPrice) {
         this.listingPrice = listingPrice;
     }
 }

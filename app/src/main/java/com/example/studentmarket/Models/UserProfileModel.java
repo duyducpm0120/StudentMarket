@@ -3,7 +3,7 @@ package com.example.studentmarket.Models;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UserProfile implements Serializable {
+public class UserProfileModel implements Serializable {
     public String userId;
     public String userAddress;
     public String userEmail;
