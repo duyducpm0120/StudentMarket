@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.studentmarket.Helper.DownloadImageTask.DownloadImageTask;
 import com.example.studentmarket.R;
+import com.example.studentmarket.Services.PushNotificationService;
 import com.example.studentmarket.Store.SharedStorage;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -54,8 +55,10 @@ public class ListMessages extends AppCompatActivity {
     private boolean isFirstAccess = true;
     private DatabaseReference mesageRef;
     private DatabaseReference conversationRef;
-    private String myId="1";
+    private String myId="2";
     private String conversationId;
+    private PushNotificationService pushNotificationService;
+    private String posterId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,22 +73,44 @@ public class ListMessages extends AppCompatActivity {
                 Picasso.get().load(url).into(imageView);
             }
         };
+        pushNotificationService = new PushNotificationService(this);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         conversationRef = database.getReference("Conversation");
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
+        String posterName = intent.getStringExtra("posterName");
+        posterId = intent.getStringExtra("posterId");
+        //
+        String posterAvatar = intent.getStringExtra("posterAvatar");
         conversationId = intent.getStringExtra("id");
         String imageUrl = intent.getStringExtra("imageUrl");
+        if (getUserId() != null) {
+            myId = getUserId();
+        }
 
         if (conversationId == null) {
             final String[] newConversationId = {"1"};
-            conversationRef.limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            if (Integer.parseInt(posterId) < Integer.parseInt(myId)) {
+                newConversationId[0] = posterId +"-"+ myId;
+            } else {
+                newConversationId[0] = myId +"-"+ posterId;
+            }
+
+            conversationRef.orderByChild("id").equalTo(newConversationId[0]).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        FirebaseConversation conversation = dataSnapshot.getValue(FirebaseConversation.class);
-                        newConversationId[0] = conversation.getId();
+                    if (snapshot.getValue()==null){
+                        conversationRef.push().setValue(new FirebaseConversation(newConversationId[0], myId,posterId,getUsername(),posterName, posterAvatar, imageUrl));
+                        conversationId = newConversationId[0];
+                    } else {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            FirebaseConversation conversation = dataSnapshot.getValue(FirebaseConversation.class);
+                            if (conversation.getId()!=null) {
+                                conversationId = conversation.getId();
+                            }
+                        }
                     }
+
                 }
 
                 @Override
@@ -93,16 +118,13 @@ public class ListMessages extends AppCompatActivity {
 
                 }
             });
-//            conversationRef.push().setValue(new FirebaseConversation(newConversationId[0], myId,, name, imageUrl));
         }
 
         listMessagesChatName = findViewById(R.id.list_messages_name);
-        listMessagesChatName.setText(name);
-        if (getUserId() != null) {
-            myId = getUserId();
-        }
+        listMessagesChatName.setText(posterName);
+
         senderAuthor = new Author(myId,"test","https://i.pinimg.com/236x/c1/c8/49/c1c8498d9aec3d4e6c894ddba7882031.jpg");
-        receiverAuthor = new Author("receiverId",name,"https://i.pinimg.com/236x/c1/c8/49/c1c8498d9aec3d4e6c894ddba7882031.jpg");
+        receiverAuthor = new Author("receiverId",posterName,"https://i.pinimg.com/236x/c1/c8/49/c1c8498d9aec3d4e6c894ddba7882031.jpg");
         mesageRef = database.getReference("Message_"+conversationId);
         listMessagesChatName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,8 +174,6 @@ public class ListMessages extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for (DataSnapshot dataSnapshot : task.getResult().getChildren()) {
                         FirebaseMessage message = dataSnapshot.getValue(FirebaseMessage.class);
-                        Log.d("firebase", message.getAuthorId()+" "+finalMyId);
-
                         if (message.getAuthorId().equals(finalMyId)) {
                             adapter.addToStart(new Message(id,message.getMsg(),senderAuthor,message.getDate()), true);
                         } else {
@@ -170,7 +190,7 @@ public class ListMessages extends AppCompatActivity {
                 if (snapshot.exists()) {
                     for(DataSnapshot snapshot_ : snapshot.getChildren()) {
                         FirebaseMessage message = snapshot_.getValue(FirebaseMessage.class);
-                        if (!message.getAuthorId().equals(finalMyId)) {
+                        if (message.getAuthorId().equals(finalMyId)) {
                             if (!isFirstAccess){
                                 adapter.addToStart(new Message(message.getconversationId(),message.getMsg(),receiverAuthor,message.getDate()), true);
                             }
@@ -204,8 +224,7 @@ public class ListMessages extends AppCompatActivity {
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
                                     Log.d("firebase", "success");
-                                } else {
-                                    Log.d("firebase", "failed");
+                                    pushNotificationService.sendNewMessageNotification(posterId);
                                 }
                             }
                         });

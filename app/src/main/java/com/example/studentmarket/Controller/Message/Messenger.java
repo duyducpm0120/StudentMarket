@@ -3,16 +3,18 @@ package com.example.studentmarket.Controller.Message;
 public class Messenger {
     private String id;
     private String name;
+    private String posterId;
     private String imageUrl;
     private String msg;
     private String time;
 
-    public Messenger(String id,String name, String imageUrl, String msg,String time) {
+    public Messenger(String id,String posterId,String name, String imageUrl, String msg,String time) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.msg = msg;
         this.time = time;
         this.id = id;
+        this.posterId = posterId;
     }
 
     public String getName() {
@@ -52,5 +54,12 @@ public class Messenger {
     }
     public void seId() {
         this.id = id;
+    }
+
+    public String getPosterId() {
+        return posterId;
+    }
+    public void setPosterId(String posterId) {
+        this.posterId = posterId;
     }
 }

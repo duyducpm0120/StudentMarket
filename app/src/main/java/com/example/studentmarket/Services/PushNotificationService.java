@@ -1,6 +1,7 @@
 package com.example.studentmarket.Services;
 
 import static com.example.studentmarket.Constants.EndpointConstant.PUSHNOTI_REGISTER_DEVICE;
+import static com.example.studentmarket.Constants.EndpointConstant.SEND_NEW_MESSAGE_NOTIFICATION;
 import static com.example.studentmarket.Constants.EndpointConstant.SIGNUP_URL;
 
 import android.content.Context;
@@ -37,6 +38,33 @@ public class PushNotificationService {
         }
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //textView.setText("Response: " + response.toString());
+                        Log.d("response", response.toString());
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        //parseVolleyError(error); //handle wrong username or password
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return new ServiceHeaderHelper(context).getHeadersWithToken();
+            }
+        };
+        // Access the RequestQueue through your singleton class.
+        ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+    public void sendNewMessageNotification(String receiverId) {
+        String url = SEND_NEW_MESSAGE_NOTIFICATION+"/"+receiverId;
+        JSONObject requestBody = new JSONObject();
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());

@@ -86,7 +86,6 @@ public class ProfileInfo extends Fragment {
                 //textView.setText("Response: " + response.toString());
                 Log.d("reload profile response", response.toString());
                 UserProfile userProfile = new Gson().fromJson(String.valueOf(response), UserProfile.class);
-                setUserId(userProfile.getUserId());
                 UserProfileHolder.getInstance().setData(userProfile);
                 Log.d("reload profile response user pic", userProfile.getUserPic());
             }
