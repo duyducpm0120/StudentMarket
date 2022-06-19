@@ -166,22 +166,22 @@ public class Login extends Fragment {
                     Log.d("Login response token", loginResponse.getToken());
                     SharedStorage storage = new SharedStorage(getContext());
                     storage.saveValue(TOKEN_ID_KEY, loginResponse.getToken());
-                    myFirebaseService = new MyFirebaseService();
-                    Task<String> FCMToken =  FirebaseMessaging.getInstance().getToken()
-                            .addOnCompleteListener(new OnCompleteListener<String>() {
-                                @Override
-                                public void onComplete(@NonNull Task<String> task) {
-                                    if (!task.isSuccessful()) {
-                                        Log.d("Fetching FCM registration token failed","");
-                                        return;
-                                    }
-
-                                    // Get new FCM registration token
-                                    String token = task.getResult();
-                                    PushNotificationService pushNotificationService = new PushNotificationService(getContext());
-                                    pushNotificationService.registerDevice(token);
-                                }
-                            });
+//                    myFirebaseService = new MyFirebaseService();
+//                    Task<String> FCMToken =  FirebaseMessaging.getInstance().getToken()
+//                            .addOnCompleteListener(new OnCompleteListener<String>() {
+//                                @Override
+//                                public void onComplete(@NonNull Task<String> task) {
+//                                    if (!task.isSuccessful()) {
+//                                        Log.d("Fetching FCM registration token failed","");
+//                                        return;
+//                                    }
+//
+//                                    // Get new FCM registration token
+//                                    String token = task.getResult();
+//                                    PushNotificationService pushNotificationService = new PushNotificationService(getContext());
+//                                    pushNotificationService.registerDevice(token);
+//                                }
+//                            });
                     getMyProfileAndNavigate();
                 }
 
@@ -225,4 +225,3 @@ public class Login extends Fragment {
 
 
 }
-1
