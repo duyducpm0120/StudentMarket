@@ -20,7 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.studentmarket.Models.UserProfile;
+import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Store.SharedStorage;
 import com.example.studentmarket.Store.UserProfileHolder;
@@ -95,7 +95,7 @@ public class Account extends Fragment {
         String token = new SharedStorage(getContext()).getValue(TOKEN_ID_KEY);
         Log.d("@@@@@@@@@@token", token);
         if(token != "") {
-            UserProfile userProfile = UserProfileHolder.getInstance().getData();
+            UserProfileModel userProfile = UserProfileHolder.getInstance().getData();
             if(userProfile!= null) {}
             fragmentTransaction.replace(R.id.fragmentContainerView, new Profile(userProfile));
             fragmentTransaction.addToBackStack(null);
@@ -160,7 +160,7 @@ public class Account extends Fragment {
         accountPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(getContext(), Post.class);
+                Intent myIntent = new Intent(getContext(), PostProduct.class);
                 startActivity(myIntent);
             }
         });

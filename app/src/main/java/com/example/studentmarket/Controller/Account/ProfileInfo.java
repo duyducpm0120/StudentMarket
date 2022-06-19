@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +15,7 @@ import android.widget.EditText;
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Helper.VolleyErrorHelper;
-import com.example.studentmarket.Models.UserProfile;
+import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProfileService;
 import com.example.studentmarket.Store.UserProfileHolder;
@@ -34,10 +32,10 @@ public class ProfileInfo extends Fragment {
     private EditText phoneEditText;
     private EditText emailEditText;
     private EditText passwordEditText;
-    private UserProfile userProfile;
+    private UserProfileModel userProfile;
     private Button editProfileButton;
 
-    public ProfileInfo(UserProfile userProfile) {
+    public ProfileInfo(UserProfileModel userProfile) {
         this.userProfile = userProfile;
         Log.d("profile accnamne", userProfile.getAccountName());
     }
@@ -59,7 +57,7 @@ public class ProfileInfo extends Fragment {
         ;
         passwordEditText = view.findViewById(R.id.password_text_box);
         ;
-        editProfileButton = view.findViewById(R.id.profile_info_edit_profile_button);
+        editProfileButton = view.findViewById(R.id.confirm_button);
 
         setValues();
 
@@ -85,7 +83,7 @@ public class ProfileInfo extends Fragment {
             public void onSuccess(JSONObject response) {
                 //textView.setText("Response: " + response.toString());
                 Log.d("reload profile response", response.toString());
-                UserProfile userProfile = new Gson().fromJson(String.valueOf(response), UserProfile.class);
+                UserProfileModel userProfile = new Gson().fromJson(String.valueOf(response), UserProfileModel.class);
                 UserProfileHolder.getInstance().setData(userProfile);
                 Log.d("reload profile response user pic", userProfile.getUserPic());
             }

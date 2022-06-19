@@ -31,13 +31,16 @@
             android:name=".Controller.Message.ListMessages"
             android:exported="false" />
         <activity
-            android:name=".Controller.Account.Post"
+            android:name=".Controller.Account.PostProduct"
             android:exported="false" />
         <activity
             android:name=".Controller.Home.ListCategory"
             android:exported="false" />
         <activity
             android:name=".Controller.Common.ProductDetail"
+            android:exported="false" />
+        <activity
+            android:name=".Controller.Account.ViewAvatar"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -49,7 +52,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Controller.Account.ViewAvatar" />
 
         <service
             android:name=".Services.MyFirebaseService"

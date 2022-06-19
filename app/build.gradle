@@ -61,6 +61,9 @@ dependencies {
     implementation 'com.github.stfalcon-studio:Chatkit:v0.4.1'
     implementation 'com.squareup.picasso:picasso:2.8'
     implementation 'jp.wasabeef:picasso-transformations:2.4.0'
+    implementation 'com.google.code.gson:gson:2.8.7'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
 
     //firebase configs

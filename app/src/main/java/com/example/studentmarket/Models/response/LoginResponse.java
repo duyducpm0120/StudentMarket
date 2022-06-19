@@ -1,4 +1,4 @@
-package com.example.studentmarket.Models;
+package com.example.studentmarket.Models.response;
 
 public class LoginResponse {
     private String token;

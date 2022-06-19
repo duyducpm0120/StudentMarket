@@ -40,6 +40,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import static com.example.studentmarket.Helper.globalValue.*;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DialogList#newInstance} factory method to

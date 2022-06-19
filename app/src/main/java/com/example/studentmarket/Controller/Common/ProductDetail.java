@@ -3,9 +3,8 @@ package com.example.studentmarket.Controller.Common;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.VolleyError;
-import com.example.studentmarket.Controller.Account.Post;
+import com.example.studentmarket.Controller.Account.PostProduct;
 import com.example.studentmarket.Controller.Message.ListMessages;
-import com.example.studentmarket.Helper.DownloadImageTask.DownloadImageTask;
 import com.example.studentmarket.Helper.Popup.PopupHelper;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
@@ -21,7 +20,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
 import static com.example.studentmarket.Helper.globalValue.*;
@@ -180,7 +178,7 @@ public class ProductDetail extends AppCompatActivity {
         detailProductEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(getApplicationContext(), Post.class);
+                Intent myIntent = new Intent(getApplicationContext(), PostProduct.class);
                 myIntent.putExtra("name","test");
                 ProductDetail.this.startActivity(myIntent);
             }

@@ -1,12 +1,12 @@
 package com.example.studentmarket.Controller.Common;
 
-public class type {
+public class CategoryType {
     private String id;
     private String name;
     private String image;
     private boolean show;
 
-    public type(String id,String name, String image,boolean show) {
+    public CategoryType(String id, String name, int image, boolean show) {
         this.id = id;
         this.name = name;
         this.image = image;

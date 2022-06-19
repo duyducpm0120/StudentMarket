@@ -15,13 +15,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.studentmarket.Helper.ServiceHeaderHelper.ServiceHeaderHelper;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
-import com.example.studentmarket.Models.LoginResponse;
+import com.example.studentmarket.Models.response.LoginResponse;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
-import static com.example.studentmarket.Helper.globalValue.*;
 
 public class AccountService {
     private Context context;
@@ -180,8 +179,5 @@ public class AccountService {
 
     public void ValidateEmail(String email) {
     }
-
-
-
 
 }

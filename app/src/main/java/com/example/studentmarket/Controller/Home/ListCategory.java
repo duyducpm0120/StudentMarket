@@ -16,11 +16,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Component.categoryInterface;
-import com.example.studentmarket.Controller.Common.type;
+import com.example.studentmarket.Controller.Common.CategoryType;
 import com.example.studentmarket.Controller.Common.typeAdapter;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
@@ -31,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 import com.example.studentmarket.Helper.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,7 +40,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ListCategory extends AppCompatActivity {
     private RecyclerView listCategory;
-    private ArrayList<type> arrayCategory;
+    private ArrayList<CategoryType> arrayCategory;
     private com.example.studentmarket.Controller.Common.typeAdapter typeAdapter;
     private typeAdapter typeAdapterSearch;
     private String[] listName = {"All Woments","New Collection","Active / Sports","Luxury","Swimwear","Casual"};
@@ -50,6 +48,9 @@ public class ListCategory extends AppCompatActivity {
     private ImageButton listCategoryGoBack;
     private EditText listCategorySearch;
     private LinearLayout listCategoryEmtySearch;
+
+    private String name="testuser12771@gmail.com";
+    private String pass="Testuser1277";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -66,6 +67,32 @@ public class ListCategory extends AppCompatActivity {
                 finish();
             }
         });
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+//        if(mAuth.getCurrentUser() == null) {
+//            // Start sign in/sign up activity
+//            mAuth.signInWithEmailAndPassword(name,pass).addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
+//                @Override
+//                public void onComplete(@NonNull Task<AuthResult> task) {
+//                    if (task.isSuccessful()){
+//                        Log.d("suc","Thành công");
+//                    } else {
+//                        mAuth.createUserWithEmailAndPassword(name,pass).addOnCompleteListener((Activity) this, new OnCompleteListener<AuthResult>() {
+//                            @Override
+//                            public void onComplete(@NonNull Task<AuthResult> task) {
+//                                if (task.isSuccessful()){
+//                                    Log.d("fail","Thất bại");
+//                                } else {
+//                                    Log.d("tk",task.getException().toString());
+//                                }
+//                            }
+//                        });
+//                    }
+//                }
+//            });
+//        } else {
+//
+//        }
         listCategorySearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -76,9 +103,9 @@ public class ListCategory extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().trim().length()>0){
                     String rawInput = utils.stripAccents(s.toString());
-                    ArrayList<type> listSearch = new ArrayList<>();
+                    ArrayList<CategoryType> listSearch = new ArrayList<>();
                     for (int i=0;i<arrayCategory.size();i++){
-                        type arrayCategoryItem = arrayCategory.get(i);
+                        CategoryType arrayCategoryItem = arrayCategory.get(i);
                         String rawName = utils.stripAccents(arrayCategoryItem.getName());
                         if (rawName.toLowerCase().contains(rawInput.toLowerCase())){
                             listSearch.add(arrayCategoryItem);
@@ -124,7 +151,7 @@ public class ListCategory extends AppCompatActivity {
             if (listCate!=null){
                 for (int i = 0; i < listCate.length(); i++) {
                     JSONObject jsonObject = listCate.getJSONObject(i);
-                    arrayCategory.add(new type(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), jsonObject.getString("listingCategoryIcon"), false));
+                    arrayCategory.add(new CategoryType(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), R.drawable.type, false));
                 }
                 typeAdapter = new typeAdapter(arrayCategory, 2, new categoryInterface() {
                     @Override

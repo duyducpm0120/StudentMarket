@@ -10,7 +10,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,8 +18,7 @@ import com.example.studentmarket.Controller.Account.Account;
 import com.example.studentmarket.Controller.Message.DialogList;
 import com.example.studentmarket.Controller.Favorite.Favorite;
 import com.example.studentmarket.Controller.Home.Home;
-import com.example.studentmarket.Models.UserProfile;
-import com.example.studentmarket.Services.MyFirebaseService;
+import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.Store.SharedStorage;
 import com.example.studentmarket.Store.UserProfileHolder;
 import com.example.studentmarket.databinding.ActivityMainBinding;
@@ -113,6 +111,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initUserProfile () {
-        UserProfileHolder.getInstance().setData(new UserProfile());
+        UserProfileHolder.getInstance().setData(new UserProfileModel());
     }
 }

@@ -7,37 +7,45 @@ import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_CATE
 import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_FAVORITE;
 import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_PRODUCT;
 import static com.example.studentmarket.Constants.EndpointConstant.GET_MY_LIST_PRODUCT;
-import static com.example.studentmarket.Constants.EndpointConstant.LOGIN_URL;
-import static com.example.studentmarket.Constants.EndpointConstant.POST_PRODUCT;
 import static com.example.studentmarket.Constants.EndpointConstant.SAVE_PRODUCT_FAVORITE;
 import static com.example.studentmarket.Constants.EndpointConstant.SEARCH_PRODUCT;
 import static com.example.studentmarket.Constants.EndpointConstant.UNSAVE_PRODUCT_FAVORITE;
 import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.example.studentmarket.Helper.Popup.PopupHelper;
-import com.example.studentmarket.Helper.ServiceHeaderHelper.ServiceHeaderHelper;
+import com.example.studentmarket.Helper.RetrofitHelper.RetrofitCallback;
+import com.example.studentmarket.Helper.RetrofitHelper.RetrofitClient;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
+import com.example.studentmarket.Helper.Utils;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
+import com.example.studentmarket.Models.request.FileRequestBody;
+import com.example.studentmarket.Models.request.ProductBodyRequest;
+import com.example.studentmarket.Models.ProductModel;
 import com.example.studentmarket.Store.SharedStorage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.MultipartBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class ProductService {
 
@@ -47,47 +55,51 @@ public class ProductService {
         this.context = context;
     }
 
-    public void PostProduct(String token) {
-        String url = POST_PRODUCT;
+    public void PostProduct(String title, int price, String body, Uri imageUri, Integer[] categories, RetrofitCallback callback) {
+//
+//        "title": "girl's underwears for boys",
+//                "price": 100000,
+//                "body": "gamer girl's underwear, worn, unwashed",
+//                "pic": {
+//            "formdata": {}
+//        },
+//        "address": "UIT",
+//                "categories": []
 
-        JSONObject requestBody = new JSONObject();
 
+        File file = new File(imageUri.getPath());
+        String contentType = new Utils().getContentType(imageUri, context);
+        FileRequestBody fileRequestBody = null;
+        try {
+            fileRequestBody = new FileRequestBody(context.getContentResolver().openInputStream(imageUri), contentType);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        MultipartBody.Part img = MultipartBody.Part.createFormData("img", file.getName(), fileRequestBody);
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
+        ProductBodyRequest productBodyRequest = new ProductBodyRequest(title, price, body, categories);
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //textView.setText("Response: " + response.toString());
-                        Log.d("login response", response.toString());
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        Log.d("response err", error.toString());
-                        PopupHelper popup = new PopupHelper(context, "Thông báo", "Đăng nhập thất bại, vui lòng thử lại");
-                        Toast.makeText(context, "Login err", Toast.LENGTH_LONG).show();
-
-                    }
-
-                }) {
-
-            /**
-             * Passing some request headers
-             */
+        Call<ProductModel> call = RetrofitClient.getInstance().getMyApi().postProduct("Bearer " + new SharedStorage(context).getValue(TOKEN_ID_KEY), img, productBodyRequest);
+        call.enqueue(new Callback<ProductModel>() {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer " + token);
-                return headers;
+            public void onResponse(Call<ProductModel> call, retrofit2.Response<ProductModel> response) {
+
+                try {
+                    callback.onSuccess(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.d("retrofit response message", response.message());
+
             }
-        };
-        ;
 
+            @Override
+            public void onFailure(Call<ProductModel> call, Throwable t) {
+                Log.e("retrofit fail message", t.getMessage());
+                callback.onError(call);
+            }
 
-        // Access the RequestQueue through your singleton class.
-        ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
+        });
     }
 
     public void GetListProduct(int PageSize, int PageIndex, ArrayList<Integer> listCategoyIds, VolleyCallback callback) throws JSONException {
@@ -273,7 +285,7 @@ public class ProductService {
 
     public void SaveFavorite(String id, VolleyCallback
             callback) throws JSONException {
-        String url = SAVE_PRODUCT_FAVORITE;
+        String url = SAVE_PRODUCT_FAVORITE + "/" + id;
         JSONObject requestBody = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
@@ -310,7 +322,7 @@ public class ProductService {
 
     public void UnsaveFavorite(String id, VolleyCallback
             callback) throws JSONException {
-        String url = UNSAVE_PRODUCT_FAVORITE+"/"+id;
+        String url = UNSAVE_PRODUCT_FAVORITE + "/" + id;
         JSONObject requestBody = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
@@ -330,20 +342,22 @@ public class ProductService {
                         callback.onError(error);
                     }
 
-                }){
+                }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer "+new SharedStorage(context).getValue(TOKEN_ID_KEY));
+                headers.put("Authorization", "Bearer " + new SharedStorage(context).getValue(TOKEN_ID_KEY));
                 return headers;
             }
-        };;
+        };
+        ;
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
-    public void CanSaveFavorite(String id,VolleyCallback
+
+    public void CanSaveFavorite(String id, VolleyCallback
             callback) throws JSONException {
-        String url = CAN_SAVE_PRODUCT_FAVORITE+"/"+id;
+        String url = CAN_SAVE_PRODUCT_FAVORITE + "/" + id;
         JSONObject requestBody = new JSONObject();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, requestBody, new Response.Listener<JSONObject>() {
@@ -377,42 +391,80 @@ public class ProductService {
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
-    public void GetMyProductList (VolleyCallback callback) {
+
+    public void GetMyProductList(VolleyCallback callback) {
         String url = GET_MY_LIST_PRODUCT;
 
         JSONObject requestBody = new JSONObject();
 
-        Log.d("rq", requestBody.toString());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
+                (Request.Method.GET, url, requestBody, new Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
+                        Log.d("get my product list response", response.toString());
                         try {
                             callback.onSuccess(response);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-                        Log.d("response err", error.toString());
+                        Log.d("get my product list err", error.getMessage());
                         callback.onError(error);
                     }
 
                 }) {
-
-            /**
-             * Passing some request headers
-             */
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                return new ServiceHeaderHelper(context).getHeadersWithToken();
-//            }
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + new SharedStorage(context).getValue(TOKEN_ID_KEY));
+                return headers;
+            }
         };
+        ;
+
+
+        // Access the RequestQueue through your singleton class.
+        ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+
+    public void GetDetailProduct(String id, VolleyCallback
+            callback) throws JSONException {
+        String url = GET_DETAIL_PRODUCT + "/" + id;
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //textView.setText("Response: " + response.toString());
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.d("response get favorite err", error.toString());
+                        callback.onError(error);
+                    }
+
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + new SharedStorage(context).getValue(TOKEN_ID_KEY));
+                return headers;
+            }
+        };
+        ;
 
 
         // Access the RequestQueue through your singleton class.
@@ -489,5 +541,10 @@ public class ProductService {
 
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
+
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
 }

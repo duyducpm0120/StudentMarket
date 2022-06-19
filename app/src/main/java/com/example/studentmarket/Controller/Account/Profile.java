@@ -10,20 +10,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.VolleyError;
-import com.example.studentmarket.Helper.CircleTransform.CircleTransform;
+import com.example.studentmarket.Constants.IntentMessage;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Helper.VolleyErrorHelper;
-import com.example.studentmarket.Models.UserProfile;
+import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProfileService;
 import com.example.studentmarket.Store.UserProfileHolder;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -41,11 +39,11 @@ public class Profile extends Fragment {
     private AvatarView profile_avatar;
     private TextView profile_name_text_view;
 
-    private UserProfile userProfile;
+    private UserProfileModel userProfile;
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
 
-    public Profile(UserProfile userProfile) {
+    public Profile(UserProfileModel userProfile) {
         this.userProfile = userProfile;
         Log.d("profile accnamne", userProfile.getAccountName());
     }
@@ -107,11 +105,14 @@ public class Profile extends Fragment {
             public void onClick(View v) {
 //                ProfileBottomSheet profileBottomSheet = new ProfileBottomSheet();
 //                profileBottomSheet.show(getActivity().getSupportFragmentManager(),"TAG");
-                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
-                View bottomSheetView = inflater.inflate(R.layout.fragment_profile_avatart_bottom_sheet, view.findViewById(R.id.bottom_sheet_id), false);
-                bottomSheetDialog.setContentView(bottomSheetView);
-                bottomSheetDialog.show();
 
+//                BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+//                View bottomSheetView = inflater.inflate(R.layout.fragment_profile_avatart_bottom_sheet, view.findViewById(R.id.bottom_sheet_id), false);
+//                bottomSheetDialog.setContentView(bottomSheetView);
+//                bottomSheetDialog.show();
+                Intent myIntent = new Intent(getContext(), ViewAvatar.class);
+                myIntent.putExtra(IntentMessage.VIEW_AVATAR, userProfile.getUserPic());
+                getContext().startActivity(myIntent);
             }
         });
 
@@ -131,6 +132,7 @@ public class Profile extends Fragment {
         intent.putExtra("avatar", "aaa");
         startActivity(intent);
     }
+
     private void updateUserProfileHolder() {
 //        UserProfileHolder.getInstance().updateUserData(getContext());
 //        this.userProfile = UserProfileHolder.getInstance().getData();
@@ -140,7 +142,7 @@ public class Profile extends Fragment {
             public void onSuccess(JSONObject response) {
                 //textView.setText("Response: " + response.toString());
                 Log.d("reload profile response", response.toString());
-                UserProfile userProfile = new Gson().fromJson(String.valueOf(response), UserProfile.class);
+                UserProfileModel userProfile = new Gson().fromJson(String.valueOf(response), UserProfileModel.class);
                 UserProfileHolder.getInstance().setData(userProfile);
                 Log.d("reload profile response user pic", userProfile.getUserPic());
             }
@@ -153,6 +155,7 @@ public class Profile extends Fragment {
             }
         });
     }
+
     @Override
     public void onResume() {
         super.onResume();

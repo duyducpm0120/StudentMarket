@@ -1,15 +1,15 @@
 package com.example.studentmarket.Store;
 
-import com.example.studentmarket.Models.UserProfile;
+import com.example.studentmarket.Models.UserProfileModel;
 
 public class UserProfileHolder {
-    private UserProfile userData;
+    private UserProfileModel userData;
 
-    public UserProfile getData() {
+    public UserProfileModel getData() {
         return userData;
     }
 
-    public void setData(UserProfile data) {
+    public void setData(UserProfileModel data) {
         this.userData = data;
     }
 

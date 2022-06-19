@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.studentmarket.Component.categoryInterface;
-import com.example.studentmarket.Controller.Common.type;
+import com.example.studentmarket.Controller.Common.CategoryType;
 import com.example.studentmarket.Controller.Common.typeAdapter;
 import com.example.studentmarket.R;
 
@@ -33,7 +33,7 @@ public class ListCategory1 extends Fragment {
     private String mParam2;
 
     private RecyclerView listCategory;
-    private ArrayList<type> arrayCategory;
+    private ArrayList<CategoryType> arrayCategory;
     private com.example.studentmarket.Controller.Common.typeAdapter typeAdapter;
     private String[] listName = {"All Woments","New Collection","Active / Sports","Luxury","Swimwear","Casual"};
 
@@ -88,7 +88,7 @@ public class ListCategory1 extends Fragment {
         listCategory = (RecyclerView) view.findViewById(R.id.list_category);
         arrayCategory = new ArrayList<>();
         for (int i=0;i<listName.length;i++){
-            arrayCategory.add(new type("1",listName[i],"",false));
+            arrayCategory.add(new CategoryType("1",listName[i],R.drawable.type,false));
         }
     }
 }
