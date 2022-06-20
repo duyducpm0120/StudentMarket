@@ -103,6 +103,7 @@ public class ProductAdapter extends BaseAdapter {
                 myIntent.putExtra("image", product.getListingImage());
                 myIntent.putExtra("body", product.getListingBody());
                 myIntent.putExtra("id", product.getListingId());
+                myIntent.putExtra("categories", new int[]{1, 3});
                 myIntent.putExtra("isHeart", true);
                 context.startActivity(myIntent);
             }

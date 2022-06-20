@@ -1,4 +1,4 @@
-package com.example.studentmarket.Controller.Account;
+package com.example.studentmarket.Controller.Common;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,11 +17,13 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Component.MultiSpinner;
+import com.example.studentmarket.Constants.IntentMessage;
+import com.example.studentmarket.Constants.PostProductReasonEnum;
 import com.example.studentmarket.Constants.RequestCode;
-import com.example.studentmarket.Controller.Common.CategoryType;
 import com.example.studentmarket.Helper.BitmapConverter;
 import com.example.studentmarket.Helper.RetrofitHelper.RetrofitCallback;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
+import com.example.studentmarket.Models.ProductModel;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProductService;
 import com.squareup.picasso.Picasso;
@@ -33,8 +35,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import javax.annotation.Nullable;
-
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
 public class PostProduct extends AppCompatActivity {
@@ -53,12 +53,21 @@ public class PostProduct extends AppCompatActivity {
     ProductService productService = new ProductService(this);
     Bitmap productImageBitmap;
     Uri avatarUri;
+    String productName;
+    String productImage;
+    String productBody;
+    int productPrice;
+    int productId;
+    private int[] categories;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_product);
+        Intent myIntent = getIntent();
+        String reason = myIntent.getStringExtra("reason");
         categoryDropdown = findViewById(R.id.category_dropdown);
         postCloseButton = findViewById(R.id.post_close_button);
         postUploadImage = findViewById(R.id.post_upload_image);
@@ -81,7 +90,6 @@ public class PostProduct extends AppCompatActivity {
                 String title = postTitleEdittext.getText().toString();
                 int price = Integer.valueOf(String.valueOf(postPriceEdittext.getText()));
                 String body = postBodyEdittext.getText().toString();
-                String category = categoryDropdown.getSelectedItem().toString();
                 long categoryId = categoryDropdown.getSelectedItemId();
                 //get Image
                 if (categoryId >= 0) {
@@ -90,19 +98,10 @@ public class PostProduct extends AppCompatActivity {
                             if (!body.isEmpty()) {
                                 Integer[] categoryIdList = new Integer[categoryIdListToRequest.size()];
                                 categoryIdList = categoryIdListToRequest.toArray(categoryIdList);
-                                productService.PostProduct(title, price, body, avatarUri, categoryIdList, new RetrofitCallback() {
-                                    @Override
-                                    public void onSuccess(Object response) throws JSONException {
-                                        Log.d("retrofit success","aaaa");
-                                        Toast.makeText(PostProduct.this, "Bạn đã đăng bài " + categoryDropdown.getSelectedItem().toString() + " " + postTitleEdittext.getText() + " " + postPriceEdittext.getText() + " " + postBodyEdittext.getText(), Toast.LENGTH_SHORT).show();
-                                        finish();
-                                    }
-
-                                    @Override
-                                    public void onError(Object error) {
-                                        Log.d("retrofit fail","aaaa");
-                                    }
-                                });
+                                if (reason.equals(IntentMessage.EDIT_PRODUCT)) {
+                                    editProduct(title, price, body, categoryIdList);
+                                } else
+                                    postProduct(title, price, body, categoryIdList);
                             } else {
                                 Toast.makeText(PostProduct.this, "Bạn không được để trống mô tả", Toast.LENGTH_SHORT).show();
                             }
@@ -136,17 +135,44 @@ public class PostProduct extends AppCompatActivity {
         });
 
 
+        if (reason.equals(IntentMessage.EDIT_PRODUCT)) {
+            Log.d("edit product", "edittt");
+            setDefaultDataForEdit(myIntent);
+            postPostButton.setText("Cập nhật");
+        }
     }
 
-    private MultiSpinner.MultiSpinnerListener onSelectedListener = new MultiSpinner.MultiSpinnerListener() {
-        public void onItemsSelected(boolean[] selected) {
-            // Do something here with the selected items
-            if (selected != null)
-                Log.d("selected item", selected.toString());
-            Log.d("selected item", "");
+    private void editProduct(String title, int price, String body, Integer[] categoryIdList) {
+        productService.EditProduct(new ProductModel(productId, "", body, "", "", title, price), new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) throws JSONException {
+                Log.d("edit success", "edit success");
+            }
 
-        }
-    };
+            @Override
+            public void onError(VolleyError error) {
+                Log.d("edit prioduct fail", error.getMessage());
+            }
+
+        });
+    }
+
+    private void postProduct(String title, int price, String body, Integer[] categoryIdList) {
+        productService.PostProduct(title, price, body, avatarUri, categoryIdList, new RetrofitCallback() {
+            @Override
+            public void onSuccess(Object response) throws JSONException {
+                Log.d("retrofit success", "aaaa");
+                Toast.makeText(PostProduct.this, "Bạn đã đăng bài " + categoryDropdown.getSelectedItem().toString() + " " + postTitleEdittext.getText() + " " + postPriceEdittext.getText() + " " + postBodyEdittext.getText(), Toast.LENGTH_SHORT).show();
+                finish();
+            }
+
+            @Override
+            public void onError(Object error) {
+                Log.d("retrofit fail", "aaaa");
+            }
+        });
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -198,12 +224,30 @@ public class PostProduct extends AppCompatActivity {
         });
     }
 
-    private int findCategoryId(String categoryName) {
-        categoryList.stream().map(categoryType -> {
-            if (categoryName == categoryType.getName())
-                return categoryType.getId();
-            else return -9999;
-        });
-        return -9999;
+    private int findCategoryIndex(int id) {
+        int result = 0;
+        for (int i = 0; i < categoryNameList.size(); i++) {
+            if (categoryList.get(i).getId() == id) result = i;
+            break;
+        }
+        return result;
+    }
+
+    private void setDefaultDataForEdit(Intent myIntent) {
+        productName = myIntent.getStringExtra("name");
+        productPrice = myIntent.getIntExtra("price", 0);
+        productImage = myIntent.getStringExtra("image");
+        productBody = myIntent.getStringExtra("body");
+        productId = myIntent.getIntExtra("id", 0);
+        categories = myIntent.getIntArrayExtra("categories");
+
+        postTitleEdittext.setText(productName);
+        Picasso.get().load(productImage).into(postUploadImage);
+        postPriceEdittext.setText(String.valueOf(productPrice));
+        postBodyEdittext.setText(productBody);
+//        for (int i = 0; i < categories.length; i++) {
+//            categoryDropdown.setSelection(findCategoryIndex(categories[i]));
+//        }
+
     }
 }

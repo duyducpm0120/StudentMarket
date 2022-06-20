@@ -11,11 +11,11 @@ import android.widget.GridView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.VolleyError;
+import com.example.studentmarket.Constants.IntentMessage;
 import com.example.studentmarket.Constants.PostProductReasonEnum;
+import com.example.studentmarket.Controller.Common.PostProduct;
 import com.example.studentmarket.Controller.Common.ProductAdapter;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Models.ProductModel;
@@ -57,7 +57,7 @@ public class ProfilePost extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getContext(), PostProduct.class);
-                myIntent.putExtra("reason", PostProductReasonEnum.POST_NEW_PRODUCT);
+                myIntent.putExtra("reason", IntentMessage.POST_PRODUCT);
                 getActivity().startActivity(myIntent);
             }
         });

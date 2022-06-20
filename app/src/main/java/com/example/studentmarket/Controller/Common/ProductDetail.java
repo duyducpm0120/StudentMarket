@@ -3,7 +3,8 @@ package com.example.studentmarket.Controller.Common;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.VolleyError;
-import com.example.studentmarket.Controller.Account.PostProduct;
+import com.example.studentmarket.Constants.IntentMessage;
+import com.example.studentmarket.Constants.PostProductReasonEnum;
 import com.example.studentmarket.Controller.Message.ListMessages;
 import com.example.studentmarket.Helper.Popup.PopupHelper;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
@@ -46,6 +47,12 @@ public class ProductDetail extends AppCompatActivity {
     private String posterId;
     private String posterName;
     private String posterAvatar;
+    private int[] categories;
+    String productName;
+    String productImage;
+    String productBody;
+    int productPrice;
+    int productId;
 
 
     @Override
@@ -55,13 +62,19 @@ public class ProductDetail extends AppCompatActivity {
         SharedStorage storage = new SharedStorage(this);
 
         setContentView(R.layout.activity_product_detail);
+
+
         Intent myIntent = getIntent();
-        String productName = myIntent.getStringExtra("name");
-        int productPrice = myIntent.getIntExtra("price", 0);
-        String productImage = myIntent.getStringExtra("image");
-        String productBody = myIntent.getStringExtra("body");
+        productName = myIntent.getStringExtra("name");
+        productPrice = myIntent.getIntExtra("price", 0);
+        productImage = myIntent.getStringExtra("image");
+        productBody = myIntent.getStringExtra("body");
+        productId = myIntent.getIntExtra("id", 0);
+        categories = myIntent.getIntArrayExtra("categories");
         final boolean[] isHeart = {myIntent.getBooleanExtra("isHeart", false)};
         int id = myIntent.getIntExtra("id", 0);
+
+
         detailProductName = findViewById(R.id.product_detail_textview_name_product);
         detailProductPrice = findViewById(R.id.product_detail_price);
         detailProductDescriptions = findViewById(R.id.product_detail_description);
@@ -73,8 +86,12 @@ public class ProductDetail extends AppCompatActivity {
         detailProductAvatar = findViewById(R.id.product_detail_avatar);
         detailProductAvatarName = findViewById(R.id.product_detail_avatar_name);
         detailProductImage = findViewById(R.id.product_detail_image);
+
+
         productService = new ProductService(this);
         ProductService productService = new ProductService(this);
+
+
 
         detailProductName.setText(productName);
         detailProductPrice.setText(String.valueOf(productPrice) + " VND");
@@ -178,7 +195,14 @@ public class ProductDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getApplicationContext(), PostProduct.class);
-                myIntent.putExtra("name", "test");
+                myIntent.putExtra("reason", IntentMessage.EDIT_PRODUCT);
+                myIntent.putExtra("name", productName);
+                myIntent.putExtra("price", productPrice);
+                myIntent.putExtra("image", productImage);
+                myIntent.putExtra("body", productBody);
+                myIntent.putExtra("id", productId);
+                myIntent.putExtra("categories", categories);
+
                 ProductDetail.this.startActivity(myIntent);
             }
         });
