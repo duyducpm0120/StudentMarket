@@ -14,16 +14,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="110dp"
-            android:gravity="center"
             android:background="@drawable/gradient_background_header_home"
-            >
+            android:gravity="center">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="28sp"
-                android:textStyle="bold"
                 android:paddingHorizontal="40dp"
-                android:text="@string/Appname"/>
+                android:text="@string/Appname"
+                android:textSize="28sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <RelativeLayout

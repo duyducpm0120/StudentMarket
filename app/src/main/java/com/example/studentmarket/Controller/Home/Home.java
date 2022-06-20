@@ -130,6 +130,7 @@ public class Home extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("Home", "onResume");
         refresh();
     }
 

@@ -167,7 +167,6 @@ public class ListMessages extends AppCompatActivity {
         mesageRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                Log.d("firebase", String.valueOf(task.getResult().getValue()));
                 if (task.getResult().getValue()==null){
                     isFirstAccess = false;
                 }
@@ -190,7 +189,7 @@ public class ListMessages extends AppCompatActivity {
                 if (snapshot.exists()) {
                     for(DataSnapshot snapshot_ : snapshot.getChildren()) {
                         FirebaseMessage message = snapshot_.getValue(FirebaseMessage.class);
-                        if (message.getAuthorId().equals(finalMyId)) {
+                        if (!message.getAuthorId().equals(finalMyId)) {
                             if (!isFirstAccess){
                                 adapter.addToStart(new Message(message.getconversationId(),message.getMsg(),receiverAuthor,message.getDate()), true);
                             }
