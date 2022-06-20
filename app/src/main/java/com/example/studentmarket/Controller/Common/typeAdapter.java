@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.studentmarket.R;
 import static com.example.studentmarket.Helper.globalValue.*;
 import com.example.studentmarket.Component.categoryInterface;
+import com.squareup.picasso.Picasso;
 
 
 import java.util.List;

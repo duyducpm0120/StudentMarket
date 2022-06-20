@@ -22,7 +22,7 @@ import com.example.studentmarket.Store.UserProfileHolder;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
-
+import static com.example.studentmarket.Helper.globalValue.*;
 
 public class ProfileInfo extends Fragment {
 

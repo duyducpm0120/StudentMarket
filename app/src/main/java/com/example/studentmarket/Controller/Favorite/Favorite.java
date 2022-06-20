@@ -1,11 +1,13 @@
 package com.example.studentmarket.Controller.Favorite;
 
 import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
+import static com.example.studentmarket.Helper.globalValue.setListProduct;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +15,17 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
+import com.android.volley.VolleyError;
 import com.example.studentmarket.Controller.Common.Product;
 import com.example.studentmarket.Controller.Common.productAdater;
+import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
+import com.example.studentmarket.Services.ProductService;
 import com.example.studentmarket.Store.SharedStorage;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -41,6 +50,8 @@ public class Favorite extends Fragment {
     private com.example.studentmarket.Controller.Common.productAdater productAdater;
     private LinearLayout favoriteRequireLogin;
     private EditText favoriteEdittextSearch;
+    private ProductService productService;
+
 
     public Favorite() {
         // Required empty public constructor
@@ -89,15 +100,20 @@ public class Favorite extends Fragment {
             favoriteRequireLogin.setVisibility(View.INVISIBLE);
             favoriteEdittextSearch.setVisibility(View.VISIBLE);
         }
+        productService = new ProductService(getContext());
 
-        MappingProduct(view);
-        productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
-        homeListProduct.setAdapter(productAdater);
+        if (!storage.getValue(TOKEN_ID_KEY).isEmpty()){
+            LoadListProduct(view);
+        } else {
+            homeListProduct = (GridView) view.findViewById(R.id.favorite_list_product);
+            arrayProduct = new ArrayList<>();
+            productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
+            homeListProduct.setAdapter(productAdater);
+        }
         return view;
     }
 
     private void MappingProduct(View view) {
-        homeListProduct = (GridView) view.findViewById(R.id.list_favorite);
         arrayProduct = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             arrayProduct.add(new Product(i, "Address", "body",
@@ -105,5 +121,42 @@ public class Favorite extends Fragment {
                     "timestapm", "DKNY t-shirt - colour block front logo" + i, i, i, "3" + i + ".000 VND", true));
         }
 
+    }
+    private void LoadListProduct(View view) {
+        homeListProduct = (GridView) view.findViewById(R.id.favorite_list_product);
+        arrayProduct = new ArrayList<>();
+        try {
+            productService.GetListFavorite(new VolleyCallback() {
+                @Override
+                public void onSuccess(JSONObject response) {
+                    try {
+                        JSONArray listingPage = response.getJSONArray("listings");
+                        if (listingPage.length() != 0){
+                            for (int i=0;i<listingPage.length();i++){
+                                JSONObject jsonObject = listingPage.getJSONObject(i);
+                                arrayProduct.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
+                                        jsonObject.getString("listingImage"),
+                                        jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), true));
+                            }
+                            productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
+                            homeListProduct.setAdapter(productAdater);
+                            setListProduct(arrayProduct);
+                        }
+                    }
+                    catch (JSONException jsonException){
+                        Log.d("json",jsonException.toString());
+                    }
+
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    MappingProduct(view);
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+            MappingProduct(view);
+        }
     }
 }

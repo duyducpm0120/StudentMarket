@@ -3,7 +3,7 @@ package com.example.studentmarket.Controller.Common;
 public class CategoryType {
     private String id;
     private String name;
-    private int image;
+    private String image;
     private boolean show;
 
     public CategoryType(String id, String name, int image, boolean show) {
@@ -17,7 +17,7 @@ public class CategoryType {
         return name;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
@@ -25,7 +25,7 @@ public class CategoryType {
         this.name = name;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 

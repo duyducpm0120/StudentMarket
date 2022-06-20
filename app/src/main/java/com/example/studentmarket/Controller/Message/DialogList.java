@@ -29,9 +29,17 @@ import android.widget.Toast;
 
 import com.example.studentmarket.R;
 import com.example.studentmarket.Store.SharedStorage;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Objects;
+import static com.example.studentmarket.Helper.globalValue.*;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -57,8 +65,9 @@ public class DialogList extends Fragment {
     private LinearLayout chatContainerUser;
     private LinearLayout chatRequireLogin;
     private EditText chatEdittextSearch;
-    private String name="testuser12771@gmail.com";
+    private String name="testuser127711@gmail.com";
     private String pass="Testuser1277";
+    private String myId="2";
 
     public DialogList() {
         // Required empty public constructor
@@ -96,89 +105,74 @@ public class DialogList extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
-        MappingMessenger(view);
-        messengerApdater = new MessengerApdater(arrayMessenger,getContext());
+//        MappingMessenger(view);
         chatContainerUser = view.findViewById(R.id.chat_container_user);
         chatRequireLogin = view.findViewById(R.id.chat_require_login);
         chatEdittextSearch = view.findViewById(R.id.chat_edittext_search);
         SharedStorage storage = new SharedStorage(getContext());
 
-        if (!storage.getValue(TOKEN_ID_KEY).isEmpty()){
-//            chatRequireLogin.setVisibility(View.INVISIBLE);
-//            chatContainerUser.setVisibility(View.VISIBLE);
-//            chatEdittextSearch.setVisibility(View.VISIBLE);
+        if (getUserId()!=null){
+            myId = getUserId();
+        }
 
+        if (!storage.getValue(TOKEN_ID_KEY).isEmpty()){
+            chatRequireLogin.setVisibility(View.INVISIBLE);
+            chatContainerUser.setVisibility(View.VISIBLE);
+            chatEdittextSearch.setVisibility(View.VISIBLE);
+            displayChatConv(view);
         } else {
             chatContainerUser.setVisibility(View.INVISIBLE);
             chatRequireLogin.setVisibility(View.VISIBLE);
             chatEdittextSearch.setVisibility(View.INVISIBLE);
         }
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-        if(mAuth.getCurrentUser() == null) {
-            // Start sign in/sign up activity
-            mAuth.signInWithEmailAndPassword(name,pass).addOnCompleteListener(getActivity(),new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()){
-                        displayChatMessages("đăng nhập");
-                    } else {
-                        mAuth.createUserWithEmailAndPassword(name,pass).addOnCompleteListener(getActivity(),new OnCompleteListener<AuthResult>() {
+
+        return view;
+    }
+
+    private void displayChatConv(View view){
+        listMessenger = (RecyclerView) view.findViewById(R.id.chat_list_friend);
+        arrayMessenger = new ArrayList<>();
+        FirebaseDatabase.getInstance().getReference().child("Conversation").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot child : snapshot.getChildren()){
+                    FirebaseConversation conversation = child.getValue(FirebaseConversation.class);
+                    final String[] lastMsg = {"Hiện chưa có tin nhắn"};
+                    final Date[] lastTime = {new Date()};
+                    if (conversation.getUser1().equals(myId) || conversation.getUser2().equals(myId)){
+                        FirebaseDatabase.getInstance().getReference("Message_"+conversation.getId()).limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()){
-                                    displayChatMessages("tạo");
-                                } else {
-                                    Log.d("tk",task.getException().toString());
-                                    Toast.makeText(getContext(),
-                                            "Đăng nhập thất bại",
-                                            Toast.LENGTH_LONG)
-                                            .show();
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot child : snapshot.getChildren()){
+                                    FirebaseMessage message = child.getValue(FirebaseMessage.class);
+                                    lastMsg[0] = message.getMsg();
+                                    lastTime[0] = message.getDate();
                                 }
+                                arrayMessenger.add(new Messenger(conversation.getId(),conversation.getUser1().equals(myId) ? conversation.getUser2() : conversation.getUser1(), conversation.getUserName1().equals(getUsername()) ? conversation.getUserName2() : conversation.getUserName1(), conversation.getImg1(),lastMsg[0],String.valueOf(lastTime[0].getTime())));
+                                messengerApdater = new MessengerApdater(arrayMessenger,getContext());
+                                listMessenger.setAdapter(messengerApdater);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
                             }
                         });
                     }
                 }
-            });
-        } else {
-            // User is already signed in. Therefore, display
-            // a welcome Toast
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-            // Load chat room contents
-            displayChatMessages("có sẵn");
-        }
-        return view;
-    }
+            }
+        });
 
-    private void MappingMessenger(View view){
-        listMessenger = (RecyclerView) view.findViewById(R.id.chat_list_friend);
-        arrayMessenger = new ArrayList<>();
-        for (int i=0;i<20;i++){
-            arrayMessenger.add(new Messenger("Ten"+i,"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJl4HD7evSsUvmjasC52hxhvBeikYlyhu7uQ&usqp=CAU","Đây là tin nhắn để test"+i,"10:4"+i%10+"PM"));
-        }
-    }
-    private void displayChatMessages(String signal){
-        Log.d("signal",signal);
-        chatRequireLogin.setVisibility(View.INVISIBLE);
-            chatContainerUser.setVisibility(View.VISIBLE);
-            chatEdittextSearch.setVisibility(View.VISIBLE);
-            String user="user";
-//            if (FirebaseAuth.getInstance()
-//                    .getCurrentUser()
-//                    .getDisplayName()!=null){
-//                user=FirebaseAuth.getInstance()
-//                        .getCurrentUser()
-//                        .getDisplayName();
-//            }
-        Toast.makeText(getContext(),
-                "Welcome " + user,
-                Toast.LENGTH_LONG)
-                .show();
-        listMessenger.setAdapter(messengerApdater);
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(),
                 DividerItemDecoration.VERTICAL);
         listMessenger.addItemDecoration(dividerItemDecoration);
+
     }
 
 }

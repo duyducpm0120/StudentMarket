@@ -38,10 +38,13 @@ import com.example.studentmarket.Controller.Common.typeAdapter;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
 
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
 import static com.example.studentmarket.Helper.globalValue.*;
 
 import com.example.studentmarket.Services.ProductService;
+import com.example.studentmarket.Services.ProductService.*;
 import com.example.studentmarket.Store.SharedStorage;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -150,7 +153,8 @@ public class Home extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getContext(), ListCategory.class);
-                startActivityForResult(myIntent, 999);
+                setIndex(-1);
+                startActivityForResult(myIntent,999);
 //                getContext().startActivity(myIntent);
             }
         });
@@ -447,8 +451,6 @@ public class Home extends Fragment {
                 if (index == -1) {
                     productAdater.setItem(getListProduct());
                     productAdater.notifyDataSetChanged();
-//                    homeListProduct.setAdapter(productAdater);
-                    Log.d("tag", String.valueOf(index));
                     return;
                 }
                 ArrayList<Product> arrayProductCate = new ArrayList<>();

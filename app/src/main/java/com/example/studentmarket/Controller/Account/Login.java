@@ -1,7 +1,7 @@
 package com.example.studentmarket.Controller.Account;
 
 import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
-
+import static com.example.studentmarket.Helper.globalValue.*;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -110,6 +110,8 @@ public class Login extends Fragment {
         fragmentTransaction = fragmentManager.beginTransaction();
         loginEditTextEmail = (EditText) view.findViewById(R.id.login_username_edit_text);
         loginEditTextPassword = (EditText) view.findViewById(R.id.login_password_edit_text);
+        loginEditTextEmail.setText("letuyen1234");
+        loginEditTextPassword.setText("Kanekirito1");
         loginClose = (ImageButton) view.findViewById(R.id.login_close_button);
         loginClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,6 +208,9 @@ public class Login extends Fragment {
             public void onSuccess(JSONObject response) {
                 //textView.setText("Response: " + response.toString());
                 Log.d("get profile response",response.toString());
+                UserProfile userProfile = new Gson().fromJson(String.valueOf(response), UserProfile.class);
+                setUsername(userProfile.getAccountName());
+                setUserId(userProfile.getUserId());
                 UserProfileModel userProfile = new Gson().fromJson(String.valueOf(response), UserProfileModel.class);
                 UserProfileHolder.getInstance().setData(userProfile);
                 // navigate

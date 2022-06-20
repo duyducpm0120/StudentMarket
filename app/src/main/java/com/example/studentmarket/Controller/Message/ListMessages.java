@@ -1,5 +1,8 @@
 package com.example.studentmarket.Controller.Message;
 
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
@@ -20,6 +24,16 @@ import android.widget.Toast;
 
 import com.example.studentmarket.Helper.DownloadImageTask.DownloadImageTask;
 import com.example.studentmarket.R;
+import com.example.studentmarket.Services.PushNotificationService;
+import com.example.studentmarket.Store.SharedStorage;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.commons.ViewHolder;
@@ -28,7 +42,7 @@ import com.stfalcon.chatkit.messages.MessagesList;
 import com.stfalcon.chatkit.messages.MessagesListAdapter;
 
 import java.util.Date;
-
+import static com.example.studentmarket.Helper.globalValue.*;
 
 public class ListMessages extends AppCompatActivity {
     private MessagesList messagesList;
@@ -36,6 +50,15 @@ public class ListMessages extends AppCompatActivity {
     private ImageButton goBackButton;
     private TextView listMessagesChatName;
     private MessagesListAdapter<Message> adapter;
+    private Author senderAuthor;
+    private Author receiverAuthor;
+    private boolean isFirstAccess = true;
+    private DatabaseReference mesageRef;
+    private DatabaseReference conversationRef;
+    private String myId="2";
+    private String conversationId;
+    private PushNotificationService pushNotificationService;
+    private String posterId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,19 +73,66 @@ public class ListMessages extends AppCompatActivity {
                 Picasso.get().load(url).into(imageView);
             }
         };
-
+        pushNotificationService = new PushNotificationService(this);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        conversationRef = database.getReference("Conversation");
         Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
+        String posterName = intent.getStringExtra("posterName");
+        posterId = intent.getStringExtra("posterId");
+        //
+        String posterAvatar = intent.getStringExtra("posterAvatar");
+        conversationId = intent.getStringExtra("id");
+        String imageUrl = intent.getStringExtra("imageUrl");
+        if (getUserId() != null) {
+            myId = getUserId();
+        }
+
+        if (conversationId == null) {
+            final String[] newConversationId = {"1"};
+
+            if (Integer.parseInt(posterId) < Integer.parseInt(myId)) {
+                newConversationId[0] = posterId +"-"+ myId;
+            } else {
+                newConversationId[0] = myId +"-"+ posterId;
+            }
+
+            conversationRef.orderByChild("id").equalTo(newConversationId[0]).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getValue()==null){
+                        conversationRef.push().setValue(new FirebaseConversation(newConversationId[0], myId,posterId,getUsername(),posterName, posterAvatar, imageUrl));
+                        conversationId = newConversationId[0];
+                    } else {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            FirebaseConversation conversation = dataSnapshot.getValue(FirebaseConversation.class);
+                            if (conversation.getId()!=null) {
+                                conversationId = conversation.getId();
+                            }
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
 
         listMessagesChatName = findViewById(R.id.list_messages_name);
-        listMessagesChatName.setText(name);
+        listMessagesChatName.setText(posterName);
+
+        senderAuthor = new Author(myId,"test","https://i.pinimg.com/236x/c1/c8/49/c1c8498d9aec3d4e6c894ddba7882031.jpg");
+        receiverAuthor = new Author("receiverId",posterName,"https://i.pinimg.com/236x/c1/c8/49/c1c8498d9aec3d4e6c894ddba7882031.jpg");
+        mesageRef = database.getReference("Message_"+conversationId);
         listMessagesChatName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(ListMessages.this, "test", Toast.LENGTH_SHORT).show();
             }
         });
-        String senderId = "test1";
+        String senderId = myId;
         messagesList = findViewById(R.id.message_list);
         adapter = new MessagesListAdapter<Message>(senderId, imageLoader){
             @Override
@@ -93,18 +163,71 @@ public class ListMessages extends AppCompatActivity {
                 finish();
             }
         });
-    }
+        String finalMyId = myId;
+        mesageRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                Log.d("firebase", String.valueOf(task.getResult().getValue()));
+                if (task.getResult().getValue()==null){
+                    isFirstAccess = false;
+                }
+                if (task.isSuccessful()) {
+                    for (DataSnapshot dataSnapshot : task.getResult().getChildren()) {
+                        FirebaseMessage message = dataSnapshot.getValue(FirebaseMessage.class);
+                        if (message.getAuthorId().equals(finalMyId)) {
+                            adapter.addToStart(new Message(id,message.getMsg(),senderAuthor,message.getDate()), true);
+                        } else {
+                            adapter.addToStart(new Message(id,message.getMsg(),receiverAuthor,message.getDate()), true);
+                        }
+                    }
+                }
+            }
+        });
 
+        mesageRef.limitToLast(1).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for(DataSnapshot snapshot_ : snapshot.getChildren()) {
+                        FirebaseMessage message = snapshot_.getValue(FirebaseMessage.class);
+                        if (message.getAuthorId().equals(finalMyId)) {
+                            if (!isFirstAccess){
+                                adapter.addToStart(new Message(message.getconversationId(),message.getMsg(),receiverAuthor,message.getDate()), true);
+                            }
+                            isFirstAccess = false;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
     private void initViews(MessagesListAdapter<Message> adapter) {
         inputView = findViewById(R.id.message_input);
         inputView.setInputListener(new MessageInput.InputListener() {
             @Override
             public boolean onSubmit(CharSequence input) {
-                Author author = new Author("test","test","https://i.pinimg.com/236x/c1/c8/49/c1c8498d9aec3d4e6c894ddba7882031.jpg");
-                Message message = new Message("test", input.toString(),author,new Date());
-                
+                Message message = new Message("abc", input.toString(),senderAuthor,new Date());
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 //validate and send message
                 adapter.addToStart(message, true);
+                FirebaseDatabase.getInstance()
+                        .getReference("Message_"+conversationId)
+                        .push()
+                        .setValue(new FirebaseMessage(conversationId,input.toString(),"name1",myId,new Date()))
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("firebase", "success");
+                                    pushNotificationService.sendNewMessageNotification(posterId);
+                                }
+                            }
+                        });
                 return true;
             }
         });

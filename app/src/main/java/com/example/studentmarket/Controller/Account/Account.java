@@ -25,6 +25,7 @@ import com.example.studentmarket.R;
 import com.example.studentmarket.Store.SharedStorage;
 import com.example.studentmarket.Store.UserProfileHolder;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -161,6 +162,14 @@ public class Account extends Fragment {
             public void onClick(View v) {
                 Intent myIntent = new Intent(getContext(), PostProduct.class);
                 startActivity(myIntent);
+            }
+        });
+        Button logout = (Button) view.findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+
             }
         });
 
