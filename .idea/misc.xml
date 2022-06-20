@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.1640625" />
         <entry key="../../../Library/Android/sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.23020833333333332" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/drawable/accounticon.xml" value="0.1685" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/drawable/background_type.xml" value="0.1505" />
@@ -93,7 +94,7 @@
         <entry key="app/src/main/res/layout/activity_list_category.xml" value="0.1595744680851064" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15" />
         <entry key="app/src/main/res/layout/activity_post.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_product_detail.xml" value="0.11594202898550725" />
+        <entry key="app/src/main/res/layout/activity_product_detail.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.16757246376811594" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.14492753623188406" />
         <entry key="app/src/main/res/layout/fragment_profile2.xml" value="0.16757246376811594" />

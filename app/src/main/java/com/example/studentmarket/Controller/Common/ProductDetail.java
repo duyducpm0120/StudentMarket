@@ -48,7 +48,6 @@ public class ProductDetail extends AppCompatActivity {
     private String posterAvatar;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -58,11 +57,11 @@ public class ProductDetail extends AppCompatActivity {
         setContentView(R.layout.activity_product_detail);
         Intent myIntent = getIntent();
         String productName = myIntent.getStringExtra("name");
-        String productPrice = myIntent.getStringExtra("price");
+        int productPrice = myIntent.getIntExtra("price", 0);
         String productImage = myIntent.getStringExtra("image");
         String productBody = myIntent.getStringExtra("body");
         final boolean[] isHeart = {myIntent.getBooleanExtra("isHeart", false)};
-        int id=myIntent.getIntExtra("id",0);
+        int id = myIntent.getIntExtra("id", 0);
         detailProductName = findViewById(R.id.product_detail_textview_name_product);
         detailProductPrice = findViewById(R.id.product_detail_price);
         detailProductDescriptions = findViewById(R.id.product_detail_description);
@@ -78,13 +77,13 @@ public class ProductDetail extends AppCompatActivity {
         ProductService productService = new ProductService(this);
 
         detailProductName.setText(productName);
-        detailProductPrice.setText(productPrice);
+        detailProductPrice.setText(String.valueOf(productPrice) + " VND");
 
         ArrayList<Product> listProduct = new ArrayList<>();
         listProduct = getListProduct();
         ArrayList<Product> finalListProduct = listProduct;
 
-        if (!storage.getValue(TOKEN_ID_KEY).isEmpty()){
+        if (!storage.getValue(TOKEN_ID_KEY).isEmpty()) {
             detailProductHeart.setVisibility(ImageView.VISIBLE);
             try {
                 productService.CanSaveFavorite(String.valueOf(id), new VolleyCallback() {
@@ -92,7 +91,7 @@ public class ProductDetail extends AppCompatActivity {
                     public void onSuccess(JSONObject response) throws JSONException {
                         //convert response to object
                         String value = response.getString("value");
-                        if (response.toString()=="true"){
+                        if (response.toString() == "true") {
                             detailProductHeart.setColorFilter(getColor(R.color.secondary));
                         } else {
                             detailProductHeart.setColorFilter(getColor(R.color.gray));
@@ -101,7 +100,7 @@ public class ProductDetail extends AppCompatActivity {
 
                     @Override
                     public void onError(VolleyError error) {
-                        Log.d("cansave",error.toString());
+                        Log.d("cansave", error.toString());
 
                     }
                 });
@@ -111,7 +110,7 @@ public class ProductDetail extends AppCompatActivity {
             detailProductHeart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isHeart[0]){
+                    if (isHeart[0]) {
                         try {
                             productService.UnsaveFavorite(String.valueOf(id), new VolleyCallback() {
                                 @Override
@@ -146,8 +145,8 @@ public class ProductDetail extends AppCompatActivity {
                         }
                     }
                     isHeart[0] = !isHeart[0];
-                    for (int i=0;i< finalListProduct.size();i++){
-                        if (finalListProduct.get(i).getId()==id){
+                    for (int i = 0; i < finalListProduct.size(); i++) {
+                        if (finalListProduct.get(i).getId() == id) {
                             finalListProduct.get(i).setHeart(isHeart[0]);
                             break;
                         }
@@ -170,7 +169,7 @@ public class ProductDetail extends AppCompatActivity {
         detailProductRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupHelper popupHelper = new PopupHelper(ProductDetail.this,id,"Thông báo","Bạn chắc chắn muốn xóa bài đăng này",true,"Huỷ","Xoá");
+                PopupHelper popupHelper = new PopupHelper(ProductDetail.this, id, "Thông báo", "Bạn chắc chắn muốn xóa bài đăng này", true, "Huỷ", "Xoá");
                 popupHelper.Show();
             }
         });
@@ -179,7 +178,7 @@ public class ProductDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getApplicationContext(), PostProduct.class);
-                myIntent.putExtra("name","test");
+                myIntent.putExtra("name", "test");
                 ProductDetail.this.startActivity(myIntent);
             }
         });
@@ -188,21 +187,19 @@ public class ProductDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(ProductDetail.this, ListMessages.class);
-                myIntent.putExtra("posterId",posterId);
-                myIntent.putExtra("posterName",posterName);
-                myIntent.putExtra("posterAvatar",posterAvatar);
+                myIntent.putExtra("posterId", posterId);
+                myIntent.putExtra("posterName", posterName);
+                myIntent.putExtra("posterAvatar", posterAvatar);
                 ProductDetail.this.startActivity(myIntent);
             }
         });
         detailProductDescriptions.setText(productBody);
 
-        if (isHeart[0]){
+        if (isHeart[0]) {
             detailProductHeart.setColorFilter(getColor(R.color.secondary));
-        }
-        else {
+        } else {
             detailProductHeart.setColorFilter(getColor(R.color.gray));
         }
-
 
 
         try {

@@ -68,9 +68,6 @@ public class productAdater extends BaseAdapter {
         ViewHolder holder;
         SharedStorage storage = new SharedStorage(context);
         ProductService productService = new ProductService(context);
-
-
-
         if (convertView == null) {
             holder = new ViewHolder();
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

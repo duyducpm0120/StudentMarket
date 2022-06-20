@@ -190,7 +190,7 @@ public class ListMessages extends AppCompatActivity {
                 if (snapshot.exists()) {
                     for(DataSnapshot snapshot_ : snapshot.getChildren()) {
                         FirebaseMessage message = snapshot_.getValue(FirebaseMessage.class);
-                        if (message.getAuthorId().equals(finalMyId)) {
+                        if (!message.getAuthorId().equals(finalMyId)) {
                             if (!isFirstAccess){
                                 adapter.addToStart(new Message(message.getconversationId(),message.getMsg(),receiverAuthor,message.getDate()), true);
                             }

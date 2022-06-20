@@ -73,6 +73,7 @@ public class ProfilePost extends Fragment {
                 Gson gson = new Gson();
                 for (int i = 0; i < listings.length(); i++) {
                     listingList.add(gson.fromJson(String.valueOf(listings.getJSONObject(i)), ProductModel.class));
+                    Log.d("listing price", String.valueOf(gson.fromJson(String.valueOf(listings.getJSONObject(i)), ProductModel.class).getListingPrice()));
                 }
             }
 
