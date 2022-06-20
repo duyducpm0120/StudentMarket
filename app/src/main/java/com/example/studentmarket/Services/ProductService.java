@@ -433,43 +433,7 @@ public class ProductService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void GetDetailProduct(String id, VolleyCallback
-            callback) throws JSONException {
-        String url = GET_DETAIL_PRODUCT + "/" + id;
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        //textView.setText("Response: " + response.toString());
-                        try {
-                            callback.onSuccess(response);
-                        } catch (JSONException jsonException) {
-                            jsonException.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        Log.d("response get favorite err", error.toString());
-                        callback.onError(error);
-                    }
-
-                }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer " + new SharedStorage(context).getValue(TOKEN_ID_KEY));
-                return headers;
-            }
-        };
-        ;
-
-
-        // Access the RequestQueue through your singleton class.
-        ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
-    }
     public void GetDetailProduct(String id,VolleyCallback
                                         callback) throws JSONException {
         String url = GET_DETAIL_PRODUCT+"/"+id;
@@ -508,7 +472,7 @@ public class ProductService {
     }
     public void GetDetailPoster(String id,VolleyCallback
             callback) throws JSONException {
-        String url = GET_DETAIL_POSTER+"/"+id;
+        String url = GET_DETAIL_POSTER + "/" + id;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -529,18 +493,20 @@ public class ProductService {
                         callback.onError(error);
                     }
 
-                }){
+                }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer "+new SharedStorage(context).getValue(TOKEN_ID_KEY));
+                headers.put("Authorization", "Bearer " + new SharedStorage(context).getValue(TOKEN_ID_KEY));
                 return headers;
             }
-        };;
+        };
+        ;
 
 
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
 
     public byte[] getFileDataFromDrawable(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

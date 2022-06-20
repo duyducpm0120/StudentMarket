@@ -35,7 +35,7 @@ public class ListCategory1 extends Fragment {
     private RecyclerView listCategory;
     private ArrayList<CategoryType> arrayCategory;
     private com.example.studentmarket.Controller.Common.typeAdapter typeAdapter;
-    private String[] listName = {"All Woments","New Collection","Active / Sports","Luxury","Swimwear","Casual"};
+    private String[] listName = {"All Woments", "New Collection", "Active / Sports", "Luxury", "Swimwear", "Casual"};
 
     public ListCategory1() {
         // Required empty public constructor
@@ -84,11 +84,11 @@ public class ListCategory1 extends Fragment {
         return view;
     }
 
-    private void MappingType(View view){
+    private void MappingType(View view) {
         listCategory = (RecyclerView) view.findViewById(R.id.list_category);
         arrayCategory = new ArrayList<>();
-        for (int i=0;i<listName.length;i++){
-            arrayCategory.add(new CategoryType("1",listName[i],R.drawable.type,false));
+        for (int i = 0; i < listName.length; i++) {
+            arrayCategory.add(new CategoryType("1", listName[i], "drawable://" + R.drawable.type, false));
         }
     }
 }

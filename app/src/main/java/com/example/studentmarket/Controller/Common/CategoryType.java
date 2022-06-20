@@ -6,7 +6,7 @@ public class CategoryType {
     private String image;
     private boolean show;
 
-    public CategoryType(String id, String name, int image, boolean show) {
+    public CategoryType(String id, String name, String image, boolean show) {
         this.id = id;
         this.name = name;
         this.image = image;

@@ -173,7 +173,7 @@ public class PostProduct extends AppCompatActivity {
                     for (int i = 0; i < listCate.length(); i++) {
                         JSONObject jsonObject = listCate.getJSONObject(i);
                         categoryNameList.add(jsonObject.getString("listingCategoryName"));
-                        categoryList.add(new CategoryType(jsonObject.getString("listingCategoryId"), jsonObject.getString("listingCategoryName"), 0, true));
+                        categoryList.add(new CategoryType(jsonObject.getString("listingCategoryId"), jsonObject.getString("listingCategoryName"), "drawable://" + R.drawable.type, true));
                         categoryAdapter.add(jsonObject.getString("listingCategoryName"));
                     }
                 }

@@ -321,7 +321,7 @@ public class Home extends Fragment {
                 arrayCategoryType = new ArrayList<>();
                 for (int i = 0; i < listCate.length(); i++) {
                     JSONObject jsonObject = listCate.getJSONObject(i);
-                    arrayCategoryType.add(new CategoryType(jsonObject.getString("listingCategoryId"), jsonObject.getString("listingCategoryName"), R.drawable.type, false));
+                    arrayCategoryType.add(new CategoryType(jsonObject.getString("listingCategoryId"), jsonObject.getString("listingCategoryName"), "drawable://" + R.drawable.type, false));
                 }
                 createTypeAdapter();
                 homeListType.setAdapter(homeTypeAdapter);

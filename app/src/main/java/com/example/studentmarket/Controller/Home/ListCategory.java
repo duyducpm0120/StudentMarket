@@ -151,7 +151,7 @@ public class ListCategory extends AppCompatActivity {
             if (listCate!=null){
                 for (int i = 0; i < listCate.length(); i++) {
                     JSONObject jsonObject = listCate.getJSONObject(i);
-                    arrayCategory.add(new CategoryType(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"), R.drawable.type, false));
+                    arrayCategory.add(new CategoryType(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"),"drawable://" + R.drawable.type, false));
                 }
                 typeAdapter = new typeAdapter(arrayCategory, 2, new categoryInterface() {
                     @Override

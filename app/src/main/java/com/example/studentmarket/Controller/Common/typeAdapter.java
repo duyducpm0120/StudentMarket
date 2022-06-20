@@ -54,7 +54,7 @@ public class typeAdapter extends RecyclerView.Adapter<typeAdapter.ViewHolder> {
         int index =position;
         CategoryType categoryTypeValue = categoryTypeList.get(position);
         holder.name.setText(categoryTypeValue.getName());
-        holder.img.setImageResource(categoryTypeValue.getImage());
+        Picasso.get().load(categoryTypeValue.getImage()).into(holder.img);
         if (type == 1){
             if (categoryTypeValue.isShow()==true){
                 holder.imageLayout.setVisibility(View.VISIBLE);

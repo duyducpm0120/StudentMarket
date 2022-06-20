@@ -74,12 +74,6 @@ public class ProfilePost extends Fragment {
                 for (int i = 0; i < listings.length(); i++) {
                     listingList.add(gson.fromJson(String.valueOf(listings.getJSONObject(i)), ProductModel.class));
                 }
-                for (int i = 0; i < listings.length(); i++) {
-                    listingList.add(gson.fromJson(String.valueOf(listings.getJSONObject(i)), ProductModel.class));
-                }
-                for (int i = 0; i < listings.length(); i++) {
-                    listingList.add(gson.fromJson(String.valueOf(listings.getJSONObject(i)), ProductModel.class));
-                }
             }
 
             @Override
@@ -87,9 +81,6 @@ public class ProfilePost extends Fragment {
                 Log.e("get producList err", error.getMessage());
             }
         });
-        FragmentTransaction tr = getFragmentManager().beginTransaction();
-        tr.replace(R.id.profile_fragmentContainerView, this);
-        tr.commit();
     }
 
 
