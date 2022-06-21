@@ -167,7 +167,6 @@ public class ListMessages extends AppCompatActivity {
         mesageRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                Log.d("firebase", String.valueOf(task.getResult().getValue()));
                 if (task.getResult().getValue()==null){
                     isFirstAccess = false;
                 }

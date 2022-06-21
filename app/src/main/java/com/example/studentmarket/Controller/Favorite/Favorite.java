@@ -45,7 +45,7 @@ public class Favorite extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private GridView homeListProduct;
+    private GridView favoriteListProduct;
     private ArrayList<Product> arrayProduct;
     private com.example.studentmarket.Controller.Common.productAdater productAdater;
     private LinearLayout favoriteRequireLogin;
@@ -105,10 +105,10 @@ public class Favorite extends Fragment {
         if (!storage.getValue(TOKEN_ID_KEY).isEmpty()){
             LoadListProduct(view);
         } else {
-            homeListProduct = (GridView) view.findViewById(R.id.favorite_list_product);
+            favoriteListProduct = (GridView) view.findViewById(R.id.favorite_list_product);
             arrayProduct = new ArrayList<>();
             productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
-            homeListProduct.setAdapter(productAdater);
+            favoriteListProduct.setAdapter(productAdater);
         }
         return view;
     }
@@ -123,7 +123,7 @@ public class Favorite extends Fragment {
 
     }
     private void LoadListProduct(View view) {
-        homeListProduct = (GridView) view.findViewById(R.id.favorite_list_product);
+        favoriteListProduct = (GridView) view.findViewById(R.id.favorite_list_product);
         arrayProduct = new ArrayList<>();
         try {
             productService.GetListFavorite(new VolleyCallback() {
@@ -139,8 +139,7 @@ public class Favorite extends Fragment {
                                         jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), true));
                             }
                             productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
-                            homeListProduct.setAdapter(productAdater);
-                            setListProduct(arrayProduct);
+                            favoriteListProduct.setAdapter(productAdater);
                         }
                     }
                     catch (JSONException jsonException){

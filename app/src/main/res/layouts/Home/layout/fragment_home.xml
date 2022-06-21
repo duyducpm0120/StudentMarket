@@ -23,7 +23,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:paddingHorizontal="40dp"
                     android:text="@string/Appname"
                     android:textSize="28sp"
