@@ -51,6 +51,7 @@ public class EditProfile extends AppCompatActivity {
     private TextView changeAvatarTextView;
     private Button confirmButton;
     private AvatarView profile_avatar;
+    private TextView changePasswordButton;
 
     private UserProfileModel userProfile;
 
@@ -139,7 +140,7 @@ public class EditProfile extends AppCompatActivity {
         userNameEditText = findViewById(R.id.edit_profile_user_name_text_box);
         confirmButton = findViewById(R.id.confirm_button);
         profile_avatar = findViewById(R.id.edit_profile_profile_avatar);
-
+        changePasswordButton = findViewById(R.id.edit_profile_change_password_text);
     }
 
     private void initLayoutFunction() {
@@ -170,6 +171,13 @@ public class EditProfile extends AppCompatActivity {
                     showFileChooser();
                 }
 
+            }
+        });
+        changePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ChangePassword.class);
+                startActivity(intent);
             }
         });
     }

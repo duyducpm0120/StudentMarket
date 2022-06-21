@@ -91,6 +91,7 @@
         <entry key="app/src/main/res/drawable/common_header.xml" value="0.21" />
         <entry key="app/src/main/res/drawable/nav_item_color_state.xml" value="0.1165" />
         <entry key="app/src/main/res/font/main_font.xml" value="0.21574074074074073" />
+        <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.20677083333333332" />
         <entry key="app/src/main/res/layout/activity_list_category.xml" value="0.1595744680851064" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15" />
         <entry key="app/src/main/res/layout/activity_post.xml" value="0.33" />
@@ -102,7 +103,7 @@
         <entry key="app/src/main/res/layouts/Account/drawable/rounded_avatar.xml" value="0.1165" />
         <entry key="app/src/main/res/layouts/Account/drawable/special_header.xml" value="0.1165" />
         <entry key="app/src/main/res/layouts/Account/layout/abc.xml" value="0.16757246376811594" />
-        <entry key="app/src/main/res/layouts/Account/layout/activity_edit_profile.xml" value="0.14" />
+        <entry key="app/src/main/res/layouts/Account/layout/activity_edit_profile.xml" value="0.33" />
         <entry key="app/src/main/res/layouts/Account/layout/activity_edit_profile2.xml" value="0.14628623188405798" />
         <entry key="app/src/main/res/layouts/Account/layout/activity_view_avatar.xml" value="0.1595744680851064" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_account.xml" value="0.22" />

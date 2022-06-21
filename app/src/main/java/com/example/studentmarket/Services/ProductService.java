@@ -521,6 +521,7 @@ public class ProductService {
             requestBody.put("listingTitle", product.getListingTitle());
             requestBody.put("listingBody", product.getListingBody());
             requestBody.put("listingPrice", product.getListingPrice());
+            requestBody.put("categories", null);
         } catch (JSONException e) {
             e.printStackTrace();
         }

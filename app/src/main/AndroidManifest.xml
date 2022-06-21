@@ -43,6 +43,9 @@
             android:name=".Controller.Account.ViewAvatar"
             android:exported="false" />
         <activity
+            android:name=".Controller.Account.ChangePassword"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
