@@ -7,14 +7,16 @@ public class Messenger {
     private String imageUrl;
     private String msg;
     private String time;
+    private String rawTime;
 
-    public Messenger(String id,String posterId,String name, String imageUrl, String msg,String time) {
+    public Messenger(String id,String posterId,String name, String imageUrl, String msg,String time,String rawTime) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.msg = msg;
         this.time = time;
         this.id = id;
         this.posterId = posterId;
+        this.rawTime = rawTime;
     }
 
     public String getName() {
@@ -62,4 +64,11 @@ public class Messenger {
     public void setPosterId(String posterId) {
         this.posterId = posterId;
     }
+    public String getRawTime() {
+        return rawTime;
+    }
+    public void setRawTime(String rawTime) {
+        this.rawTime = rawTime;
+    }
+
 }

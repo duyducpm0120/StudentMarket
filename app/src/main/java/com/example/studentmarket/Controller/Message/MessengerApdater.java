@@ -3,6 +3,8 @@ package com.example.studentmarket.Controller.Message;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.studentmarket.Helper.DownloadImageTask.DownloadImageTask;
 import com.example.studentmarket.R;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
+import static com.example.studentmarket.Helper.globalValue.*;
 public class MessengerApdater extends RecyclerView.Adapter<MessengerApdater.ViewHolder> {
     private List<Messenger> listMessenger;
     private Context context;
@@ -46,7 +49,15 @@ public class MessengerApdater extends RecyclerView.Adapter<MessengerApdater.View
         holder.name.setText(msgValue.getName());
 //        new DownloadImageTask(holder.avatar).execute(msgValue.getImageUrl());
         Picasso.get().load(msgValue.getImageUrl()).into(holder.avatar);
+
         holder.msg.setText(msgValue.getMsg());
+//        if (msgValue.getIsRead().equals("true")){
+//            holder.msg.setTypeface(holder.msg.getTypeface(), Typeface.NORMAL);
+//            holder.msg.setTextColor(context.getResources().getColor(R.color.grayPrimary));
+//        } else {
+//            holder.msg.setTypeface(holder.msg.getTypeface(), Typeface.BOLD_ITALIC);
+//            holder.msg.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+//        }
         holder.time.setText(msgValue.getTime());
         holder.messenger_clickable.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,11 +65,10 @@ public class MessengerApdater extends RecyclerView.Adapter<MessengerApdater.View
                 Intent myIntent = new Intent(context,ListMessages.class);
                 myIntent.putExtra("name",msgValue.getName());
                 myIntent.putExtra("id",msgValue.getId());
-                myIntent.putExtra("imageUrl",msgValue.getImageUrl());
+                myIntent.putExtra("posterAvatar",msgValue.getImageUrl());
                 myIntent.putExtra("posterId",msgValue.getPosterId());
                 myIntent.putExtra("posterName",msgValue.getName());
                 context.startActivity(myIntent);
-                Toast.makeText(v.getContext(), msgValue.getName(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -36,6 +36,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -130,37 +133,73 @@ public class DialogList extends Fragment {
         return view;
     }
 
+    private String convertMiliSecondTimesToTimeAgo(String time){
+        Date date = new Date();
+        long timeLong = Long.parseLong(time);
+        long timeAgo = date.getTime() - timeLong;
+        long timeAgoSecond = timeAgo / 1000;
+        long timeAgoMinute = timeAgoSecond / 60;
+        long timeAgoHour = timeAgoMinute / 60;
+        long timeAgoDay = timeAgoHour / 24;
+        long timeAgoWeek = timeAgoDay / 7;
+        long timeAgoMonth = timeAgoWeek / 4;
+        long timeAgoYear = timeAgoMonth / 12;
+        if (timeAgoSecond < 60){
+            return "Vừa xong";
+        } else if (timeAgoMinute < 60){
+            return timeAgoMinute + " phút trước";
+        } else if (timeAgoHour < 24){
+            return timeAgoHour + " giờ trước";
+        } else if (timeAgoDay < 7){
+            return timeAgoDay + " ngày trước";
+        } else if (timeAgoWeek < 4){
+            return timeAgoWeek + " tuần trước";
+        } else if (timeAgoMonth < 12){
+            return timeAgoMonth + " tháng trước";
+        } else {
+            return timeAgoYear + " năm trước";
+        }
+    }
+
     private void displayChatConv(View view){
         listMessenger = (RecyclerView) view.findViewById(R.id.chat_list_friend);
         arrayMessenger = new ArrayList<>();
-        FirebaseDatabase.getInstance().getReference().child("Conversation").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("Conversation").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot child : snapshot.getChildren()){
-                    FirebaseConversation conversation = child.getValue(FirebaseConversation.class);
-                    final String[] lastMsg = {"Hiện chưa có tin nhắn"};
-                    final Date[] lastTime = {new Date()};
-                    if (conversation.getUser1().equals(myId) || conversation.getUser2().equals(myId)){
-                        FirebaseDatabase.getInstance().getReference("Message_"+conversation.getId()).limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot child : snapshot.getChildren()){
-                                    FirebaseMessage message = child.getValue(FirebaseMessage.class);
-                                    lastMsg[0] = message.getMsg();
-                                    lastTime[0] = message.getDate();
-                                }
-                                arrayMessenger.add(new Messenger(conversation.getId(),conversation.getUser1().equals(myId) ? conversation.getUser2() : conversation.getUser1(), conversation.getUserName1().equals(getUsername()) ? conversation.getUserName2() : conversation.getUserName1(), conversation.getImg1(),lastMsg[0],String.valueOf(lastTime[0].getTime())));
-                                messengerApdater = new MessengerApdater(arrayMessenger,getContext());
-                                listMessenger.setAdapter(messengerApdater);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
+                arrayMessenger.clear();
+                for (DataSnapshot childConversation : snapshot.getChildren()){
+                    FirebaseConversation conversation = childConversation.getValue(FirebaseConversation.class);                    String userId1 = conversation.getUser1();
+                    String userId2 = conversation.getUser2();
+                    String userName1 = conversation.getUserName1();
+                    String userName2 = conversation.getUserName2();
+                    String userName = "";
+                    String avatar = "";
+                    String userId = "";
+                    String isRead = "";
+                    if (!userId1.equals(myId)) {
+                        userId = userId1;
+                        userName = userName1;
+                        avatar = conversation.getImg1();
+                    } else {
+                        userId = userId2;
+                        userName = userName2;
+                        avatar = conversation.getImg2();
+                    }
+                    String formatTime = convertMiliSecondTimesToTimeAgo(conversation.getLastMsgTime());
+                    if (userId1.equals(myId) || userId2.equals(myId)){
+                        arrayMessenger.add(new Messenger(conversation.getId(),userId,userName, avatar, conversation.getLastMsg(),formatTime,conversation.getLastMsgTime()));
                     }
                 }
+                //sort array to display newest message first
+                Collections.sort(arrayMessenger, new Comparator<Messenger>() {
+                    @Override
+                    public int compare(Messenger o1, Messenger o2) {
+                        return o2.getRawTime().compareTo(o1.getRawTime());
+                    }
+                });
+                messengerApdater = new MessengerApdater(arrayMessenger,getContext());
+                listMessenger.setAdapter(messengerApdater);
             }
 
             @Override

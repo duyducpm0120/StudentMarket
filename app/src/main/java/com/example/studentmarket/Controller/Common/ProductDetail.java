@@ -98,7 +98,10 @@ public class ProductDetail extends AppCompatActivity {
 
 
         detailProductName.setText(productName);
-        detailProductPrice.setText(String.valueOf(productPrice) + " VND");
+
+        String fromatPrice = String.format("%,d", Integer.parseInt(productPrice)) + " đ";
+        detailProductPrice.setText(fromatPrice);
+
 
         detailProductName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,80 +119,17 @@ public class ProductDetail extends AppCompatActivity {
         ArrayList<Product> listProduct = new ArrayList<>();
         listProduct = getListProduct();
         ArrayList<Product> finalListProduct = listProduct;
+        if (!storage.getValue(TOKEN_ID_KEY).isEmpty()){
+            handleHeart(isHeart, id, productService, finalListProduct);
 
-        if (!storage.getValue(TOKEN_ID_KEY).isEmpty()) {
-            detailProductHeart.setVisibility(ImageView.VISIBLE);
+
             try {
-                productService.CanSaveFavorite(String.valueOf(id), new VolleyCallback() {
-                    @Override
-                    public void onSuccess(JSONObject response) throws JSONException {
-                        //convert response to object
-                        String value = response.getString("value");
-                        if (response.toString() == "true") {
-                            detailProductHeart.setColorFilter(getColor(R.color.secondary));
-                        } else {
-                            detailProductHeart.setColorFilter(getColor(R.color.gray));
-                        }
-                    }
-
-                    @Override
-                    public void onError(VolleyError error) {
-                        Log.d("cansave", error.toString());
-
-                    }
-                });
+                getDetailPoster(String.valueOf(id));
             } catch (JSONException jsonException) {
                 jsonException.printStackTrace();
             }
-            detailProductHeart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isHeart[0]) {
-                        try {
-                            productService.UnsaveFavorite(String.valueOf(id), new VolleyCallback() {
-                                @Override
-                                public void onSuccess(JSONObject response) throws JSONException {
-                                }
-
-                                @Override
-                                public void onError(VolleyError error) {
-                                    //unsave succesfull
-                                    detailProductHeart.setColorFilter(getColor(R.color.gray));
-                                }
-                            });
-                        } catch (JSONException jsonException) {
-                            jsonException.printStackTrace();
-                        }
-                    } else {
-                        try {
-                            productService.SaveFavorite(String.valueOf(id), new VolleyCallback() {
-                                @Override
-                                public void onSuccess(JSONObject response) throws JSONException {
-                                    //save successfull
-                                    detailProductHeart.setColorFilter(getColor(R.color.secondary));
-                                }
-
-                                @Override
-                                public void onError(VolleyError error) {
-
-                                }
-                            });
-                        } catch (JSONException jsonException) {
-                            jsonException.printStackTrace();
-                        }
-                    }
-                    isHeart[0] = !isHeart[0];
-                    for (int i = 0; i < finalListProduct.size(); i++) {
-                        if (finalListProduct.get(i).getId() == id) {
-                            finalListProduct.get(i).setHeart(isHeart[0]);
-                            break;
-                        }
-                    }
-                    setListProduct(finalListProduct);
-                }
-            });
         } else {
-            detailProductHeart.setVisibility(ImageView.INVISIBLE);
+            handleShowButton();
         }
 
         detailProductGoBack.setOnClickListener(new View.OnClickListener() {
@@ -227,7 +167,8 @@ public class ProductDetail extends AppCompatActivity {
         detailProductChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent myIntent = new Intent(ProductDetail.this, ListMessages.class);
+                Intent myIntent = new Intent(getApplicationContext(), ListMessages.class);
+                Log.d("posterId", posterId+" "+posterName+" "+posterAvatar);
                 myIntent.putExtra("posterId", posterId);
                 myIntent.putExtra("posterName", posterName);
                 myIntent.putExtra("posterAvatar", posterAvatar);
@@ -236,18 +177,88 @@ public class ProductDetail extends AppCompatActivity {
         });
         detailProductDescriptions.setText(productBody);
 
-        if (isHeart[0]) {
+        heartCheckShow(isHeart[0]);
+
+
+
+    }
+
+    private void heartCheckShow(boolean canShow) {
+        if (canShow) {
             detailProductHeart.setColorFilter(getColor(R.color.secondary));
         } else {
             detailProductHeart.setColorFilter(getColor(R.color.gray));
         }
+    }
 
-
+    private void handleHeart(boolean[] isHeart, int id, ProductService productService, ArrayList<Product> finalListProduct) {
+        detailProductHeart.setVisibility(ImageView.VISIBLE);
         try {
-            getDetailPoster(String.valueOf(id));
+            productService.CanSaveFavorite(String.valueOf(id), new VolleyCallback() {
+                @Override
+                public void onSuccess(JSONObject response) throws JSONException {
+                    //convert response to object
+                    Boolean value = response.getBoolean("value");
+                    heartCheckShow(!value);
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    Log.d("cansave",error.toString());
+
+                }
+            });
+
         } catch (JSONException jsonException) {
             jsonException.printStackTrace();
         }
+        detailProductHeart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isHeart[0]){
+                    try {
+                        productService.UnsaveFavorite(String.valueOf(id), new VolleyCallback() {
+                            @Override
+                            public void onSuccess(JSONObject response) throws JSONException {
+                            }
+
+                            @Override
+                            public void onError(VolleyError error) {
+                                //unsave succesfull
+                                detailProductHeart.setColorFilter(getColor(R.color.gray));
+                            }
+                        });
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
+                    }
+                } else {
+                    try {
+                        productService.SaveFavorite(String.valueOf(id), new VolleyCallback() {
+                            @Override
+                            public void onSuccess(JSONObject response) throws JSONException {
+                                //save successfull
+                                detailProductHeart.setColorFilter(getColor(R.color.secondary));
+                            }
+
+                            @Override
+                            public void onError(VolleyError error) {
+
+                            }
+                        });
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
+                    }
+                }
+                isHeart[0] = !isHeart[0];
+                for (int i = 0; i< finalListProduct.size(); i++){
+                    if (finalListProduct.get(i).getId()== id){
+                        finalListProduct.get(i).setHeart(isHeart[0]);
+                        break;
+                    }
+                }
+                setListProduct(finalListProduct);
+            }
+        });
     }
 
     public void getDetailPoster(String id) throws JSONException {
@@ -259,16 +270,42 @@ public class ProductDetail extends AppCompatActivity {
                 posterAvatar = response.getString("userPic");
                 detailProductAvatarName.setText(posterName);
                 posterId = response.getString("userId");
+                if (getUserId().equals(posterId)) {
+                    detailProductEdit.setVisibility(View.VISIBLE);
+                    detailProductEdit.setActivated(true);
+                    detailProductRemove.setVisibility(View.VISIBLE);
+                    detailProductRemove.setActivated(true);
+                    detailProductChat.setVisibility(ImageView.INVISIBLE);
+                    detailProductChat.setActivated(false);
+
+                } else {
+                    detailProductChat.setVisibility(View.VISIBLE);
+                    detailProductChat.setActivated(true);
+                    detailProductEdit.setVisibility(ImageView.INVISIBLE);
+                    detailProductRemove.setVisibility(ImageView.INVISIBLE);
+                    detailProductRemove.setActivated(false);
+                    detailProductEdit.setActivated(false);
+                }
             }
 
             @Override
             public void onError(VolleyError error) {
-
+                handleShowButton();
             }
         });
     }
 
-    public void viewProfile(){
+    private void handleShowButton() {
+        detailProductHeart.setVisibility(ImageView.INVISIBLE);
+        detailProductChat.setVisibility(ImageView.INVISIBLE);
+        detailProductEdit.setVisibility(ImageView.INVISIBLE);
+        detailProductRemove.setVisibility(ImageView.INVISIBLE);
+        detailProductChat.setActivated(false);
+        detailProductEdit.setActivated(false);
+        detailProductRemove.setActivated(false);
+    }
+  
+  public void viewProfile(){
         ProfileService profileService = new ProfileService(getApplicationContext());
         profileService.getUserProfileByProductId(productId, new VolleyCallback() {
             @Override

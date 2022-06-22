@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+
         <entry key="../../../../../layout/custom_preview.xml" value="0.1640625" />
         <entry key="../../../Library/Android/sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.23020833333333332" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/drawable/accounticon.xml" value="0.1685" />
@@ -32,6 +33,7 @@
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/activity_notify.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/activity_post.xml" value="0.2164855072463768" />
+        <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/activity_post_product.xml" value="0.1734375" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/activity_product_detail.xml" value="0.25" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/content_list_categoty.xml" value="0.2164855072463768" />
         <entry key="..\:/Studentmarket/StudentMarket/app/src/main/res/layout/fragment_account.xml" value="0.2" />
@@ -71,19 +73,17 @@
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layout/fragment_forgot_password.xml" value="0.128" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layout/test_layout.xml" value="0.24230072463768115" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layout/test_layout2.xml" value="0.24230072463768115" />
-        <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/activity_view_avatar.xml" value="0.176" />
+        <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/activity_view_avatar.xml" value="0.2" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_login.xml" value="0.1828125" />
-        <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_profile.xml" value="0.2" />
+        <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_profile.xml" value="0.1068840579710145" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_profile_avatart_bottom_sheet.xml" value="0.2" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_profile_bottom_sheet.xml" value="0.2" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_profile_info.xml" value="0.136" />
-        <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_profile_post.xml" value="0.1" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Account/layout/fragment_register.xml" value="0.2" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Authentication/layout/fragment_account.xml" value="0.25" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Authentication/layout/fragment_login.xml" value="0.10885416666666667" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Authentication/layout/fragment_pre_register.xml" value="0.10885416666666667" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Authentication/layout/fragment_register.xml" value="0.24230072463768115" />
-        <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/layouts/Home/layout/product.xml" value="0.14322916666666666" />
         <entry key="..\:/Users/Dell/Documents/GitHub/StudentMarket/app/src/main/res/menu/bottom_menu.xml" value="0.12685185185185185" />
         <entry key="app/src/main/res/drawable/accounticon.xml" value="0.21" />
         <entry key="app/src/main/res/drawable/button_color.xml" value="0.21" />
@@ -94,6 +94,7 @@
         <entry key="app/src/main/res/layout/activity_change_password.xml" value="0.20677083333333332" />
         <entry key="app/src/main/res/layout/activity_list_category.xml" value="0.1595744680851064" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15" />
+
         <entry key="app/src/main/res/layout/activity_post.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_product_detail.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_view_other_profile.xml" value="0.22" />
@@ -104,7 +105,9 @@
         <entry key="app/src/main/res/layouts/Account/drawable/rounded_avatar.xml" value="0.1165" />
         <entry key="app/src/main/res/layouts/Account/drawable/special_header.xml" value="0.1165" />
         <entry key="app/src/main/res/layouts/Account/layout/abc.xml" value="0.16757246376811594" />
+
         <entry key="app/src/main/res/layouts/Account/layout/activity_edit_profile.xml" value="0.22" />
+
         <entry key="app/src/main/res/layouts/Account/layout/activity_edit_profile2.xml" value="0.14628623188405798" />
         <entry key="app/src/main/res/layouts/Account/layout/activity_view_avatar.xml" value="0.1595744680851064" />
         <entry key="app/src/main/res/layouts/Account/layout/fragment_account.xml" value="0.22" />

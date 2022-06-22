@@ -48,7 +48,7 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/chat_input_style"
             app:inputHint="Soạn tin nhắn..."
-            app:showAttachmentButton="true" />
+            app:showAttachmentButton="false" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
