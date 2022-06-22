@@ -59,17 +59,7 @@ public class ProductService {
     }
 
     public void PostProduct(String title, int price, String body, Uri imageUri, Integer[] categories, RetrofitCallback callback) {
-//
-//        "title": "girl's underwears for boys",
-//                "price": 100000,
-//                "body": "gamer girl's underwear, worn, unwashed",
-//                "pic": {
-//            "formdata": {}
-//        },
-//        "address": "UIT",
-//                "categories": []
-
-
+        
         File file = new File(imageUri.getPath());
         String contentType = new Utils().getContentType(imageUri, context);
         FileRequestBody fileRequestBody = null;

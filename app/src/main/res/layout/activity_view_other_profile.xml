@@ -26,7 +26,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="110dp"
+                    android:layout_height="90dp"
                     android:background="@drawable/gradient_background_header_home"
                     android:orientation="horizontal"></LinearLayout>
 
@@ -35,7 +35,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="160dp"
-                    android:layout_marginTop="80dp"
+                    android:layout_marginTop="60dp"
                     android:layout_weight="1"
                     android:fontFamily="sans-serif"
                     android:text="TextView"
@@ -53,7 +53,7 @@
                         android:layout_width="110dp"
                         android:layout_height="110dp"
                         android:layout_marginLeft="30dp"
-                        android:layout_marginTop="50dp"
+                        android:layout_marginTop="10dp"
                         app:avatarViewBorderColor="@color/white"
                         app:avatarViewBorderWidth="3dp"
                         app:avatarViewShape="circle" />
@@ -63,7 +63,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="160dp"
-                    android:layout_marginTop="115dp"
+                    android:layout_marginTop="90dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
