@@ -159,7 +159,8 @@ public class productAdater extends BaseAdapter {
             holder.heartProduct.setColorFilter(context.getColor(R.color.gray));
         }
         holder.nameProduct.setText(product.getTitle());
-        holder.priceProduct.setText(product.getPrice());
+        String formatPrice = String.format("%,d", Integer.parseInt(product.getPrice()))+" đ";
+        holder.priceProduct.setText(formatPrice);
 
         return convertView;
     }

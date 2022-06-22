@@ -58,7 +58,6 @@ public class MessengerApdater extends RecyclerView.Adapter<MessengerApdater.View
                 myIntent.putExtra("posterId",msgValue.getPosterId());
                 myIntent.putExtra("posterName",msgValue.getName());
                 context.startActivity(myIntent);
-                Toast.makeText(v.getContext(), msgValue.getName(), Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -11,6 +11,7 @@ public class globalValue {
     private static String token;
     private static boolean firstAcess=true;
     private static String userId;
+    private static String userImg;
 
     public static boolean isFirstAcess() {
         return firstAcess;
@@ -58,5 +59,13 @@ public class globalValue {
 
     public static void setUserId(String userId) {
         globalValue.userId = userId;
+    }
+
+    public static String getUserImg() {
+        return userImg;
+    }
+
+    public static void setUserImg(String userImg) {
+        globalValue.userImg = userImg;
     }
 }

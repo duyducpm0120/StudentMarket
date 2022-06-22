@@ -110,8 +110,8 @@ public class Login extends Fragment {
         fragmentTransaction = fragmentManager.beginTransaction();
         loginEditTextEmail = (EditText) view.findViewById(R.id.login_username_edit_text);
         loginEditTextPassword = (EditText) view.findViewById(R.id.login_password_edit_text);
-        loginEditTextEmail.setText("duyduc012");
-        loginEditTextPassword.setText("duyduc012");
+        loginEditTextEmail.setText("letuyen1234");
+        loginEditTextPassword.setText("Kanekirito1");
         loginClose = (ImageButton) view.findViewById(R.id.login_close_button);
         loginClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,6 +211,7 @@ public class Login extends Fragment {
                 UserProfileModel userProfile = new Gson().fromJson(String.valueOf(response), UserProfileModel.class);
                 setUsername(userProfile.getAccountName());
                 setUserId(userProfile.getUserId());
+                setUserImg(userProfile.getUserPic());
                 UserProfileHolder.getInstance().setData(userProfile);
                 // navigate
                 fragmentTransaction.replace(R.id.fragmentContainerView, new Profile(userProfile));

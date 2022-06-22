@@ -59,6 +59,7 @@ public class ListMessages extends AppCompatActivity {
     private String conversationId;
     private PushNotificationService pushNotificationService;
     private String posterId;
+    private FirebaseDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,19 +75,17 @@ public class ListMessages extends AppCompatActivity {
             }
         };
         pushNotificationService = new PushNotificationService(this);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance();
         conversationRef = database.getReference("Conversation");
         Intent intent = getIntent();
         String posterName = intent.getStringExtra("posterName");
         posterId = intent.getStringExtra("posterId");
-        //
         String posterAvatar = intent.getStringExtra("posterAvatar");
         conversationId = intent.getStringExtra("id");
-        String imageUrl = intent.getStringExtra("imageUrl");
+        String imageUrl = getUserImg();
         if (getUserId() != null) {
             myId = getUserId();
         }
-
         if (conversationId == null) {
             final String[] newConversationId = {"1"};
 
@@ -107,6 +106,8 @@ public class ListMessages extends AppCompatActivity {
                             FirebaseConversation conversation = dataSnapshot.getValue(FirebaseConversation.class);
                             if (conversation.getId()!=null) {
                                 conversationId = conversation.getId();
+                                initListener();
+                                break;
                             }
                         }
                     }
@@ -118,20 +119,21 @@ public class ListMessages extends AppCompatActivity {
 
                 }
             });
+        } else {
+            initListener();
         }
 
         listMessagesChatName = findViewById(R.id.list_messages_name);
         listMessagesChatName.setText(posterName);
 
         senderAuthor = new Author(myId,"test","https://i.pinimg.com/236x/c1/c8/49/c1c8498d9aec3d4e6c894ddba7882031.jpg");
-        receiverAuthor = new Author("receiverId",posterName,"https://i.pinimg.com/236x/c1/c8/49/c1c8498d9aec3d4e6c894ddba7882031.jpg");
-        mesageRef = database.getReference("Message_"+conversationId);
-        listMessagesChatName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(ListMessages.this, "test", Toast.LENGTH_SHORT).show();
-            }
-        });
+        receiverAuthor = new Author("receiverId",posterName,posterAvatar);
+//        listMessagesChatName.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(ListMessages.this, "test", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         String senderId = myId;
         messagesList = findViewById(R.id.message_list);
         adapter = new MessagesListAdapter<Message>(senderId, imageLoader){
@@ -143,27 +145,44 @@ public class ListMessages extends AppCompatActivity {
                     params.addRule(RelativeLayout.ALIGN_PARENT_END);
                 }
             }
-        };
-        messagesList.setAdapter(adapter);
-        initViews(adapter);
-        inputView.setAttachmentsListener(new MessageInput.AttachmentsListener() {
             @Override
-            public void onAddAttachments() {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"Title"),1);
+            public void onLoadMore(int page,int total){
+                Log.d("test","load more");
+            }
+        };
+        adapter.setLoadMoreListener(new MessagesListAdapter.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(int page, int total) {
+                Log.d("test","load more");
             }
         });
+        messagesList.setAdapter(adapter);
+        initViews(adapter);
+//        inputView.setAttachmentsListener(new MessageInput.AttachmentsListener() {
+//            @Override
+//            public void onAddAttachments() {
+//                Intent intent = new Intent();
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent,"Title"),1);
+//            }
+//        });
         goBackButton = findViewById(R.id.chat_goback_button);
         goBackButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ListMessages.this, "back", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
-        String finalMyId = myId;
+    }
+
+    private void initListener() {
+        mesageRef = database.getReference("Message_"+conversationId);
+        listenerFirstMessage(myId);
+        listenerMessage(myId);
+    }
+
+    private void listenerFirstMessage(String finalMyId) {
         mesageRef.get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -182,7 +201,9 @@ public class ListMessages extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    private void listenerMessage(String finalMyId) {
         mesageRef.limitToLast(1).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -193,8 +214,8 @@ public class ListMessages extends AppCompatActivity {
                             if (!isFirstAccess){
                                 adapter.addToStart(new Message(message.getconversationId(),message.getMsg(),receiverAuthor,message.getDate()), true);
                             }
-                            isFirstAccess = false;
                         }
+                        isFirstAccess = false;
                     }
                 }
             }
@@ -205,19 +226,19 @@ public class ListMessages extends AppCompatActivity {
             }
         });
     }
+
     private void initViews(MessagesListAdapter<Message> adapter) {
         inputView = findViewById(R.id.message_input);
         inputView.setInputListener(new MessageInput.InputListener() {
             @Override
             public boolean onSubmit(CharSequence input) {
-                Message message = new Message("abc", input.toString(),senderAuthor,new Date());
-                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                Message message = new Message("SenderId", input.toString(),senderAuthor,new Date());
                 //validate and send message
                 adapter.addToStart(message, true);
-                FirebaseDatabase.getInstance()
+                database
                         .getReference("Message_"+conversationId)
                         .push()
-                        .setValue(new FirebaseMessage(conversationId,input.toString(),"name1",myId,new Date()))
+                        .setValue(new FirebaseMessage(conversationId,input.toString(),getUsername(),myId,new Date()))
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
@@ -227,6 +248,15 @@ public class ListMessages extends AppCompatActivity {
                                 }
                             }
                         });
+                //update last message and time to Conversation table
+//                FirebaseDatabase.getInstance()
+//                        .getReference("Conversation_"+conversationId)
+//                        .child("lastMessage")
+//                        .setValue(input.toString());
+//                FirebaseDatabase.getInstance()
+//                        .getReference("Conversation_"+conversationId)
+//                        .child("lastTime")
+//                        .setValue(new Date().getTime());
                 return true;
             }
         });

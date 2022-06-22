@@ -133,7 +133,7 @@ public class DialogList extends Fragment {
     private void displayChatConv(View view){
         listMessenger = (RecyclerView) view.findViewById(R.id.chat_list_friend);
         arrayMessenger = new ArrayList<>();
-        FirebaseDatabase.getInstance().getReference().child("Conversation").addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference("Conversation").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot child : snapshot.getChildren()){
@@ -141,24 +141,24 @@ public class DialogList extends Fragment {
                     final String[] lastMsg = {"Hiện chưa có tin nhắn"};
                     final Date[] lastTime = {new Date()};
                     if (conversation.getUser1().equals(myId) || conversation.getUser2().equals(myId)){
-                        FirebaseDatabase.getInstance().getReference("Message_"+conversation.getId()).limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                for (DataSnapshot child : snapshot.getChildren()){
-                                    FirebaseMessage message = child.getValue(FirebaseMessage.class);
-                                    lastMsg[0] = message.getMsg();
-                                    lastTime[0] = message.getDate();
-                                }
-                                arrayMessenger.add(new Messenger(conversation.getId(),conversation.getUser1().equals(myId) ? conversation.getUser2() : conversation.getUser1(), conversation.getUserName1().equals(getUsername()) ? conversation.getUserName2() : conversation.getUserName1(), conversation.getImg1(),lastMsg[0],String.valueOf(lastTime[0].getTime())));
-                                messengerApdater = new MessengerApdater(arrayMessenger,getContext());
-                                listMessenger.setAdapter(messengerApdater);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
+//                        FirebaseDatabase.getInstance().getReference("Message_"+conversation.getId()).limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
+//                            @Override
+//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                for (DataSnapshot child : snapshot.getChildren()){
+//                                    FirebaseMessage message = child.getValue(FirebaseMessage.class);
+//                                    lastMsg[0] = message.getMsg();
+//                                    lastTime[0] = message.getDate();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onCancelled(@NonNull DatabaseError error) {
+//
+//                            }
+//                        });
+                        arrayMessenger.add(new Messenger(conversation.getId(),"2","lo", "https://i.pinimg.com/236x/c1/c8/49/c1c8498d9aec3d4e6c894ddba7882031.jpg", "lo","10"));
+                        messengerApdater = new MessengerApdater(arrayMessenger,getContext());
+                        listMessenger.setAdapter(messengerApdater);
                     }
                 }
             }
