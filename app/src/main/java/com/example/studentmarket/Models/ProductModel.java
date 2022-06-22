@@ -18,7 +18,15 @@ public class ProductModel {
 
     private int listingPrice;
 
-//    private boolean listingIsLoved;
+    private boolean listingIsLoved = false;
+
+    public boolean isListingIsLoved() {
+        return listingIsLoved;
+    }
+
+    public void setListingIsLoved(boolean listingIsLoved) {
+        this.listingIsLoved = listingIsLoved;
+    }
 
     public ProductModel(int listingId, String listingAddress, String listingBody, String listingImage, String listingTimestamp, String listingTitle, int listingPrice) {
         this.listingId = listingId;

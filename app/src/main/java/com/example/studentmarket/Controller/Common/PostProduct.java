@@ -147,11 +147,14 @@ public class PostProduct extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject response) throws JSONException {
                 Log.d("edit success", "edit success");
+                Toast.makeText(PostProduct.this,"Cập nhật bài đăng thành công", Toast.LENGTH_SHORT).show();
+                finish();
             }
 
             @Override
             public void onError(VolleyError error) {
                 Log.d("edit prioduct fail", error.getMessage());
+                Toast.makeText(PostProduct.this,"Cập nhật bài đăng thất bại", Toast.LENGTH_SHORT).show();
             }
 
         });

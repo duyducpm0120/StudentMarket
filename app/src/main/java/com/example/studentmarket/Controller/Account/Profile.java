@@ -52,6 +52,7 @@ public class Profile extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -59,9 +60,7 @@ public class Profile extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        //init
-        profile_info_fragment = new ProfileInfo(userProfile, ProfileViewMode.MY_PROFILE);
-        profile_post_fragment = new ProfilePost(ProfileViewMode.MY_PROFILE);
+
         ///
         profile_avatar = view.findViewById(R.id.edit_profile_profile_avatar);
         profile_name_text_view = view.findViewById(R.id.profile_name_text_view);
@@ -75,7 +74,6 @@ public class Profile extends Fragment {
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getText() == getResources().getString(R.string.profile_info)) {
                     openFragment(profile_info_fragment);
-
                 } else {
                     openFragment(profile_post_fragment);
                 }
@@ -91,8 +89,18 @@ public class Profile extends Fragment {
 
             }
         });
-
-
+        //init
+        profile_info_fragment = new ProfileInfo(userProfile, ProfileViewMode.MY_PROFILE);
+        profile_post_fragment = new ProfilePost(ProfileViewMode.MY_PROFILE);
+        fragmentManager = getParentFragmentManager();
+        //init first fragment is profile_info
+        transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.profile_fragmentContainerView, profile_info_fragment);
+        transaction.add(R.id.profile_fragmentContainerView, profile_post_fragment);
+        transaction.replace(R.id.profile_fragmentContainerView, profile_post_fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        tabLayout.getTabAt(1).select();
         profile_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,12 +114,6 @@ public class Profile extends Fragment {
                 navigateToViewAvatar();
             }
         });
-        fragmentManager = getParentFragmentManager();
-        //init first fragment is profile_post
-        transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.profile_fragmentContainerView, profile_post_fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
         return view;
     }
 
