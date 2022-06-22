@@ -8,6 +8,7 @@ import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -25,4 +26,9 @@ public interface RetrofitInterface {
                                    @Part("body") ProductBodyRequest body);
     @GET("/listings/myListings")
     Call<List<ProductModel>> getMyProduct(@Header("Authorization") String authorization);
+
+    @POST("/listings/update")
+    @Multipart
+    Call<ProductModel> editProduct(@Header("Authorization") String authorization,
+                                   @Body ProductModel product);
 }
