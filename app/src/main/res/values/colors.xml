@@ -13,4 +13,5 @@
     <color name="gray">#6A6565</color>
     <color name="Transparent">#00000000</color>
     <color name="opacity">#99000000</color>
+    <color name="grayPrimary">#979797</color>
 </resources>

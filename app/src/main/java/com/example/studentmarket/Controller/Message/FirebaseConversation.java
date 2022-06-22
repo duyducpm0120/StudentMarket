@@ -8,12 +8,14 @@ public class FirebaseConversation {
     private String userName2;
     private String img1;
     private String img2;
+    private String lastMsg;
+    private String lastMsgTime;
 
     public FirebaseConversation(){
 
     }
 
-    public FirebaseConversation(String id, String user1, String user2,String userName1,String userName2, String img1, String img2) {
+    public FirebaseConversation(String id, String user1, String user2,String userName1,String userName2, String img1, String img2, String lastMsg, String lastMsgTime) {
         this.id = id;
         this.user1 = user1;
         this.user2 = user2;
@@ -21,6 +23,8 @@ public class FirebaseConversation {
         this.img2 = img2;
         this.userName1 = userName1;
         this.userName2 = userName2;
+        this.lastMsg = lastMsg;
+        this.lastMsgTime = lastMsgTime;
     }
 
     public String getId() {
@@ -75,4 +79,18 @@ public class FirebaseConversation {
     public void setUserName2(String userName2) {
         this.userName2 = userName2;
     }
+
+    public String getLastMsg() {
+        return lastMsg;
+    }
+    public void setLastMsg(String lastMsg) {
+        this.lastMsg = lastMsg;
+    }
+    public String getLastMsgTime() {
+        return lastMsgTime;
+    }
+    public void setLastMsgTime(String lastMsgTime) {
+        this.lastMsgTime = lastMsgTime;
+    }
+
 }

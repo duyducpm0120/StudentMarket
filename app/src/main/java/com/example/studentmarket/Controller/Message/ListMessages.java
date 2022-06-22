@@ -60,6 +60,9 @@ public class ListMessages extends AppCompatActivity {
     private PushNotificationService pushNotificationService;
     private String posterId;
     private FirebaseDatabase database;
+    private String posterName;
+    private String posterAvatar;
+    private String imageUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +81,11 @@ public class ListMessages extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         conversationRef = database.getReference("Conversation");
         Intent intent = getIntent();
-        String posterName = intent.getStringExtra("posterName");
+        posterName = intent.getStringExtra("posterName");
         posterId = intent.getStringExtra("posterId");
-        String posterAvatar = intent.getStringExtra("posterAvatar");
+        posterAvatar = intent.getStringExtra("posterAvatar");
         conversationId = intent.getStringExtra("id");
-        String imageUrl = getUserImg();
+        imageUrl = getUserImg();
         if (getUserId() != null) {
             myId = getUserId();
         }
@@ -95,21 +98,18 @@ public class ListMessages extends AppCompatActivity {
                 newConversationId[0] = myId +"-"+ posterId;
             }
 
-            conversationRef.orderByChild("id").equalTo(newConversationId[0]).addListenerForSingleValueEvent(new ValueEventListener() {
+            conversationRef.child("Conversation_"+newConversationId[0]).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getValue()==null){
-                        conversationRef.push().setValue(new FirebaseConversation(newConversationId[0], myId,posterId,getUsername(),posterName, posterAvatar, imageUrl));
+                        conversationRef.child("Conversation_"+newConversationId[0]).setValue(new FirebaseConversation(newConversationId[0], myId,posterId,getUsername(),posterName, posterAvatar, imageUrl,"Hiện không có tin nhắn nào",String.valueOf(new Date().getTime())));
                         conversationId = newConversationId[0];
                     } else {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            FirebaseConversation conversation = dataSnapshot.getValue(FirebaseConversation.class);
+                            FirebaseConversation conversation = snapshot.getValue(FirebaseConversation.class);
                             if (conversation.getId()!=null) {
                                 conversationId = conversation.getId();
                                 initListener();
-                                break;
                             }
-                        }
                     }
 
                 }
@@ -128,6 +128,7 @@ public class ListMessages extends AppCompatActivity {
 
         senderAuthor = new Author(myId,"test","https://i.pinimg.com/236x/c1/c8/49/c1c8498d9aec3d4e6c894ddba7882031.jpg");
         receiverAuthor = new Author("receiverId",posterName,posterAvatar);
+        Log.d("posterId",posterAvatar);
 //        listMessagesChatName.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -145,15 +146,13 @@ public class ListMessages extends AppCompatActivity {
                     params.addRule(RelativeLayout.ALIGN_PARENT_END);
                 }
             }
-            @Override
-            public void onLoadMore(int page,int total){
-                Log.d("test","load more");
-            }
         };
         adapter.setLoadMoreListener(new MessagesListAdapter.OnLoadMoreListener() {
             @Override
             public void onLoadMore(int page, int total) {
-                Log.d("test","load more");
+                Log.d("test",total+"");
+                Log.d("test",page+"");
+
             }
         });
         messagesList.setAdapter(adapter);
@@ -249,14 +248,10 @@ public class ListMessages extends AppCompatActivity {
                             }
                         });
                 //update last message and time to Conversation table
-//                FirebaseDatabase.getInstance()
-//                        .getReference("Conversation_"+conversationId)
-//                        .child("lastMessage")
-//                        .setValue(input.toString());
-//                FirebaseDatabase.getInstance()
-//                        .getReference("Conversation_"+conversationId)
-//                        .child("lastTime")
-//                        .setValue(new Date().getTime());
+                database
+                        .getReference("Conversation")
+                        .child("Conversation_"+conversationId)
+                        .setValue(new FirebaseConversation(conversationId, myId,posterId,getUsername(),posterName, posterAvatar, imageUrl,input.toString(),String.valueOf(new Date().getTime())));
                 return true;
             }
         });
