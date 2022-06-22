@@ -8,6 +8,7 @@ import com.example.studentmarket.Constants.PostProductReasonEnum;
 import com.example.studentmarket.Controller.Account.ViewOtherProfile;
 import com.example.studentmarket.Controller.Message.ListMessages;
 import com.example.studentmarket.Helper.Popup.PopupHelper;
+import com.example.studentmarket.Helper.Popup.PopupHelperAction;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.R;
@@ -25,6 +26,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
 import static com.example.studentmarket.Helper.globalValue.*;
@@ -96,10 +98,9 @@ public class ProductDetail extends AppCompatActivity {
         ProductService productService = new ProductService(this);
 
 
-
         detailProductName.setText(productName);
 
-        String fromatPrice = String.format("%,d", Integer.parseInt(productPrice)) + " đ";
+        String fromatPrice = String.format("%,d", productPrice) + " đ";
         detailProductPrice.setText(fromatPrice);
 
 
@@ -119,7 +120,7 @@ public class ProductDetail extends AppCompatActivity {
         ArrayList<Product> listProduct = new ArrayList<>();
         listProduct = getListProduct();
         ArrayList<Product> finalListProduct = listProduct;
-        if (!storage.getValue(TOKEN_ID_KEY).isEmpty()){
+        if (!storage.getValue(TOKEN_ID_KEY).isEmpty()) {
             handleHeart(isHeart, id, productService, finalListProduct);
 
 
@@ -143,8 +144,33 @@ public class ProductDetail extends AppCompatActivity {
         detailProductRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PopupHelper popupHelper = new PopupHelper(ProductDetail.this, id, "Thông báo", "Bạn chắc chắn muốn xóa bài đăng này", true, "Huỷ", "Xoá");
+                PopupHelper popupHelper = new PopupHelper(ProductDetail.this, id, "Thông báo", "Bạn chắc chắn muốn xóa bài đăng này", true, "Huỷ", "Xoá", new PopupHelperAction() {
+                    @Override
+                    public void onAction() {
+                        ProductService productService1 = new ProductService(getApplicationContext());
+                        productService1.DeleteProduct(productId, new VolleyCallback() {
+                            @Override
+                            public void onSuccess(JSONObject response) throws JSONException {
+                                Toast.makeText(getApplicationContext(), "Xoá bài đăng thành công", Toast.LENGTH_SHORT);
+                            }
+
+                            @Override
+                            public void onError(VolleyError error) {
+                                Toast.makeText(getApplicationContext(), "Có lỗi. Xoá bài đăng thất bại", Toast.LENGTH_SHORT);
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onClose() {
+                        return;
+                    }
+                });
                 popupHelper.Show();
+
+
+//                PopupHelper popupHelper = new PopupHelper(ProductDetail.this, id, "Thông báo", "Bạn chắc chắn muốn xóa bài đăng này?", true, "Huỷ", "Xoá");
+//                popupHelper.Show();
             }
         });
 
@@ -168,7 +194,7 @@ public class ProductDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getApplicationContext(), ListMessages.class);
-                Log.d("posterId", posterId+" "+posterName+" "+posterAvatar);
+                Log.d("posterId", posterId + " " + posterName + " " + posterAvatar);
                 myIntent.putExtra("posterId", posterId);
                 myIntent.putExtra("posterName", posterName);
                 myIntent.putExtra("posterAvatar", posterAvatar);
@@ -178,7 +204,6 @@ public class ProductDetail extends AppCompatActivity {
         detailProductDescriptions.setText(productBody);
 
         heartCheckShow(isHeart[0]);
-
 
 
     }
@@ -204,7 +229,7 @@ public class ProductDetail extends AppCompatActivity {
 
                 @Override
                 public void onError(VolleyError error) {
-                    Log.d("cansave",error.toString());
+                    Log.d("cansave", error.toString());
 
                 }
             });
@@ -215,7 +240,7 @@ public class ProductDetail extends AppCompatActivity {
         detailProductHeart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isHeart[0]){
+                if (isHeart[0]) {
                     try {
                         productService.UnsaveFavorite(String.valueOf(id), new VolleyCallback() {
                             @Override
@@ -250,8 +275,8 @@ public class ProductDetail extends AppCompatActivity {
                     }
                 }
                 isHeart[0] = !isHeart[0];
-                for (int i = 0; i< finalListProduct.size(); i++){
-                    if (finalListProduct.get(i).getId()== id){
+                for (int i = 0; i < finalListProduct.size(); i++) {
+                    if (finalListProduct.get(i).getId() == id) {
                         finalListProduct.get(i).setHeart(isHeart[0]);
                         break;
                     }
@@ -304,8 +329,8 @@ public class ProductDetail extends AppCompatActivity {
         detailProductEdit.setActivated(false);
         detailProductRemove.setActivated(false);
     }
-  
-  public void viewProfile(){
+
+    public void viewProfile() {
         ProfileService profileService = new ProfileService(getApplicationContext());
         profileService.getUserProfileByProductId(productId, new VolleyCallback() {
             @Override

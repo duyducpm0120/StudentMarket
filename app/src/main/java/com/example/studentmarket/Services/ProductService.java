@@ -1,6 +1,7 @@
 package com.example.studentmarket.Services;
 
 import static com.example.studentmarket.Constants.EndpointConstant.CAN_SAVE_PRODUCT_FAVORITE;
+import static com.example.studentmarket.Constants.EndpointConstant.DELETE_PRODUCT_BY_ID;
 import static com.example.studentmarket.Constants.EndpointConstant.EDIT_PRODUCT;
 import static com.example.studentmarket.Constants.EndpointConstant.GET_DETAIL_POSTER;
 import static com.example.studentmarket.Constants.EndpointConstant.GET_DETAIL_PRODUCT;
@@ -59,7 +60,7 @@ public class ProductService {
     }
 
     public void PostProduct(String title, int price, String body, Uri imageUri, Integer[] categories, RetrofitCallback callback) {
-        
+
         File file = new File(imageUri.getPath());
         String contentType = new Utils().getContentType(imageUri, context);
         FileRequestBody fileRequestBody = null;
@@ -552,7 +553,7 @@ public class ProductService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void GetUserProductList(int userId,VolleyCallback callback) {
+    public void GetUserProductList(int userId, VolleyCallback callback) {
         String url = GET_LIST_PRODUCT_BY_USER_ID + "/" + userId;
 
         JSONObject requestBody = new JSONObject();
@@ -592,6 +593,50 @@ public class ProductService {
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
+
+    public void DeleteProduct (int productId, VolleyCallback callback){
+        String url = DELETE_PRODUCT_BY_ID + "/" + productId;
+
+        JSONObject requestBody = new JSONObject();
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //textView.setText("Response: " + response.toString());
+                        Log.d("deleted product", response.toString());
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException jsonException) {
+                            jsonException.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.d("delete product err", error.toString());
+                        callback.onError(error);
+                    }
+
+                }) {
+
+            /**
+             * Passing some request headers
+             */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Authorization", "Bearer " + new SharedStorage(context).getValue(TOKEN_ID_KEY));
+                return headers;
+            }
+        };
+
+        // Access the RequestQueue through your singleton class.
+        ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+
 
     public byte[] getFileDataFromDrawable(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
