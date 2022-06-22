@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Constants.IntentMessage;
 import com.example.studentmarket.Constants.PostProductReasonEnum;
+import com.example.studentmarket.Constants.ProfileViewMode;
 import com.example.studentmarket.Controller.Common.PostProduct;
 import com.example.studentmarket.Controller.Common.ProductAdapter;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
@@ -36,6 +37,11 @@ public class ProfilePost extends Fragment {
     private ProductAdapter productAdapter;
     private Button postNewProductButton;
     private ArrayList<ProductModel> listingList;
+    private ProfileViewMode viewMode;
+
+    public ProfilePost(ProfileViewMode viewMode) {
+        this.viewMode = viewMode;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +67,8 @@ public class ProfilePost extends Fragment {
                 getActivity().startActivity(myIntent);
             }
         });
+        if (this.viewMode == ProfileViewMode.OTHER_PROFILE)
+            postNewProductButton.setVisibility(View.INVISIBLE);
         return view;
     }
 

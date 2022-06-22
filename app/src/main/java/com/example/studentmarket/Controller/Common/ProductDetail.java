@@ -5,12 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Constants.IntentMessage;
 import com.example.studentmarket.Constants.PostProductReasonEnum;
+import com.example.studentmarket.Controller.Account.ViewOtherProfile;
 import com.example.studentmarket.Controller.Message.ListMessages;
 import com.example.studentmarket.Helper.Popup.PopupHelper;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
+import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProductService;
+import com.example.studentmarket.Services.ProfileService;
 import com.example.studentmarket.Store.SharedStorage;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 
@@ -95,6 +99,19 @@ public class ProductDetail extends AppCompatActivity {
 
         detailProductName.setText(productName);
         detailProductPrice.setText(String.valueOf(productPrice) + " VND");
+
+        detailProductName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewProfile();
+            }
+        });
+        detailProductAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewProfile();
+            }
+        });
 
         ArrayList<Product> listProduct = new ArrayList<>();
         listProduct = getListProduct();
@@ -250,4 +267,22 @@ public class ProductDetail extends AppCompatActivity {
             }
         });
     }
+
+    public void viewProfile(){
+        ProfileService profileService = new ProfileService(getApplicationContext());
+        profileService.getUserProfileByProductId(productId, new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) throws JSONException {
+                Intent myIntent = new Intent(getApplicationContext(), ViewOtherProfile.class);
+                myIntent.putExtra("userProfileModel", response.toString());
+                startActivity(myIntent);
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        });
+    }
+
 }

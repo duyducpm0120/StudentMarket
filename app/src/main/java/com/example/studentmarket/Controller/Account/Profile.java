@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Constants.IntentMessage;
+import com.example.studentmarket.Constants.ProfileViewMode;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Helper.VolleyErrorHelper;
 import com.example.studentmarket.Models.UserProfileModel;
@@ -51,8 +52,6 @@ public class Profile extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -61,14 +60,8 @@ public class Profile extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         //init
-        profile_info_fragment = new ProfileInfo(userProfile);
-        profile_post_fragment = new ProfilePost();
-        fragmentManager = getParentFragmentManager();
-        //init first fragment is profile_post
-        transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.profile_fragmentContainerView, profile_post_fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        profile_info_fragment = new ProfileInfo(userProfile, ProfileViewMode.MY_PROFILE);
+        profile_post_fragment = new ProfilePost(ProfileViewMode.MY_PROFILE);
         ///
         profile_avatar = view.findViewById(R.id.edit_profile_profile_avatar);
         profile_name_text_view = view.findViewById(R.id.profile_name_text_view);
@@ -110,12 +103,15 @@ public class Profile extends Fragment {
 //                View bottomSheetView = inflater.inflate(R.layout.fragment_profile_avatart_bottom_sheet, view.findViewById(R.id.bottom_sheet_id), false);
 //                bottomSheetDialog.setContentView(bottomSheetView);
 //                bottomSheetDialog.show();
-                Intent myIntent = new Intent(getContext(), ViewAvatar.class);
-                myIntent.putExtra(IntentMessage.VIEW_AVATAR, userProfile.getUserPic());
-                getContext().startActivity(myIntent);
+                navigateToViewAvatar();
             }
         });
-
+        fragmentManager = getParentFragmentManager();
+        //init first fragment is profile_post
+        transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.profile_fragmentContainerView, profile_post_fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
         return view;
     }
 
@@ -127,10 +123,10 @@ public class Profile extends Fragment {
         transaction.commit();
     }
 
-    void navigateToViewAvatar(View view, Drawable background) {
-        Intent intent = new Intent(view.getContext(), ViewAvatar.class);
-        intent.putExtra("avatar", "aaa");
-        startActivity(intent);
+    void navigateToViewAvatar() {
+        Intent myIntent = new Intent(getContext(), ViewAvatar.class);
+        myIntent.putExtra(IntentMessage.VIEW_AVATAR, userProfile.getUserPic());
+        getContext().startActivity(myIntent);
     }
 
     private void updateUserProfileHolder() {

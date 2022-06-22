@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.VolleyError;
+import com.example.studentmarket.Constants.ProfileViewMode;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Helper.VolleyErrorHelper;
 import com.example.studentmarket.Models.UserProfileModel;
@@ -35,9 +36,11 @@ public class ProfileInfo extends Fragment {
     private UserProfileModel userProfile;
     private Button editProfileButton;
 
-    public ProfileInfo(UserProfileModel userProfile) {
+    private ProfileViewMode viewMode;
+
+    public ProfileInfo(UserProfileModel userProfile, ProfileViewMode viewMode) {
         this.userProfile = userProfile;
-        Log.d("profile accnamne", userProfile.getAccountName());
+        this.viewMode = viewMode;
     }
 
     @Override
@@ -70,6 +73,9 @@ public class ProfileInfo extends Fragment {
                 getContext().startActivity(myIntent);
             }
         });
+
+        if (this.viewMode == ProfileViewMode.OTHER_PROFILE)
+            editProfileButton.setVisibility(View.INVISIBLE);
 
         return view;
     }

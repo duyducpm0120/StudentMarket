@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class ChangePassword extends AppCompatActivity {
     private EditText newPasswordEdittext;
     private EditText confirmPasswordEditText;
     private Button confirmButton;
+    private ImageButton closeButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +88,13 @@ public class ChangePassword extends AppCompatActivity {
 //                        }
                     }
                 }
+            }
+        });
+        closeButton = findViewById(R.id.changePasswordClose);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }

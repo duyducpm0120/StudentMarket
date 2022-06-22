@@ -43,7 +43,7 @@ public class AccountService {
 
         requestBody.put("userFullName", fullname);
 
-        requestBody.put("userPhone", email);
+        requestBody.put("userPhone", phone);
 
         requestBody.put("password", password);
         Log.i(requestBody.toString(), "Request body");
