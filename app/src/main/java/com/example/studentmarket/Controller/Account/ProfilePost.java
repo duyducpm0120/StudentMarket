@@ -14,12 +14,12 @@ import androidx.fragment.app.Fragment;
 
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Constants.IntentMessage;
-import com.example.studentmarket.Constants.PostProductReasonEnum;
 import com.example.studentmarket.Constants.ProfileViewMode;
 import com.example.studentmarket.Controller.Common.PostProduct;
 import com.example.studentmarket.Controller.Common.ProductAdapter;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Models.ProductModel;
+import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProductService;
 import com.google.gson.Gson;
@@ -38,6 +38,12 @@ public class ProfilePost extends Fragment {
     private Button postNewProductButton;
     private ArrayList<ProductModel> listingList;
     private ProfileViewMode viewMode;
+    private UserProfileModel userProfileModel;
+
+    public ProfilePost(UserProfileModel userProfileModel, ProfileViewMode viewMode) {
+        this.userProfileModel = userProfileModel;
+        this.viewMode = viewMode;
+    }
 
     public ProfilePost(ProfileViewMode viewMode) {
         this.viewMode = viewMode;
@@ -46,7 +52,7 @@ public class ProfilePost extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         listingList = new ArrayList<>();
-        getMyProduct();
+        getProductList();
         super.onCreate(savedInstanceState);
     }
 
@@ -72,24 +78,44 @@ public class ProfilePost extends Fragment {
         return view;
     }
 
-    private void getMyProduct() {
+    private void getProductList() {
         ProductService productService = new ProductService(getContext());
-        productService.GetMyProductList(new VolleyCallback() {
-            @Override
-            public void onSuccess(JSONObject response) throws JSONException {
-                JSONArray listings = response.getJSONArray("listings");
-                Gson gson = new Gson();
-                for (int i = 0; i < listings.length(); i++) {
-                    listingList.add(gson.fromJson(String.valueOf(listings.getJSONObject(i)), ProductModel.class));
-                    Log.d("listing price", String.valueOf(gson.fromJson(String.valueOf(listings.getJSONObject(i)), ProductModel.class).getListingPrice()));
+        if (viewMode == ProfileViewMode.MY_PROFILE) {
+            productService.GetMyProductList(new VolleyCallback() {
+                @Override
+                public void onSuccess(JSONObject response) throws JSONException {
+                    JSONArray listings = response.getJSONArray("listings");
+                    Gson gson = new Gson();
+                    for (int i = 0; i < listings.length(); i++) {
+                        listingList.add(gson.fromJson(String.valueOf(listings.getJSONObject(i)), ProductModel.class));
+                        Log.d("listing price", String.valueOf(gson.fromJson(String.valueOf(listings.getJSONObject(i)), ProductModel.class).getListingPrice()));
+                    }
                 }
-            }
 
-            @Override
-            public void onError(VolleyError error) {
-                Log.e("get producList err", error.getMessage());
-            }
-        });
+                @Override
+                public void onError(VolleyError error) {
+                    Log.e("get producList err", error.getMessage());
+                }
+            });
+        } else {
+            productService.GetUserProductList(userProfileModel.getUserId(), new VolleyCallback() {
+                @Override
+                public void onSuccess(JSONObject response) throws JSONException {
+                    JSONArray listings = response.getJSONArray("listings");
+                    Gson gson = new Gson();
+                    for (int i = 0; i < listings.length(); i++) {
+                        listingList.add(gson.fromJson(String.valueOf(listings.getJSONObject(i)), ProductModel.class));
+                        Log.d("listing price", String.valueOf(gson.fromJson(String.valueOf(listings.getJSONObject(i)), ProductModel.class).getListingPrice()));
+                    }
+                }
+
+                @Override
+                public void onError(VolleyError error) {
+                    Log.e("get producList err", error.getMessage());
+                }
+            });
+        }
+
     }
 
 

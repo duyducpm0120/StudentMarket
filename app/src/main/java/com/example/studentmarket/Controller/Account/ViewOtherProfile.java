@@ -48,7 +48,6 @@ public class ViewOtherProfile extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -64,7 +63,7 @@ public class ViewOtherProfile extends AppCompatActivity {
         }
         //init
         profile_info_fragment = new ProfileInfo(userProfileModel, ProfileViewMode.OTHER_PROFILE);
-        profile_post_fragment = new ProfilePost(ProfileViewMode.OTHER_PROFILE);
+        profile_post_fragment = new ProfilePost(userProfileModel, ProfileViewMode.OTHER_PROFILE);
         fragmentManager = getSupportFragmentManager();
         //init first fragment is profile_post
         transaction = fragmentManager.beginTransaction();
