@@ -43,7 +43,7 @@ public class AccountService {
 
         requestBody.put("userFullName", fullname);
 
-        requestBody.put("userPhone", email);
+        requestBody.put("userPhone", phone);
 
         requestBody.put("password", password);
         Log.i(requestBody.toString(), "Request body");
@@ -114,7 +114,7 @@ public class AccountService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void ChangePassword(String userId, String oldPassword, String newPassword, VolleyCallback callback)  {
+    public void ChangePassword(int userId, String oldPassword, String newPassword, VolleyCallback callback)  {
         String url = CHANGE_PASSWORD_URL;
 
         JSONObject requestBody = new JSONObject();

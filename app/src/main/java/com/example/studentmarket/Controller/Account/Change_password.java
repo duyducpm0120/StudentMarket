@@ -40,6 +40,7 @@ public class Change_password extends Fragment {
     private EditText changePasswordEdittextConfirm;
     private ImageButton changePasswordClose;
 
+
     public Change_password() {
         // Required empty public constructor
     }

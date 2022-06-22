@@ -210,8 +210,9 @@ public class Login extends Fragment {
                 Log.d("get profile response",response.toString());
                 UserProfileModel userProfile = new Gson().fromJson(String.valueOf(response), UserProfileModel.class);
                 setUsername(userProfile.getAccountName());
-                setUserId(userProfile.getUserId());
+                setUserId(String.valueOf(userProfile.getUserId()));
                 setUserImg(userProfile.getUserPic());
+
                 UserProfileHolder.getInstance().setData(userProfile);
                 // navigate
                 fragmentTransaction.replace(R.id.fragmentContainerView, new Profile(userProfile));

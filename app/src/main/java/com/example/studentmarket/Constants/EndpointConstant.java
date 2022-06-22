@@ -25,4 +25,6 @@ public class EndpointConstant {
     public static final String SEND_NEW_MESSAGE_NOTIFICATION = ENDPOINT_PREFIX + "pushNotifications/sendNewMessageNotification";
     public static final String GET_DETAIL_POSTER = ENDPOINT_PREFIX + "listings/getPosterProfile";
     public static final String EDIT_PRODUCT = ENDPOINT_PREFIX + "listings/update";
+    public static final String GET_OTHER_PROFILE_BY_PRODUCT_ID = ENDPOINT_PREFIX + "listings/getPosterProfile";
+    public static final String GET_LIST_PRODUCT_BY_USER_ID = ENDPOINT_PREFIX + "listings/getListingsByUser";
 }
