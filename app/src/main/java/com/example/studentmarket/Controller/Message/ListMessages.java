@@ -105,11 +105,15 @@ public class ListMessages extends AppCompatActivity {
                         conversationRef.child("Conversation_"+newConversationId[0]).setValue(new FirebaseConversation(newConversationId[0], myId,posterId,getUsername(),posterName, posterAvatar, imageUrl,"Hiện không có tin nhắn nào",String.valueOf(new Date().getTime())));
                         conversationId = newConversationId[0];
                     } else {
+                        try {
                             FirebaseConversation conversation = snapshot.getValue(FirebaseConversation.class);
-                            if (conversation.getId()!=null) {
+                            if (conversation.getId() != null) {
                                 conversationId = conversation.getId();
                                 initListener();
                             }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
 
                 }
@@ -190,11 +194,15 @@ public class ListMessages extends AppCompatActivity {
                 }
                 if (task.isSuccessful()) {
                     for (DataSnapshot dataSnapshot : task.getResult().getChildren()) {
-                        FirebaseMessage message = dataSnapshot.getValue(FirebaseMessage.class);
-                        if (message.getAuthorId().equals(finalMyId)) {
-                            adapter.addToStart(new Message(id,message.getMsg(),senderAuthor,message.getDate()), true);
-                        } else {
-                            adapter.addToStart(new Message(id,message.getMsg(),receiverAuthor,message.getDate()), true);
+                        try {
+                            FirebaseMessage message = dataSnapshot.getValue(FirebaseMessage.class);
+                            if (message.getAuthorId().equals(finalMyId)) {
+                                adapter.addToStart(new Message(id, message.getMsg(), senderAuthor, message.getDate()), true);
+                            } else {
+                                adapter.addToStart(new Message(id, message.getMsg(), receiverAuthor, message.getDate()), true);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
                 }

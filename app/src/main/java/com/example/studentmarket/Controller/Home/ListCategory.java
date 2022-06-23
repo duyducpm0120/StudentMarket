@@ -43,7 +43,6 @@ public class ListCategory extends AppCompatActivity {
     private ArrayList<CategoryType> arrayCategory;
     private com.example.studentmarket.Controller.Common.typeAdapter typeAdapter;
     private typeAdapter typeAdapterSearch;
-    private String[] listName = {"All Woments","New Collection","Active / Sports","Luxury","Swimwear","Casual"};
     private ProductService productService;
     private ImageButton listCategoryGoBack;
     private EditText listCategorySearch;
@@ -67,32 +66,7 @@ public class ListCategory extends AppCompatActivity {
                 finish();
             }
         });
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
-//        if(mAuth.getCurrentUser() == null) {
-//            // Start sign in/sign up activity
-//            mAuth.signInWithEmailAndPassword(name,pass).addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
-//                @Override
-//                public void onComplete(@NonNull Task<AuthResult> task) {
-//                    if (task.isSuccessful()){
-//                        Log.d("suc","Thành công");
-//                    } else {
-//                        mAuth.createUserWithEmailAndPassword(name,pass).addOnCompleteListener((Activity) this, new OnCompleteListener<AuthResult>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<AuthResult> task) {
-//                                if (task.isSuccessful()){
-//                                    Log.d("fail","Thất bại");
-//                                } else {
-//                                    Log.d("tk",task.getException().toString());
-//                                }
-//                            }
-//                        });
-//                    }
-//                }
-//            });
-//        } else {
-//
-//        }
         listCategorySearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -151,7 +125,7 @@ public class ListCategory extends AppCompatActivity {
             if (listCate!=null){
                 for (int i = 0; i < listCate.length(); i++) {
                     JSONObject jsonObject = listCate.getJSONObject(i);
-                    arrayCategory.add(new CategoryType(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"),"drawable://" + R.drawable.type, false));
+                    arrayCategory.add(new CategoryType(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"),jsonObject.getString("listingCategoryIcon"), false));
                 }
                 typeAdapter = new typeAdapter(arrayCategory, 2, new categoryInterface() {
                     @Override

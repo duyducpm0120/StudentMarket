@@ -169,26 +169,31 @@ public class DialogList extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 arrayMessenger.clear();
                 for (DataSnapshot childConversation : snapshot.getChildren()){
-                    FirebaseConversation conversation = childConversation.getValue(FirebaseConversation.class);                    String userId1 = conversation.getUser1();
-                    String userId2 = conversation.getUser2();
-                    String userName1 = conversation.getUserName1();
-                    String userName2 = conversation.getUserName2();
-                    String userName = "";
-                    String avatar = "";
-                    String userId = "";
-                    String isRead = "";
-                    if (!userId1.equals(myId)) {
-                        userId = userId1;
-                        userName = userName1;
-                        avatar = conversation.getImg1();
-                    } else {
-                        userId = userId2;
-                        userName = userName2;
-                        avatar = conversation.getImg2();
-                    }
-                    String formatTime = convertMiliSecondTimesToTimeAgo(conversation.getLastMsgTime());
-                    if (userId1.equals(myId) || userId2.equals(myId)){
-                        arrayMessenger.add(new Messenger(conversation.getId(),userId,userName, avatar, conversation.getLastMsg(),formatTime,conversation.getLastMsgTime()));
+                    try {
+                        FirebaseConversation conversation = childConversation.getValue(FirebaseConversation.class);
+                        String userId1 = conversation.getUser1();
+                        String userId2 = conversation.getUser2();
+                        String userName1 = conversation.getUserName1();
+                        String userName2 = conversation.getUserName2();
+                        String userName = "";
+                        String avatar = "";
+                        String userId = "";
+                        String isRead = "";
+                        if (!userId1.equals(myId)) {
+                            userId = userId1;
+                            userName = userName1;
+                            avatar = conversation.getImg1();
+                        } else {
+                            userId = userId2;
+                            userName = userName2;
+                            avatar = conversation.getImg2();
+                        }
+                        String formatTime = convertMiliSecondTimesToTimeAgo(conversation.getLastMsgTime());
+                        if (userId1.equals(myId) || userId2.equals(myId)) {
+                            arrayMessenger.add(new Messenger(conversation.getId(), userId, userName, avatar, conversation.getLastMsg(), formatTime, conversation.getLastMsgTime()));
+                        }
+                    } catch (Exception e){
+                        e.printStackTrace();
                     }
                 }
                 //sort array to display newest message first
