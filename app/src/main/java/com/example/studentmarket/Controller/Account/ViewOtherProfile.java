@@ -1,11 +1,14 @@
 package com.example.studentmarket.Controller.Account;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -61,23 +64,6 @@ public class ViewOtherProfile extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        //init
-        profile_info_fragment = new ProfileInfo(userProfileModel, ProfileViewMode.OTHER_PROFILE);
-        profile_post_fragment = new ProfilePost(userProfileModel, ProfileViewMode.OTHER_PROFILE);
-        fragmentManager = getSupportFragmentManager();
-        //init first fragment is profile_post
-        transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.profile_fragmentContainerView, profile_post_fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-        ///
-        profile_avatar = findViewById(R.id.edit_profile_profile_avatar);
-        profile_name_text_view = findViewById(R.id.profile_name_text_view);
-        closeButton = findViewById(R.id.close_button);
-        // set values
-        Picasso.get().load(userProfileModel.getUserPic()).transform(new CropCircleTransformation()).resize(110, 110).centerInside().into(profile_avatar);
-        profile_name_text_view.setText(userProfileModel.getUserFullName());
-        //Call TabLayout
         tabLayout = findViewById(R.id.profile_tab_layout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -100,6 +86,28 @@ public class ViewOtherProfile extends AppCompatActivity {
 
             }
         });
+        //init
+        profile_info_fragment = new ProfileInfo(userProfileModel, ProfileViewMode.OTHER_PROFILE);
+        profile_post_fragment = new ProfilePost(userProfileModel, ProfileViewMode.OTHER_PROFILE);
+        fragmentManager = getSupportFragmentManager();
+        //init first fragment is profile_post
+        transaction = fragmentManager.beginTransaction();
+        transaction.add(R.id.profile_fragmentContainerView, profile_info_fragment);
+        transaction.add(R.id.profile_fragmentContainerView, profile_post_fragment);
+        transaction.replace(R.id.profile_fragmentContainerView, profile_post_fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+        tabLayout.getTabAt(1).select();
+        ///
+        profile_avatar = findViewById(R.id.edit_profile_profile_avatar);
+        profile_name_text_view = findViewById(R.id.profile_name_text_view);
+        closeButton = findViewById(R.id.close_button);
+        // set values
+        Picasso.get().load(userProfileModel.getUserPic()).transform(new CropCircleTransformation()).resize(110, 110).centerInside().into(profile_avatar);
+        profile_name_text_view.setText(userProfileModel.getUserFullName());
+        //Call TabLayout
+
+
 
 
         profile_avatar.setOnClickListener(new View.OnClickListener() {
@@ -117,6 +125,7 @@ public class ViewOtherProfile extends AppCompatActivity {
             }
         });
     }
+
 
     private void openFragment(final Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

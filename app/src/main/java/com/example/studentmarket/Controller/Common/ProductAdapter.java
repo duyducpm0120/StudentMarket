@@ -183,7 +183,7 @@ public class ProductAdapter extends BaseAdapter {
             holder.heartProduct.setColorFilter(context.getColor(R.color.gray));
         }
         holder.nameProduct.setText(product.getListingTitle());
-        holder.priceProduct.setText(String.valueOf(product.getListingPrice()) + "VND");
+        holder.priceProduct.setText( String.format("%,d", product.getListingPrice()) + " đ");
 
         return convertView;
     }
