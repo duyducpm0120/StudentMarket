@@ -54,11 +54,11 @@ public class ProductDetail extends AppCompatActivity {
     private String posterName;
     private String posterAvatar;
     private int[] categories;
-    String productName;
-    String productImage;
-    String productBody;
-    int productPrice;
-    int productId;
+    private String productName;
+    private String productImage;
+    private String productBody;
+    private String productPrice;
+    private int productId;
 
 
     @Override
@@ -72,7 +72,7 @@ public class ProductDetail extends AppCompatActivity {
 
         Intent myIntent = getIntent();
         productName = myIntent.getStringExtra("name");
-        productPrice = myIntent.getIntExtra("price", 0);
+        productPrice = myIntent.getStringExtra("price");
         productImage = myIntent.getStringExtra("image");
         productBody = myIntent.getStringExtra("body");
         productId = myIntent.getIntExtra("id", 0);
@@ -100,8 +100,8 @@ public class ProductDetail extends AppCompatActivity {
 
         detailProductName.setText(productName);
 
-        String fromatPrice = String.format("%,d", productPrice) + " đ";
-        detailProductPrice.setText(fromatPrice);
+        String formatPrice = String.format("%,d",Integer.parseInt(productPrice)) + " đ";
+        detailProductPrice.setText(formatPrice);
 
 
         detailProductName.setOnClickListener(new View.OnClickListener() {

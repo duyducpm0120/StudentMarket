@@ -80,6 +80,7 @@ public class Home extends Fragment {
     private EditText homeEdittextSearch;
     private ImageButton goToNotify;
     private LinearLayout emptySearch;
+    private LinearLayout emptyCategory;
     private NestedScrollView homeScroll;
     private int indexData = 1;
     private boolean isOver = false;
@@ -144,6 +145,7 @@ public class Home extends Fragment {
         homeEdittextSearch = view.findViewById(R.id.home_edittext_search);
         goToNotify = view.findViewById(R.id.home_button_notice);
         productService = new ProductService(getContext());
+        emptyCategory = view.findViewById(R.id.home_empty_choose_category);
         fragmentManager = getParentFragmentManager();
         homeScroll = view.findViewById(R.id.home_scroll);
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -322,7 +324,7 @@ public class Home extends Fragment {
                 arrayCategoryType = new ArrayList<>();
                 for (int i = 0; i < listCate.length(); i++) {
                     JSONObject jsonObject = listCate.getJSONObject(i);
-                    arrayCategoryType.add(new CategoryType(jsonObject.getString("listingCategoryId"), jsonObject.getString("listingCategoryName"), "drawable://" + R.drawable.type, false));
+                    arrayCategoryType.add(new CategoryType(jsonObject.getString("listingCategoryId"), jsonObject.getString("listingCategoryName"), jsonObject.getString("listingCategoryIcon"), false));
                 }
                 createTypeAdapter();
                 homeListType.setAdapter(homeTypeAdapter);
@@ -452,6 +454,7 @@ public class Home extends Fragment {
                 if (index == -1) {
                     productAdater.setItem(getListProduct());
                     productAdater.notifyDataSetChanged();
+                    emptyCategory.setVisibility(View.INVISIBLE);
                     return;
                 }
                 ArrayList<Product> arrayProductCate = new ArrayList<>();
@@ -492,8 +495,9 @@ public class Home extends Fragment {
                 }
                 productAdater.setItem(productArrayList);
                 homeListProduct.setAdapter(productAdater);
+                emptyCategory.setVisibility(View.INVISIBLE);
             } else {
-                Toast.makeText(getContext(), "Hiện không có sản phẩm nào", Toast.LENGTH_SHORT).show();
+                emptyCategory.setVisibility(View.VISIBLE);
             }
 
         } catch (JSONException jsonException) {
