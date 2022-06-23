@@ -99,7 +99,7 @@ public class ProductAdapter extends BaseAdapter {
                 // Toast.makeText(context, product.getNameProduct(), Toast.LENGTH_SHORT).show();
                 Intent myIntent = new Intent(context, ProductDetail.class);
                 myIntent.putExtra("name", product.getListingTitle());
-                myIntent.putExtra("price", product.getListingPrice());
+                myIntent.putExtra("price", String.valueOf(product.getListingPrice()));
                 myIntent.putExtra("image", product.getListingImage());
                 myIntent.putExtra("body", product.getListingBody());
                 myIntent.putExtra("id", product.getListingId());
@@ -183,7 +183,7 @@ public class ProductAdapter extends BaseAdapter {
             holder.heartProduct.setColorFilter(context.getColor(R.color.gray));
         }
         holder.nameProduct.setText(product.getListingTitle());
-        holder.priceProduct.setText( String.format("%,d", product.getListingPrice()) + " đ");
+        holder.priceProduct.setText(String.format("%,d", product.getListingPrice()) + " đ");
 
         return convertView;
     }
