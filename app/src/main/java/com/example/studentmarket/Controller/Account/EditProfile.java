@@ -185,7 +185,7 @@ public class EditProfile extends AppCompatActivity {
     private void setDefaultValue() {
         userNameEditText.setText(userProfile.getUserFullName());
         accountNameEditText.setText(userProfile.getAccountName());
-        universityEditText.setText(userProfile.getUserUniversity());
+        universityEditText.setText(userProfile.getUserUniversity().universityName);
         phoneEditText.setText(userProfile.getUserPhone());
         emailEditText.setText(userProfile.getUserEmail());
         passwordEditText.setText("***ADASDAS**");

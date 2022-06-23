@@ -15,7 +15,7 @@ public class UserProfileModel implements Serializable {
     public boolean isActive;
     public boolean isNotLocked;
     public String accountName;
-    public String userUniversity;
+    public UniversityModel university;
 
     public void setUserId(int userId) {
         this.userId = userId;
@@ -61,8 +61,8 @@ public class UserProfileModel implements Serializable {
         this.accountName = accountName;
     }
 
-    public void setUserUniversity(String userUniversity) {
-        this.userUniversity = userUniversity;
+    public void setUserUniversity(UniversityModel userUniversity) {
+        this.university = userUniversity;
     }
 
     public int getUserId() {
@@ -129,9 +129,7 @@ public class UserProfileModel implements Serializable {
         return "";
     }
 
-    public String getUserUniversity() {
-        if (userUniversity != null)
-            return userUniversity;
-        return "";
+    public UniversityModel getUserUniversity() {
+            return university;
     }
 }

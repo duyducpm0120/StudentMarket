@@ -107,7 +107,7 @@ public class ProfileInfo extends Fragment {
         Log.d("user profile name", userProfile.getUserFullName());
         //set values
         accountNameEditText.setText(userProfile.getAccountName());
-        universityEditText.setText(userProfile.getUserUniversity());
+        universityEditText.setText(userProfile.getUserUniversity().getUniversityName());
         phoneEditText.setText(userProfile.getUserPhone());
         emailEditText.setText(userProfile.getUserEmail());
         passwordEditText.setText("***ADASDAS**");

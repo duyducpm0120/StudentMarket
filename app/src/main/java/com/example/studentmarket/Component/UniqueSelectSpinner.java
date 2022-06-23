@@ -11,23 +11,23 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class MultiSpinner extends androidx.appcompat.widget.AppCompatSpinner implements
+public class UniqueSelectSpinner extends androidx.appcompat.widget.AppCompatSpinner implements
         DialogInterface.OnMultiChoiceClickListener, DialogInterface.OnCancelListener {
 
     private List<String> items;
     private boolean[] selected;
     private String defaultText;
-    private MultiSpinnerListener listener;
+    private UniqueSelectListener listener;
 
-    public MultiSpinner(Context context) {
+    public UniqueSelectSpinner(Context context) {
         super(context);
     }
 
-    public MultiSpinner(Context arg0, AttributeSet arg1) {
+    public UniqueSelectSpinner(Context arg0, AttributeSet arg1) {
         super(arg0, arg1);
     }
 
-    public MultiSpinner(Context arg0, AttributeSet arg1, int arg2) {
+    public UniqueSelectSpinner(Context arg0, AttributeSet arg1, int arg2) {
         super(arg0, arg1, arg2);
     }
 
@@ -39,8 +39,7 @@ public class MultiSpinner extends androidx.appcompat.widget.AppCompatSpinner imp
                 total++;
             }
         }
-        if (total > 3) {
-            Toast.makeText(getContext(), "Chỉ được chọn 3 danh mục trở xuống!", Toast.LENGTH_SHORT).show();
+        if (total > 1) {
             ((AlertDialog) dialog).getListView().setItemChecked(which, false);
             selected[which] = false;
         } else {
@@ -99,7 +98,7 @@ public class MultiSpinner extends androidx.appcompat.widget.AppCompatSpinner imp
     }
 
     public void setItems(List<String> items, String allText,
-                         MultiSpinnerListener listener) {
+                         UniqueSelectListener listener) {
         this.items = items;
         this.defaultText = allText;
         this.listener = listener;
@@ -115,7 +114,7 @@ public class MultiSpinner extends androidx.appcompat.widget.AppCompatSpinner imp
         setAdapter(adapter);
     }
 
-    public interface MultiSpinnerListener {
+    public interface UniqueSelectListener {
         public void onItemsSelected(boolean[] selected);
     }
 }

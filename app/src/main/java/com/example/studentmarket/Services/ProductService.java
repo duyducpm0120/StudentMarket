@@ -10,6 +10,7 @@ import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_FAVO
 import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_PRODUCT;
 import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_PRODUCT_BY_USER_ID;
 import static com.example.studentmarket.Constants.EndpointConstant.GET_MY_LIST_PRODUCT;
+import static com.example.studentmarket.Constants.EndpointConstant.GET_UNI_LIST;
 import static com.example.studentmarket.Constants.EndpointConstant.SAVE_PRODUCT_FAVORITE;
 import static com.example.studentmarket.Constants.EndpointConstant.SEARCH_PRODUCT;
 import static com.example.studentmarket.Constants.EndpointConstant.UNSAVE_PRODUCT_FAVORITE;
@@ -633,6 +634,37 @@ public class ProductService {
             }
         };
 
+        // Access the RequestQueue through your singleton class.
+        ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+
+    public void getUniList(VolleyCallback callback)  {
+        String url = GET_UNI_LIST;
+
+
+        JSONObject requestBody = new JSONObject();
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, requestBody, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.d("response err", error.toString());
+                        callback.onError(error);
+                    }
+
+                }) {
+
+        };
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }

@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.studentmarket.Helper.Popup.PopupHelper;
-import com.example.studentmarket.Helper.Validation.Validate;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.AccountService;
 
@@ -51,7 +50,8 @@ public class Register extends Fragment {
     }
 
     private Bundle bundle;
-    private String textEmail;
+    private String email;
+    private int uniId;
 
     /**
      * Use this factory method to create a new instance of
@@ -87,7 +87,8 @@ public class Register extends Fragment {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
         TextView regiterToLogin = (TextView) view.findViewById(R.id.registerToLogin);
         bundle = this.getArguments();
-        getTextEmail(bundle);
+        getEmailFromBundle(bundle);
+        getUniIdFromBundle(bundle);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         ImageButton regiterClose = (ImageButton) view.findViewById(R.id.regiterClose);
@@ -147,7 +148,7 @@ public class Register extends Fragment {
 //                        warningText.setVisibility(View.VISIBLE);
 //                    }
 //                }
-                signUp(textEmail,userName,userFullName,phoneNumber,password);
+                signUp(email, userName, userFullName, phoneNumber, password);
 
             }
         });
@@ -162,10 +163,17 @@ public class Register extends Fragment {
         return view;
     }
 
-    public void getTextEmail(Bundle bundle) {
+    public void getEmailFromBundle(Bundle bundle) {
         if (bundle != null) {
-            textEmail = bundle.getString("EmailData", "");
-            Toast.makeText(getContext(), textEmail, Toast.LENGTH_SHORT).show();
+            email = bundle.getString("EmailData", "");
+            Toast.makeText(getContext(), email, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void getUniIdFromBundle(Bundle bundle) {
+        if (bundle != null) {
+            uniId = Integer.valueOf(bundle.getString("uniId", "")) ;
+            Toast.makeText(getContext(), email, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -173,14 +181,14 @@ public class Register extends Fragment {
     public void signUp(String email, String username, String userFullName, String phoneNumber, String password) {
         AccountService accountService = new AccountService(this.getContext());
         try {
-            accountService.SignUp(email, username, userFullName, phoneNumber, password);
-            PopupHelper popup = new PopupHelper(getContext(),"Thông báo","Đăng ký thành công. Quay lại đăng nhập để tiếp tục.");
+            accountService.SignUp(email, username, userFullName, phoneNumber, password, uniId);
+            PopupHelper popup = new PopupHelper(getContext(), "Thông báo", "Đăng ký thành công. Quay lại đăng nhập để tiếp tục.");
             popup.Show();
 
         } catch (Exception err) {
-             Toast toast = Toast.makeText(getContext(),
-                     getString(R.string.SignUp_Error),
-                     Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getContext(),
+                    getString(R.string.SignUp_Error),
+                    Toast.LENGTH_LONG);
         }
     }
 }
