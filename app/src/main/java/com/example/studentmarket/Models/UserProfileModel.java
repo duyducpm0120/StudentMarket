@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class UserProfileModel implements Serializable {
-    public String userId;
+    public int userId;
     public String userAddress;
     public String userEmail;
     public String userFullName;
@@ -17,7 +17,7 @@ public class UserProfileModel implements Serializable {
     public String accountName;
     public String userUniversity;
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
@@ -65,10 +65,8 @@ public class UserProfileModel implements Serializable {
         this.userUniversity = userUniversity;
     }
 
-    public String getUserId() {
-        if (userId != null)
+    public int getUserId() {
             return userId;
-        return "";
     }
 
     public String getUserAddress() {

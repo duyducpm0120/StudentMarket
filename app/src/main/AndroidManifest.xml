@@ -31,7 +31,7 @@
             android:name=".Controller.Message.ListMessages"
             android:exported="false" />
         <activity
-            android:name=".Controller.Account.PostProduct"
+            android:name=".Controller.Common.PostProduct"
             android:exported="false" />
         <activity
             android:name=".Controller.Home.ListCategory"
@@ -41,6 +41,12 @@
             android:exported="false" />
         <activity
             android:name=".Controller.Account.ViewAvatar"
+            android:exported="false" />
+        <activity
+            android:name=".Controller.Account.ChangePassword"
+            android:exported="false" />
+        <activity
+            android:name=".Controller.Account.ViewOtherProfile"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

@@ -59,8 +59,9 @@ public class PushNotificationService {
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
+
     public void sendNewMessageNotification(String receiverId) {
-        String url = SEND_NEW_MESSAGE_NOTIFICATION+"/"+receiverId;
+        String url = SEND_NEW_MESSAGE_NOTIFICATION + "/" + receiverId;
         JSONObject requestBody = new JSONObject();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest

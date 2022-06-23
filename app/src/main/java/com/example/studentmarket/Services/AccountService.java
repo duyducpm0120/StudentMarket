@@ -1,5 +1,6 @@
 package com.example.studentmarket.Services;
 
+import static com.example.studentmarket.Constants.EndpointConstant.CHANGE_PASSWORD_URL;
 import static com.example.studentmarket.Constants.EndpointConstant.FORGOT_PASSWORD_PREFIX_URL;
 import static com.example.studentmarket.Constants.EndpointConstant.LOGIN_URL;
 import static com.example.studentmarket.Constants.EndpointConstant.SIGNUP_URL;
@@ -42,7 +43,7 @@ public class AccountService {
 
         requestBody.put("userFullName", fullname);
 
-        requestBody.put("userPhone", email);
+        requestBody.put("userPhone", phone);
 
         requestBody.put("password", password);
         Log.i(requestBody.toString(), "Request body");
@@ -113,16 +114,18 @@ public class AccountService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void ChangePassword(String userId, String oldPassword, String newPassword) throws JSONException {
-        String url = LOGIN_URL;
+    public void ChangePassword(int userId, String oldPassword, String newPassword, VolleyCallback callback)  {
+        String url = CHANGE_PASSWORD_URL;
 
         JSONObject requestBody = new JSONObject();
 
-        requestBody.put("id", userId);
-
-        requestBody.put("oldPassword", oldPassword);
-
-        requestBody.put("newPassword", newPassword);
+        try {
+            requestBody.put("id", userId);
+            requestBody.put("oldPassword", oldPassword);
+            requestBody.put("newPassword", newPassword);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
@@ -130,6 +133,11 @@ public class AccountService {
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
                         Log.d("response", response.toString());
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
 
@@ -137,6 +145,7 @@ public class AccountService {
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
                         //parseVolleyError(error); //handle wrong username or password
+                        callback.onError(error);
                     }
                 }) {
             @Override

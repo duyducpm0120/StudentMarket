@@ -1,6 +1,7 @@
 package com.example.studentmarket.Services;
 
 import static com.example.studentmarket.Constants.EndpointConstant.GET_MY_PROFILE;
+import static com.example.studentmarket.Constants.EndpointConstant.GET_OTHER_PROFILE_BY_PRODUCT_ID;
 import static com.example.studentmarket.Constants.EndpointConstant.GET_USER_PROFILE_PREFIX_URL;
 import static com.example.studentmarket.Constants.EndpointConstant.UPDATE_USER_AVATAR;
 import static com.example.studentmarket.Constants.EndpointConstant.UPDATE_USER_PROFILE;
@@ -36,7 +37,7 @@ public class ProfileService {
     }
 
     public void getUserProfile(String userId, VolleyCallback callback) {
-        String url = GET_USER_PROFILE_PREFIX_URL + "{" + userId.toString() + "}";
+        String url = GET_USER_PROFILE_PREFIX_URL + "/" +  userId.toString();
 
         JSONObject requestBody = new JSONObject();
 
@@ -186,9 +187,45 @@ public class ProfileService {
 
     }
 
+
     public byte[] getFileDataFromDrawable(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
         return byteArrayOutputStream.toByteArray();
+    }
+
+    public void getUserProfileByProductId(int productId, VolleyCallback callback) {
+        String url = GET_OTHER_PROFILE_BY_PRODUCT_ID +  "/" + productId;
+
+        JSONObject requestBody = new JSONObject();
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, requestBody, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        //textView.setText("Response: " + response.toString());
+
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        callback.onError(error);
+                    }
+
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return new ServiceHeaderHelper(context).getHeadersWithToken();
+            }
+        };
+        // Access the RequestQueue through your singleton class.
+        ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 }

@@ -28,7 +28,6 @@ public class ProductModel {
         this.listingTimestamp = listingTimestamp;
         this.listingTitle = listingTitle;
         this.listingPrice = listingPrice;
-
     }
 
 //    public boolean getListingIsLoved() {
@@ -40,7 +39,7 @@ public class ProductModel {
 //    }
 // Getter Methods
 
-    public float getListingId() {
+    public int getListingId() {
         return listingId;
     }
 
@@ -64,7 +63,7 @@ public class ProductModel {
         return listingTitle;
     }
 
-    public float getListingPrice() {
+    public int getListingPrice() {
         return listingPrice;
     }
 
