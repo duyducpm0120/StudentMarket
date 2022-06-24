@@ -44,6 +44,7 @@ public class productAdater extends BaseAdapter {
 
     public void setItem(List<Product> list){
         this.productList = list;
+        notifyDataSetChanged();
     }
 
     @Override
