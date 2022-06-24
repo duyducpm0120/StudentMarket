@@ -10,6 +10,7 @@ import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_FAVO
 import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_PRODUCT;
 import static com.example.studentmarket.Constants.EndpointConstant.GET_LIST_PRODUCT_BY_USER_ID;
 import static com.example.studentmarket.Constants.EndpointConstant.GET_MY_LIST_PRODUCT;
+import static com.example.studentmarket.Constants.EndpointConstant.GET_UNI_LIST;
 import static com.example.studentmarket.Constants.EndpointConstant.SAVE_PRODUCT_FAVORITE;
 import static com.example.studentmarket.Constants.EndpointConstant.SEARCH_PRODUCT;
 import static com.example.studentmarket.Constants.EndpointConstant.UNSAVE_PRODUCT_FAVORITE;
@@ -31,9 +32,9 @@ import com.example.studentmarket.Helper.ServiceHeaderHelper.ServiceHeaderHelper;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
 import com.example.studentmarket.Helper.Utils;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
+import com.example.studentmarket.Models.ProductModel;
 import com.example.studentmarket.Models.request.FileRequestBody;
 import com.example.studentmarket.Models.request.ProductBodyRequest;
-import com.example.studentmarket.Models.ProductModel;
 import com.example.studentmarket.Store.SharedStorage;
 
 import org.json.JSONArray;
@@ -490,12 +491,6 @@ public class ProductService {
                     }
 
                 }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer " + new SharedStorage(context).getValue(TOKEN_ID_KEY));
-                return headers;
-            }
         };
         ;
         // Access the RequestQueue through your singleton class.
@@ -594,7 +589,7 @@ public class ProductService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void DeleteProduct (int productId, VolleyCallback callback){
+    public void DeleteProduct(int productId, VolleyCallback callback) {
         String url = DELETE_PRODUCT_BY_ID + "/" + productId;
 
         JSONObject requestBody = new JSONObject();
@@ -633,6 +628,37 @@ public class ProductService {
             }
         };
 
+        // Access the RequestQueue through your singleton class.
+        ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
+    }
+
+    public void getUniList(VolleyCallback callback) {
+        String url = GET_UNI_LIST;
+
+
+        JSONObject requestBody = new JSONObject();
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.GET, url, requestBody, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            callback.onSuccess(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        Log.d("response err", error.toString());
+                        callback.onError(error);
+                    }
+
+                }) {
+
+        };
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }

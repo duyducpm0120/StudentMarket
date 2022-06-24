@@ -65,7 +65,7 @@ public class Profile extends Fragment {
         profile_avatar = view.findViewById(R.id.edit_profile_profile_avatar);
         profile_name_text_view = view.findViewById(R.id.profile_name_text_view);
         // set values
-        Picasso.get().load(userProfile.getUserPic()).transform(new CropCircleTransformation()).resize(110, 110).centerInside().into(profile_avatar);
+        Picasso.get().load(userProfile.getUserPic()).transform(new CropCircleTransformation()).fit().into(profile_avatar);
         profile_name_text_view.setText(userProfile.getUserFullName());
         //Call TabLayout
         tabLayout = view.findViewById(R.id.profile_tab_layout);

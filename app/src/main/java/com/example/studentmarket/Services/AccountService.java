@@ -30,7 +30,7 @@ public class AccountService {
         this.context = context;
     }
 
-    public void SignUp(String email, String userName, String fullname, String phone, String password) throws Exception {
+    public void SignUp(String email, String userName, String fullname, String phone, String password, int uniId) throws Exception {
         String url = SIGNUP_URL;
 
         JSONObject requestBody = new JSONObject();
@@ -46,7 +46,9 @@ public class AccountService {
         requestBody.put("userPhone", phone);
 
         requestBody.put("password", password);
-        Log.i(requestBody.toString(), "Request body");
+
+        requestBody.put("universityId", uniId);
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, requestBody, new Response.Listener<JSONObject>() {
 
@@ -114,7 +116,7 @@ public class AccountService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void ChangePassword(int userId, String oldPassword, String newPassword, VolleyCallback callback)  {
+    public void ChangePassword(int userId, String oldPassword, String newPassword, VolleyCallback callback) {
         String url = CHANGE_PASSWORD_URL;
 
         JSONObject requestBody = new JSONObject();

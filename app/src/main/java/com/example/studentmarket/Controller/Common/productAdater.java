@@ -94,7 +94,7 @@ public class productAdater extends BaseAdapter {
 
         Product product = productList.get(position);
         // holder.imgProduct.setImageResource(product.get());
-        Picasso.get().load(product.getImage()).into(holder.imgProduct);
+        Picasso.get().load(product.getImage()).fit().into(holder.imgProduct);
         holder.imgProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

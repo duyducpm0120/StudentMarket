@@ -1,10 +1,23 @@
 package com.example.studentmarket.Controller.Common;
 
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
+import static com.example.studentmarket.Helper.globalValue.getListProduct;
+import static com.example.studentmarket.Helper.globalValue.getUserId;
+import static com.example.studentmarket.Helper.globalValue.setListProduct;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Constants.IntentMessage;
-import com.example.studentmarket.Constants.PostProductReasonEnum;
 import com.example.studentmarket.Controller.Account.ViewOtherProfile;
 import com.example.studentmarket.Controller.Message.ListMessages;
 import com.example.studentmarket.Helper.Popup.PopupHelper;
@@ -17,19 +30,6 @@ import com.example.studentmarket.Services.ProfileService;
 import com.example.studentmarket.Store.SharedStorage;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
-
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
-import static com.example.studentmarket.Helper.globalValue.*;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,6 +60,8 @@ public class ProductDetail extends AppCompatActivity {
     private String productPrice;
     private int productId;
 
+    UserProfileModel poster;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +81,7 @@ public class ProductDetail extends AppCompatActivity {
         categories = myIntent.getIntArrayExtra("categories");
         final boolean[] isHeart = {myIntent.getBooleanExtra("isHeart", false)};
         int id = myIntent.getIntExtra("id", 0);
-
+//        getPosterProfile();
 
         detailProductName = findViewById(R.id.product_detail_textview_name_product);
         detailProductPrice = findViewById(R.id.product_detail_price);
@@ -100,10 +102,8 @@ public class ProductDetail extends AppCompatActivity {
 
         detailProductName.setText(productName);
 
-        String formatPrice = String.format("%,d",Integer.parseInt(productPrice)) + " đ";
+        String formatPrice = String.format("%,d", Integer.parseInt(productPrice)) + " đ";
         detailProductPrice.setText(formatPrice);
-
-
         detailProductName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +116,7 @@ public class ProductDetail extends AppCompatActivity {
                 viewProfile();
             }
         });
+        Picasso.get().load(productImage).fit().into(detailProductImage);
 
         ArrayList<Product> listProduct = new ArrayList<>();
         listProduct = getListProduct();
@@ -139,7 +140,7 @@ public class ProductDetail extends AppCompatActivity {
                 finish();
             }
         });
-        Picasso.get().load(productImage).into(detailProductImage);
+
 
         detailProductRemove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -345,6 +346,25 @@ public class ProductDetail extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void getPosterProfile() {
+        UserProfileModel[] model = new UserProfileModel[1];
+        ProfileService profileService = new ProfileService(getApplicationContext());
+        profileService.getUserProfileByProductId(productId, new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                UserProfileModel userProfileModel = new Gson().fromJson(response.toString(), UserProfileModel.class);
+                model[0] = userProfileModel;
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        });
+        this.poster = model[0];
+//        Picasso.get().load(productImage).fit().into(detailProductImage);
     }
 
 }

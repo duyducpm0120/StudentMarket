@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Component.MultiSpinner;
 import com.example.studentmarket.Constants.IntentMessage;
-import com.example.studentmarket.Constants.PostProductReasonEnum;
 import com.example.studentmarket.Constants.RequestCode;
 import com.example.studentmarket.Helper.BitmapConverter;
 import com.example.studentmarket.Helper.RetrofitHelper.RetrofitCallback;
@@ -235,6 +234,7 @@ public class PostProduct extends AppCompatActivity {
         }
         return result;
     }
+
 
     private void setDefaultDataForEdit(Intent myIntent) {
         productName = myIntent.getStringExtra("name");
