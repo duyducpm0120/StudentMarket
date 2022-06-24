@@ -292,8 +292,10 @@ public class ProductDetail extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject response) throws JSONException {
                 //convert response to object
+                Log.d("response", response.toString());
                 posterName = response.getString("userFullName");
                 posterAvatar = response.getString("userPic");
+                Picasso.get().load(posterAvatar).fit().into(detailProductAvatar);
                 detailProductAvatarName.setText(posterName);
                 posterId = response.getString("userId");
                 if (getUserId().equals(posterId)) {

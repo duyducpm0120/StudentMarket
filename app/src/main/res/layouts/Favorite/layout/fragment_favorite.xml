@@ -41,32 +41,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:verticalSpacing="25dp" />
-
-            <LinearLayout
-                android:id="@+id/favorite_require_login"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/gradient_background"
-                android:orientation="vertical"
-                android:visibility="invisible">
-
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="28dp"
-                    android:layout_marginTop="57dp"
-                    android:src="@drawable/empty_search" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="18dp"
-                    android:text="@string/require_login_string"
-                    android:textColor="@color/primary"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
         </RelativeLayout>
 
         <EditText
@@ -78,6 +52,39 @@
             android:hint="Tìm kiếm trong bài đăng yêu thích"
             android:inputType="text"
             android:maxLines="1" />
+        <LinearLayout
+            android:id="@+id/favorite_require_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_background"
+            android:orientation="vertical"
+            android:visibility="invisible">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:layout_marginTop="68dp"
+                android:layout_marginLeft="23dp"
+                android:text="@string/requireLogin" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/require_login_string"
+                android:textSize="16sp"
+                android:layout_marginLeft="23dp"
+                android:textStyle="bold" />
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="28dp"
+                android:layout_marginTop="95dp"
+                android:src="@drawable/require_login" />
+
+
+        </LinearLayout>
     </RelativeLayout>
 
 </FrameLayout>
