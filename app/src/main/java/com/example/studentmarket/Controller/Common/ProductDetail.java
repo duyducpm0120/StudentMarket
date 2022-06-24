@@ -1,23 +1,9 @@
 package com.example.studentmarket.Controller.Common;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.android.volley.VolleyError;
-import com.example.studentmarket.Constants.IntentMessage;
-import com.example.studentmarket.Constants.PostProductReasonEnum;
-import com.example.studentmarket.Controller.Account.ViewOtherProfile;
-import com.example.studentmarket.Controller.Message.ListMessages;
-import com.example.studentmarket.Helper.Popup.PopupHelper;
-import com.example.studentmarket.Helper.Popup.PopupHelperAction;
-import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
-import com.example.studentmarket.Models.UserProfileModel;
-import com.example.studentmarket.R;
-import com.example.studentmarket.Services.ProductService;
-import com.example.studentmarket.Services.ProfileService;
-import com.example.studentmarket.Store.SharedStorage;
-import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
-
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
+import static com.example.studentmarket.Helper.globalValue.getListProduct;
+import static com.example.studentmarket.Helper.globalValue.getUserId;
+import static com.example.studentmarket.Helper.globalValue.setListProduct;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,8 +14,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
-import static com.example.studentmarket.Helper.globalValue.*;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.android.volley.VolleyError;
+import com.example.studentmarket.Constants.IntentMessage;
+import com.example.studentmarket.Controller.Account.ViewOtherProfile;
+import com.example.studentmarket.Controller.Message.ListMessages;
+import com.example.studentmarket.Helper.Popup.PopupHelper;
+import com.example.studentmarket.Helper.Popup.PopupHelperAction;
+import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
+import com.example.studentmarket.R;
+import com.example.studentmarket.Services.ProductService;
+import com.example.studentmarket.Services.ProfileService;
+import com.example.studentmarket.Store.SharedStorage;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -100,7 +98,7 @@ public class ProductDetail extends AppCompatActivity {
 
         detailProductName.setText(productName);
 
-        String formatPrice = String.format("%,d",Integer.parseInt(productPrice)) + " đ";
+        String formatPrice = String.format("%,d", Integer.parseInt(productPrice)) + " đ";
         detailProductPrice.setText(formatPrice);
 
 
@@ -139,7 +137,8 @@ public class ProductDetail extends AppCompatActivity {
                 finish();
             }
         });
-        Picasso.get().load(productImage).into(detailProductImage);
+
+        Picasso.get().load(productImage).fit().into(detailProductImage);
 
         detailProductRemove.setOnClickListener(new View.OnClickListener() {
             @Override

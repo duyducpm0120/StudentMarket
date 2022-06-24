@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"
-        android:gravity="center"
+        android:gravity="center|top"
         android:orientation="vertical"
         android:paddingVertical="20dp">
 
@@ -29,7 +29,8 @@
         <ImageView
             android:id="@+id/view_avatart_avatar_image_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="400dp"
+            android:layout_marginTop="100dp"
             android:background="#FFFFFF"
             tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>

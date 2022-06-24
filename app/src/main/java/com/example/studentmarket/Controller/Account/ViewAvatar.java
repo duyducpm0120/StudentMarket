@@ -44,7 +44,7 @@ public class ViewAvatar extends AppCompatActivity {
         Intent intent = getIntent();
 //        String avatar_url = intent.getStringExtra(IntentMessage.VIEW_AVATAR);
         String avatar_url = UserProfileHolder.getInstance().getData().userPic;
-        Picasso.get().load(avatar_url).transform(new CropCircleTransformation()).resize(200, 200).centerInside().into(avatar);
+        Picasso.get().load(avatar_url).transform(new CropCircleTransformation()).fit().into(avatar);
     }
 
 

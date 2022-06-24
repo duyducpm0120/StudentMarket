@@ -81,7 +81,7 @@ public class EditProfile extends AppCompatActivity {
                             PopupHelper popupHelper = new PopupHelper(getApplicationContext(),"Cập nhật ảnh đại diện thất bại","");
                         }
                     });
-                    Picasso.get().load(picUri).resize(110, 110).transform(new CropCircleTransformation()).centerCrop().into(profile_avatar);
+                    Picasso.get().load(picUri).transform(new CropCircleTransformation()).fit().into(profile_avatar);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -189,7 +189,7 @@ public class EditProfile extends AppCompatActivity {
         phoneEditText.setText(userProfile.getUserPhone());
         emailEditText.setText(userProfile.getUserEmail());
         passwordEditText.setText("***ADASDAS**");
-        Picasso.get().load(userProfile.getUserPic()).transform(new CropCircleTransformation()).resize(110, 110).centerInside().into(profile_avatar);
+        Picasso.get().load(userProfile.getUserPic()).transform(new CropCircleTransformation()).fit().into(profile_avatar);
     }
 
     private void updateProfile() {

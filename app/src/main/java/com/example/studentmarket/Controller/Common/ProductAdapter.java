@@ -92,7 +92,7 @@ public class ProductAdapter extends BaseAdapter {
 
         ProductModel product = productList.get(position);
         // holder.imgProduct.setImageResource(product.get());
-        Picasso.get().load(product.getListingImage()).into(holder.imgProduct);
+        Picasso.get().load(product.getListingImage()).fit().into(holder.imgProduct);
         holder.imgProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

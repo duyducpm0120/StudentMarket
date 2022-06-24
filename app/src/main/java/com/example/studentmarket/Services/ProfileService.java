@@ -220,10 +220,10 @@ public class ProfileService {
                     }
 
                 }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return new ServiceHeaderHelper(context).getHeadersWithToken();
-            }
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                return new ServiceHeaderHelper(context).getHeadersWithToken();
+//            }
         };
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);

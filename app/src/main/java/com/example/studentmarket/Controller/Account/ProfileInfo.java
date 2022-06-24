@@ -1,16 +1,20 @@
 package com.example.studentmarket.Controller.Account;
 
+import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
+
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Constants.ProfileViewMode;
@@ -19,11 +23,11 @@ import com.example.studentmarket.Helper.VolleyErrorHelper;
 import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProfileService;
+import com.example.studentmarket.Store.SharedStorage;
 import com.example.studentmarket.Store.UserProfileHolder;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
-import static com.example.studentmarket.Helper.globalValue.*;
 
 public class ProfileInfo extends Fragment {
 
@@ -35,7 +39,9 @@ public class ProfileInfo extends Fragment {
     private EditText passwordEditText;
     private UserProfileModel userProfile;
     private Button editProfileButton;
-
+    private TextView logOutButton;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction ;
     private ProfileViewMode viewMode;
 
     public ProfileInfo(UserProfileModel userProfile, ProfileViewMode viewMode) {
@@ -53,14 +59,31 @@ public class ProfileInfo extends Fragment {
         accountNameEditText = view.findViewById(R.id.edit_profile_account_name_text_box);
 
         universityEditText = view.findViewById(R.id.university_text_box);
-        ;
+
         phoneEditText = view.findViewById(R.id.phone_text_box);
-        ;
+
         emailEditText = view.findViewById(R.id.email_text_box);
-        ;
+
         passwordEditText = view.findViewById(R.id.password_text_box);
-        ;
+
         editProfileButton = view.findViewById(R.id.confirm_button);
+
+        logOutButton = view.findViewById(R.id.logout);
+
+        fragmentManager = getParentFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
+
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fragmentTransaction.replace(R.id.fragmentContainerView, new Login());
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+                SharedStorage storage = new SharedStorage(getContext());
+                storage.removeValue(TOKEN_ID_KEY);
+                UserProfileHolder.getInstance().setData(null);
+            }
+        });
 
         setValues();
 
@@ -69,7 +92,6 @@ public class ProfileInfo extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getContext(), EditProfile.class);
-                myIntent.putExtra("userProfile", userProfile);
                 getContext().startActivity(myIntent);
             }
         });

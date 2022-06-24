@@ -491,12 +491,6 @@ public class ProductService {
                     }
 
                 }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Authorization", "Bearer " + new SharedStorage(context).getValue(TOKEN_ID_KEY));
-                return headers;
-            }
         };
         ;
         // Access the RequestQueue through your singleton class.

@@ -55,5 +55,7 @@
     <string name="require_login_string">Bạn phải đăng nhập để sử dụng chức năng này!</string>
     <string name="add">Thêm mới</string>
     <string name="empty_category">Không tìm thấy sản phẩm nào</string>
+    <string name="logout" />
+    <string name="logOut">Đăng xuất</string>
 
 </resources>

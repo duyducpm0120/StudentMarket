@@ -103,7 +103,7 @@ public class ViewOtherProfile extends AppCompatActivity {
         profile_name_text_view = findViewById(R.id.profile_name_text_view);
         closeButton = findViewById(R.id.close_button);
         // set values
-        Picasso.get().load(userProfileModel.getUserPic()).transform(new CropCircleTransformation()).resize(110, 110).centerInside().into(profile_avatar);
+        Picasso.get().load(userProfileModel.getUserPic()).transform(new CropCircleTransformation()).fit().into(profile_avatar);
         profile_name_text_view.setText(userProfileModel.getUserFullName());
         //Call TabLayout
 
