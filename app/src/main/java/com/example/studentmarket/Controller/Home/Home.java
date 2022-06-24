@@ -199,7 +199,7 @@ public class Home extends Fragment {
                         if (homeScroll.getChildAt(0).getBottom()
                                 <= (homeScroll.getHeight() + homeScroll.getScrollY())) {
                             //scroll view is at bottom
-                            if (homeEdittextSearch.getText().toString().isEmpty()) {
+                            if (homeEdittextSearch.getText().toString().isEmpty() && arrayProduct.size()>9) {
                                 try {
                                         if (!isOver){
                                         if (!isFirstAcess()){
@@ -227,7 +227,7 @@ public class Home extends Fragment {
         homeListProduct = view.findViewById(R.id.home_list_products);
         arrayProduct = new ArrayList<>();
         try {
-            productService.GetListProduct(2, 1, arr, new VolleyCallback() {
+            productService.GetListProduct(10, 1, arr, new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONObject response) {
                     try {
@@ -269,7 +269,7 @@ public class Home extends Fragment {
         Thread.sleep(1000);
         try {
             Log.d("home", "getListProductIndex "+indexData);
-            productService.GetListProduct(2, indexData, arr, new VolleyCallback() {
+            productService.GetListProduct(10, indexData, arr, new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONObject response) {
                     try {
