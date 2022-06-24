@@ -47,6 +47,7 @@
         android:layout_width="159dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
+        android:maxLines="1"
         android:layout_marginLeft="20dp"
         android:text="TextView"
         android:textSize="12.5dp" />
