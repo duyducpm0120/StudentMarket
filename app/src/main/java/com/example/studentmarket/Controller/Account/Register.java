@@ -186,9 +186,8 @@ public class Register extends Fragment {
             popup.Show();
 
         } catch (Exception err) {
-            Toast toast = Toast.makeText(getContext(),
-                    getString(R.string.SignUp_Error),
-                    Toast.LENGTH_LONG);
+            PopupHelper popup = new PopupHelper(getContext(), "Thông báo", "Có lỗi xảy ra. Đăng ký không thành công");
+            popup.Show();
         }
     }
 }

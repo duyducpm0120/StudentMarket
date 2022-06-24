@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -36,9 +37,10 @@ public class ProfilePost extends Fragment {
     private ArrayList<ProductModel> arrayProduct;
     private ProductAdapter productAdapter;
     private Button postNewProductButton;
-    private ArrayList<ProductModel> listingList;
+    private ArrayList<ProductModel> listingList = new ArrayList<>();
     private ProfileViewMode viewMode;
     private UserProfileModel userProfileModel;
+    private LinearLayout emptyProductView;
 
     public ProfilePost(UserProfileModel userProfileModel, ProfileViewMode viewMode) {
         this.userProfileModel = userProfileModel;
@@ -51,8 +53,6 @@ public class ProfilePost extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        listingList = new ArrayList<>();
-        getProductList();
         super.onCreate(savedInstanceState);
     }
 
@@ -61,6 +61,9 @@ public class ProfilePost extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile_post, container, false);
+        emptyProductView = view.findViewById(R.id.empty_product_list_view);
+        emptyProductView.setVisibility(View.INVISIBLE);
+        getProductList();
         homeListProductGridView = (GridView) view.findViewById(R.id.profile_post_list_product);
         productAdapter = new ProductAdapter(getContext(), R.layout.product, listingList);
         homeListProductGridView.setAdapter(productAdapter);
@@ -115,8 +118,12 @@ public class ProfilePost extends Fragment {
                 }
             });
         }
-
+        if(listingList.isEmpty()) emptyProductView.setVisibility(View.VISIBLE);
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        getParentFragmentManager().beginTransaction().detach(this).attach(this).commit();
+    }
 }
