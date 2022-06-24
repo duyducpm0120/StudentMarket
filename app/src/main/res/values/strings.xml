@@ -57,5 +57,6 @@
     <string name="empty_category">Không tìm thấy sản phẩm nào</string>
     <string name="logout" />
     <string name="logOut">Đăng xuất</string>
+    <string name="noProduct">Không có sản phẩm nào</string>
 
 </resources>
