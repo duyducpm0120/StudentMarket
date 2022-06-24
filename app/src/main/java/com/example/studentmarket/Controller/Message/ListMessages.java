@@ -250,7 +250,6 @@ public class ListMessages extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Log.d("firebase", "success");
                                     pushNotificationService.sendNewMessageNotification(posterId);
                                 }
                             }
@@ -259,7 +258,7 @@ public class ListMessages extends AppCompatActivity {
                 database
                         .getReference("Conversation")
                         .child("Conversation_"+conversationId)
-                        .setValue(new FirebaseConversation(conversationId, myId,posterId,getUsername(),posterName, posterAvatar, imageUrl,input.toString(),String.valueOf(new Date().getTime())));
+                        .setValue(new FirebaseConversation(conversationId, myId,posterId,getUsername(),posterName,imageUrl, posterAvatar,input.toString(),String.valueOf(new Date().getTime())));
                 return true;
             }
         });

@@ -227,7 +227,7 @@ public class Home extends Fragment {
         homeListProduct = view.findViewById(R.id.home_list_products);
         arrayProduct = new ArrayList<>();
         try {
-            productService.GetListProduct(11, 1, arr, new VolleyCallback() {
+            productService.GetListProduct(2, 1, arr, new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONObject response) {
                     try {
@@ -268,12 +268,14 @@ public class Home extends Fragment {
     private void getListProductIndex() throws InterruptedException {
         Thread.sleep(1000);
         try {
-            productService.GetListProduct(11, indexData, arr, new VolleyCallback() {
+            Log.d("home", "getListProductIndex "+indexData);
+            productService.GetListProduct(2, indexData, arr, new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONObject response) {
                     try {
                         JSONArray listingPage = response.getJSONArray("listingPage");
                         if (listingPage.length() != 0) {
+                            Log.d("length", listingPage.length() + "");
                             for (int i = 0; i < listingPage.length(); i++) {
                                 JSONObject jsonObject = listingPage.getJSONObject(i);
                                 arrayProduct.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
@@ -452,8 +454,7 @@ public class Home extends Fragment {
                 indexData = 1;
                 isOver = false;
                 if (index == -1) {
-                    productAdater.setItem(getListProduct());
-                    productAdater.notifyDataSetChanged();
+                    productAdater.clear();
                     emptyCategory.setVisibility(View.INVISIBLE);
                     return;
                 }
@@ -498,6 +499,8 @@ public class Home extends Fragment {
                 emptyCategory.setVisibility(View.INVISIBLE);
             } else {
                 emptyCategory.setVisibility(View.VISIBLE);
+                arrayProduct.clear();
+                productAdater.clear();
             }
 
         } catch (JSONException jsonException) {
