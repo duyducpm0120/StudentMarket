@@ -32,9 +32,9 @@ import com.example.studentmarket.Helper.ServiceHeaderHelper.ServiceHeaderHelper;
 import com.example.studentmarket.Helper.ServiceQueue.ServiceQueue;
 import com.example.studentmarket.Helper.Utils;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
+import com.example.studentmarket.Models.ProductModel;
 import com.example.studentmarket.Models.request.FileRequestBody;
 import com.example.studentmarket.Models.request.ProductBodyRequest;
-import com.example.studentmarket.Models.ProductModel;
 import com.example.studentmarket.Store.SharedStorage;
 
 import org.json.JSONArray;
@@ -589,7 +589,7 @@ public class ProductService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void DeleteProduct (int productId, VolleyCallback callback){
+    public void DeleteProduct(int productId, VolleyCallback callback) {
         String url = DELETE_PRODUCT_BY_ID + "/" + productId;
 
         JSONObject requestBody = new JSONObject();
@@ -632,7 +632,7 @@ public class ProductService {
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }
 
-    public void getUniList(VolleyCallback callback)  {
+    public void getUniList(VolleyCallback callback) {
         String url = GET_UNI_LIST;
 
 

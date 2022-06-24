@@ -37,7 +37,7 @@ public class ProfileService {
     }
 
     public void getUserProfile(String userId, VolleyCallback callback) {
-        String url = GET_USER_PROFILE_PREFIX_URL + "/" +  userId.toString();
+        String url = GET_USER_PROFILE_PREFIX_URL + "/" + userId.toString();
 
         JSONObject requestBody = new JSONObject();
 
@@ -161,7 +161,7 @@ public class ProfileService {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e("Update avatar error","");
+                        Log.e("Update avatar error", "");
                         Log.e("Update avatar error", "" + error.getMessage());
                         callback.onError(error);
                     }
@@ -195,17 +195,13 @@ public class ProfileService {
     }
 
     public void getUserProfileByProductId(int productId, VolleyCallback callback) {
-        String url = GET_OTHER_PROFILE_BY_PRODUCT_ID +  "/" + productId;
-
+        String url = GET_OTHER_PROFILE_BY_PRODUCT_ID + "/" + productId;
         JSONObject requestBody = new JSONObject();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.GET, url, requestBody, new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
-                        //textView.setText("Response: " + response.toString());
-
                         try {
                             callback.onSuccess(response);
                         } catch (JSONException e) {
@@ -215,16 +211,17 @@ public class ProfileService {
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        // TODO: Handle error
                         callback.onError(error);
                     }
 
-                }) {
+                });
+  //      {
 //            @Override
 //            public Map<String, String> getHeaders() throws AuthFailureError {
 //                return new ServiceHeaderHelper(context).getHeadersWithToken();
 //            }
-        };
+   //     };
         // Access the RequestQueue through your singleton class.
         ServiceQueue.getInstance(context).addToRequestQueue(jsonObjectRequest);
     }

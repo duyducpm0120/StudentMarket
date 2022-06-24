@@ -84,6 +84,7 @@ public class ProfileInfo extends Fragment {
                 UserProfileHolder.getInstance().setData(null);
             }
         });
+        if(viewMode == ProfileViewMode.OTHER_PROFILE) logOutButton.setVisibility(View.INVISIBLE);
 
         setValues();
 

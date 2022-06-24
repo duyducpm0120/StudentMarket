@@ -23,10 +23,12 @@ import com.example.studentmarket.Controller.Message.ListMessages;
 import com.example.studentmarket.Helper.Popup.PopupHelper;
 import com.example.studentmarket.Helper.Popup.PopupHelperAction;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
+import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProductService;
 import com.example.studentmarket.Services.ProfileService;
 import com.example.studentmarket.Store.SharedStorage;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -58,6 +60,8 @@ public class ProductDetail extends AppCompatActivity {
     private String productPrice;
     private int productId;
 
+    UserProfileModel poster;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +81,7 @@ public class ProductDetail extends AppCompatActivity {
         categories = myIntent.getIntArrayExtra("categories");
         final boolean[] isHeart = {myIntent.getBooleanExtra("isHeart", false)};
         int id = myIntent.getIntExtra("id", 0);
-
+//        getPosterProfile();
 
         detailProductName = findViewById(R.id.product_detail_textview_name_product);
         detailProductPrice = findViewById(R.id.product_detail_price);
@@ -100,8 +104,6 @@ public class ProductDetail extends AppCompatActivity {
 
         String formatPrice = String.format("%,d", Integer.parseInt(productPrice)) + " đ";
         detailProductPrice.setText(formatPrice);
-
-
         detailProductName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,6 +116,7 @@ public class ProductDetail extends AppCompatActivity {
                 viewProfile();
             }
         });
+        Picasso.get().load(productImage).fit().into(detailProductImage);
 
         ArrayList<Product> listProduct = new ArrayList<>();
         listProduct = getListProduct();
@@ -138,7 +141,6 @@ public class ProductDetail extends AppCompatActivity {
             }
         });
 
-        Picasso.get().load(productImage).fit().into(detailProductImage);
 
         detailProductRemove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -344,6 +346,25 @@ public class ProductDetail extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void getPosterProfile() {
+        UserProfileModel[] model = new UserProfileModel[1];
+        ProfileService profileService = new ProfileService(getApplicationContext());
+        profileService.getUserProfileByProductId(productId, new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) {
+                UserProfileModel userProfileModel = new Gson().fromJson(response.toString(), UserProfileModel.class);
+                model[0] = userProfileModel;
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        });
+        this.poster = model[0];
+//        Picasso.get().load(productImage).fit().into(detailProductImage);
     }
 
 }
