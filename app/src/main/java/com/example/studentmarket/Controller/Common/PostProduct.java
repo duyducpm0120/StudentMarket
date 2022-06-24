@@ -238,7 +238,7 @@ public class PostProduct extends AppCompatActivity {
 
     private void setDefaultDataForEdit(Intent myIntent) {
         productName = myIntent.getStringExtra("name");
-        productPrice = myIntent.getIntExtra("price", 0);
+        productPrice = Integer.parseInt( myIntent.getStringExtra("price"));
         productImage = myIntent.getStringExtra("image");
         productBody = myIntent.getStringExtra("body");
         productId = myIntent.getIntExtra("id", 0);
