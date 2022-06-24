@@ -131,7 +131,6 @@ public class Home extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("Home", "onResume");
         refresh();
     }
 
@@ -241,7 +240,7 @@ public class Home extends Fragment {
                             }
                             productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
                             homeListProduct.setAdapter(productAdater);
-                            setListProduct(arrayProduct);
+                            setListProduct(new ArrayList<>(arrayProduct));
                             emptySearch.setVisibility(View.INVISIBLE);
                             indexData++;
                         } else {
@@ -268,14 +267,12 @@ public class Home extends Fragment {
     private void getListProductIndex() throws InterruptedException {
         Thread.sleep(1000);
         try {
-            Log.d("home", "getListProductIndex "+indexData);
             productService.GetListProduct(10, indexData, arr, new VolleyCallback() {
                 @Override
                 public void onSuccess(JSONObject response) {
                     try {
                         JSONArray listingPage = response.getJSONArray("listingPage");
                         if (listingPage.length() != 0) {
-                            Log.d("length", listingPage.length() + "");
                             for (int i = 0; i < listingPage.length(); i++) {
                                 JSONObject jsonObject = listingPage.getJSONObject(i);
                                 arrayProduct.add(new Product(Integer.parseInt(jsonObject.getString("listingId")), jsonObject.getString("listingAddress"), jsonObject.getString("listingBody"),
@@ -315,7 +312,7 @@ public class Home extends Fragment {
                     "https://product.hstatic.net/200000260587/product/zve03357_9bb9116b5f3341059fba977d701403f2_grande.png",
                     "timestapm", "DKNY t-shirt - colour block front logo" + i, i, i, "3" + i + ".000 VND", true));
         }
-        setListProduct(arrayProduct);
+//        setListProduct(arrayProduct);
     }
 
     private void MappingType(View view, JSONObject res) {
@@ -328,7 +325,7 @@ public class Home extends Fragment {
                     JSONObject jsonObject = listCate.getJSONObject(i);
                     arrayCategoryType.add(new CategoryType(jsonObject.getString("listingCategoryId"), jsonObject.getString("listingCategoryName"), jsonObject.getString("listingCategoryIcon"), false));
                 }
-                createTypeAdapter();
+                createTypeAdapter(view);
                 homeListType.setAdapter(homeTypeAdapter);
                 setIndex(-1);
             }
@@ -403,6 +400,8 @@ public class Home extends Fragment {
         if (getListProduct() == null) {
             return;
         }
+        Log.d("refresh", getListProduct().size() + "");
+
         if (productAdater != null) {
             productAdater.setItem(getListProduct());
             productAdater.notifyDataSetChanged();
@@ -445,7 +444,7 @@ public class Home extends Fragment {
         }
     }
 
-    private void createTypeAdapter() {
+    private void createTypeAdapter(View view) {
         homeTypeAdapter = new typeAdapter(arrayCategoryType, 1, new categoryInterface() {
             @Override
             public void action(int index) {
@@ -454,7 +453,9 @@ public class Home extends Fragment {
                 indexData = 1;
                 isOver = false;
                 if (index == -1) {
-                    productAdater.clear();
+                    Log.d("index", getListProduct().size() + "");
+//                    productAdater.setItem(new ArrayList<>(getListProduct()));
+                    LoadListProduct(view);
                     emptyCategory.setVisibility(View.INVISIBLE);
                     return;
                 }
@@ -499,7 +500,7 @@ public class Home extends Fragment {
                 emptyCategory.setVisibility(View.INVISIBLE);
             } else {
                 emptyCategory.setVisibility(View.VISIBLE);
-                arrayProduct.clear();
+//                arrayProduct.clear();
                 productAdater.clear();
             }
 
