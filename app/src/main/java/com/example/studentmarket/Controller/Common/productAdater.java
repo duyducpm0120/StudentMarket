@@ -37,6 +37,11 @@ public class productAdater extends BaseAdapter {
         this.productList = productList;
     }
 
+    public void clear() {
+        productList.clear();
+        notifyDataSetChanged();
+    }
+
     public void setItem(List<Product> list){
         this.productList = list;
     }
