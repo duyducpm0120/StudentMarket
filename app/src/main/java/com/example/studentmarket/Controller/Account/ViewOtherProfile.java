@@ -111,7 +111,6 @@ public class ViewOtherProfile extends AppCompatActivity {
         // set values
         Picasso.get().load(userProfileModel.getUserPic()).transform(new CropCircleTransformation()).fit().into(profile_avatar);
         profile_name_text_view.setText(userProfileModel.getUserFullName());
-        //Call TabLayout
 
         chatButton.setOnClickListener(new View.OnClickListener() {
             @Override

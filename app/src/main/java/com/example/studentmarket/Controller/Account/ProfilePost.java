@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Constants.IntentMessage;
@@ -54,6 +56,7 @@ public class ProfilePost extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getProductList();
     }
 
     @Override
@@ -63,7 +66,6 @@ public class ProfilePost extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile_post, container, false);
         emptyProductView = view.findViewById(R.id.empty_product_list_view);
         emptyProductView.setVisibility(View.INVISIBLE);
-        getProductList();
         homeListProductGridView = (GridView) view.findViewById(R.id.profile_post_list_product);
         productAdapter = new ProductAdapter(getContext(), R.layout.product, listingList);
         homeListProductGridView.setAdapter(productAdapter);
@@ -78,6 +80,7 @@ public class ProfilePost extends Fragment {
         });
         if (this.viewMode == ProfileViewMode.OTHER_PROFILE)
             postNewProductButton.setVisibility(View.INVISIBLE);
+        if(listingList.isEmpty()) emptyProductView.setVisibility(View.VISIBLE);
         return view;
     }
 
@@ -118,7 +121,6 @@ public class ProfilePost extends Fragment {
                 }
             });
         }
-        if(listingList.isEmpty()) emptyProductView.setVisibility(View.VISIBLE);
     }
 
     @Override
