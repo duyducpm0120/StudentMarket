@@ -6,6 +6,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.studentmarket.Component.categoryInterface;
+import com.example.studentmarket.Controller.Common.CategoryType;
+import com.example.studentmarket.Controller.Common.typeAdapter;
+import com.example.studentmarket.Helper.Utils;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -19,6 +23,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -65,8 +71,11 @@ public class DialogList extends Fragment {
     private RecyclerView listMessenger;
     private ArrayList<Messenger> arrayMessenger;
     private MessengerApdater messengerApdater;
+    private MessengerApdater messengerApdaterSearch;
+
     private LinearLayout chatContainerUser;
     private LinearLayout chatRequireLogin;
+    private LinearLayout chatEmptySearch;
     private EditText chatEdittextSearch;
     private String name="testuser127711@gmail.com";
     private String pass="Testuser1277";
@@ -112,7 +121,10 @@ public class DialogList extends Fragment {
         chatContainerUser = view.findViewById(R.id.chat_container_user);
         chatRequireLogin = view.findViewById(R.id.chat_require_login);
         chatEdittextSearch = view.findViewById(R.id.chat_edittext_search);
+        chatEmptySearch = view.findViewById(R.id.chat_empty_search);
         SharedStorage storage = new SharedStorage(getContext());
+        Utils utils = new Utils();
+
 
         if (getUserId()!=null){
             myId = getUserId();
@@ -128,6 +140,43 @@ public class DialogList extends Fragment {
             chatRequireLogin.setVisibility(View.VISIBLE);
             chatEdittextSearch.setVisibility(View.INVISIBLE);
         }
+
+        chatEdittextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().trim().length()>0){
+                    String rawInput = utils.stripAccents(s.toString());
+                    ArrayList<Messenger> listSearch = new ArrayList<>();
+                    for (int i=0;i<arrayMessenger.size();i++){
+                        Messenger messengerItem = arrayMessenger.get(i);
+                        String rawName = utils.stripAccents(messengerItem.getName());
+                        if (rawName.toLowerCase().contains(rawInput.toLowerCase())){
+                            listSearch.add(messengerItem);
+                        }
+                    }
+                    if (listSearch.size()>0){
+                        chatEmptySearch.setVisibility(View.INVISIBLE);
+                        messengerApdaterSearch = new MessengerApdater(listSearch, getContext());
+                        listMessenger.setAdapter(messengerApdaterSearch);
+                    } else {
+                        chatEmptySearch.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    chatEmptySearch.setVisibility(View.INVISIBLE);
+                    listMessenger.setAdapter(messengerApdater);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
 
         return view;

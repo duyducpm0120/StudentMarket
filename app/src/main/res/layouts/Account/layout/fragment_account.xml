@@ -24,31 +24,39 @@
             android:layout_height="wrap_content"
             style="@style/myButton"
             android:text="Đăng nhập" />
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/myButton"
-            android:text="Quên mật khẩu" />
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/myButton"
-            android:text="Thông báo" />
+<!--        <Button-->
+<!--            android:id="@+id/button1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            style="@style/myButton"-->
+<!--            android:visibility="invisible"-->
+<!--            android:clickable="false"-->
+<!--            android:text="Quên mật khẩu" />-->
+<!--        <Button-->
+<!--            android:id="@+id/button2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            style="@style/myButton"-->
+<!--            android:visibility="invisible"-->
+<!--            android:clickable="false"-->
+<!--            android:text="Thông báo" />-->
 
-        <Button
-            android:id="@+id/button_post"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/myButton"
-            android:text="Post" />
-        <Button
-            android:id="@+id/logout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/myButton"
-            android:text="Post" />
+<!--        <Button-->
+<!--            android:id="@+id/button_post"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:visibility="invisible"-->
+<!--            android:clickable="false"-->
+<!--            style="@style/myButton"-->
+<!--            android:text="Post" />-->
+<!--        <Button-->
+<!--            android:id="@+id/logout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            style="@style/myButton"-->
+<!--            android:visibility="invisible"-->
+<!--            android:clickable="false"-->
+<!--            android:text="Post" />-->
     </LinearLayout>
 
 </FrameLayout>

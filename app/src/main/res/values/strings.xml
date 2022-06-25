@@ -59,5 +59,6 @@
     <string name="logOut">Đăng xuất</string>
     <string name="requireLogin">Yêu cầu đăng nhập</string>
     <string name="noProduct">Không có sản phẩm nào</string>
+    <string name="emtySearchChat">Không tìm thấy kết quả</string>
 
 </resources>

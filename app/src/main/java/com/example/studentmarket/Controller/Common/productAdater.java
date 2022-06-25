@@ -30,11 +30,19 @@ public class productAdater extends BaseAdapter {
     private Context context;
     private int layout;
     private List<Product> productList;
+    private boolean isShowHeart = false;
 
     public productAdater(Context context, int layout, List<Product> productList) {
         this.context = context;
         this.layout = layout;
         this.productList = productList;
+    }
+
+    public productAdater(Context context, int layout, List<Product> productList,boolean isShowHeart) {
+        this.context = context;
+        this.layout = layout;
+        this.productList = productList;
+        this.isShowHeart = isShowHeart;
     }
 
     public void clear() {
@@ -88,7 +96,11 @@ public class productAdater extends BaseAdapter {
         }
 
         if (!storage.getValue(TOKEN_ID_KEY).isEmpty()){
-            holder.heartProduct.setVisibility(ImageView.VISIBLE);
+            if (isShowHeart){
+                holder.heartProduct.setVisibility(ImageView.VISIBLE);
+            } else {
+                holder.heartProduct.setVisibility(ImageView.INVISIBLE);
+            }
         } else {
             holder.heartProduct.setVisibility(ImageView.INVISIBLE);
         }
@@ -144,6 +156,9 @@ public class productAdater extends BaseAdapter {
                             public void onError(VolleyError error) {
                                 Log.d("unsave",error.toString());
                                 holder.heartProduct.setColorFilter(context.getColor(R.color.gray));
+                                //remove from list
+                                productList.remove(product);
+                                notifyDataSetChanged();
                             }
                         });
                     } catch (JSONException jsonException) {
