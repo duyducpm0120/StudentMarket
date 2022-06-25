@@ -94,9 +94,11 @@ public class Profile extends Fragment {
         profile_post_fragment = new ProfilePost(ProfileViewMode.MY_PROFILE);
         fragmentManager = getParentFragmentManager();
         //init first fragment is profile_info
+
         transaction = fragmentManager.beginTransaction();
         transaction.add(R.id.profile_fragmentContainerView, profile_info_fragment);
         transaction.add(R.id.profile_fragmentContainerView, profile_post_fragment);
+        transaction.replace(R.id.profile_fragmentContainerView, profile_post_fragment);
         transaction.replace(R.id.profile_fragmentContainerView, profile_post_fragment);
         transaction.addToBackStack(null);
         transaction.commit();

@@ -149,17 +149,25 @@ public class ProductDetail extends AppCompatActivity {
                     @Override
                     public void onAction() {
                         ProductService productService1 = new ProductService(getApplicationContext());
-                        productService1.DeleteProduct(productId, new VolleyCallback() {
-                            @Override
-                            public void onSuccess(JSONObject response) throws JSONException {
-                                Toast.makeText(getApplicationContext(), "Xoá bài đăng thành công", Toast.LENGTH_SHORT);
-                            }
+                        try{
+                            productService1.DeleteProduct(productId, new VolleyCallback() {
+                                @Override
+                                public void onSuccess(JSONObject response) throws JSONException {
+                                    Toast.makeText(getApplicationContext(), "Xoá bài đăng thành công", Toast.LENGTH_SHORT);
+                                    finish();
+                                }
 
-                            @Override
-                            public void onError(VolleyError error) {
-                                Toast.makeText(getApplicationContext(), "Có lỗi. Xoá bài đăng thất bại", Toast.LENGTH_SHORT);
-                            }
-                        });
+                                @Override
+                                public void onError(VolleyError error) {
+                                    Toast.makeText(getApplicationContext(), "Có lỗi. Xoá bài đăng thất bại", Toast.LENGTH_SHORT);
+                                    finish();
+                                }
+                            });
+                        } catch (Error err){
+                            Toast.makeText(getApplicationContext(), "Có lỗi. Xoá bài đăng thất bại", Toast.LENGTH_SHORT);
+                            finish();
+                        }
+
                     }
 
                     @Override

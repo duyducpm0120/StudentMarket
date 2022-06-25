@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -17,8 +18,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.studentmarket.Constants.IntentMessage;
 import com.example.studentmarket.Constants.ProfileViewMode;
+import com.example.studentmarket.Controller.Common.ProductDetail;
+import com.example.studentmarket.Controller.Message.ListMessages;
 import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.R;
+import com.example.studentmarket.Store.UserProfileHolder;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -39,6 +43,7 @@ public class ViewOtherProfile extends AppCompatActivity {
     private AvatarView profile_avatar;
     private TextView profile_name_text_view;
     private ImageButton closeButton;
+    private ImageButton chatButton;
 
     FragmentManager fragmentManager;
     FragmentTransaction transaction;
@@ -102,12 +107,25 @@ public class ViewOtherProfile extends AppCompatActivity {
         profile_avatar = findViewById(R.id.edit_profile_profile_avatar);
         profile_name_text_view = findViewById(R.id.profile_name_text_view);
         closeButton = findViewById(R.id.close_button);
+        chatButton = findViewById(R.id.view_other_profile_chat);
         // set values
         Picasso.get().load(userProfileModel.getUserPic()).transform(new CropCircleTransformation()).fit().into(profile_avatar);
         profile_name_text_view.setText(userProfileModel.getUserFullName());
         //Call TabLayout
 
-
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(getApplicationContext(), ListMessages.class);
+                myIntent.putExtra("posterId", userProfileModel.getUserId());
+                myIntent.putExtra("posterName", userProfileModel.getUserFullName());
+                myIntent.putExtra("posterAvatar", userProfileModel.getUserPic());
+                ViewOtherProfile.this.startActivity(myIntent);
+            }
+        });
+        chatButton.setVisibility(View.INVISIBLE);
+//        if(this.userProfileModel.getUserId() != UserProfileHolder.getInstance().getData().getUserId())
+//            chatButton.setVisibility(View.VISIBLE);
 
 
         profile_avatar.setOnClickListener(new View.OnClickListener() {
