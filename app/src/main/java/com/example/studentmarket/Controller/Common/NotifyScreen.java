@@ -8,7 +8,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
+import com.android.volley.VolleyError;
+import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
+import com.example.studentmarket.Services.NotifyService;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -16,6 +23,7 @@ public class NotifyScreen extends AppCompatActivity {
     private ImageButton closeButton;
     private RecyclerView listNotify;
     private ArrayList<NotifyClass> arrayNotify;
+    private NotifyService notifyService;
     private NotifyAdapter notifyAdapter;
     private String imgUrl="https://haycafe.vn/wp-content/uploads/2021/11/Anh-avatar-dep-chat-lam-hinh-dai-dien.jpg";
 
@@ -26,13 +34,16 @@ public class NotifyScreen extends AppCompatActivity {
 //        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notify);
+        notifyService = new NotifyService(this);
 
         closeButton = findViewById(R.id.notify_close_button);
         listNotify = findViewById(R.id.list_notify);
 
-        MappingType();
-        notifyAdapter = new NotifyAdapter(arrayNotify,getApplicationContext());
-        listNotify.setAdapter(notifyAdapter);
+        try {
+            MappingType();
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+        }
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,10 +53,26 @@ public class NotifyScreen extends AppCompatActivity {
 
 
     }
-    private void MappingType(){
+    private void MappingType() throws JSONException {
         arrayNotify = new ArrayList<>();
-        for (int i=0;i<10;i++){
-            arrayNotify.add(new NotifyClass(String.valueOf(i),"Minh Minh"," đã đánh giá trang cá nhân của bạn",imgUrl,"123","title","userid"));
-        }
+        notifyService.getListNotification(new VolleyCallback() {
+            @Override
+            public void onSuccess(JSONObject response) throws JSONException {
+                JSONArray listNotifyRes = response.getJSONArray("notificationList");
+                if (listNotifyRes.length() > 0) {
+                    for (int i = 0; i < listNotifyRes.length(); i++) {
+                        JSONObject object = listNotifyRes.getJSONObject(i);
+                        arrayNotify.add(new NotifyClass(object.getString("userNotificationId"), "",object.getString("userNotificationBody"), object.getString("userNotificationImage"), object.getString("userNotificationTimestamp"), object.getString("userNotificationTitle"), object.getBoolean("userNotificationRead")));
+                    }
+                    notifyAdapter = new NotifyAdapter(arrayNotify,getApplicationContext());
+                    listNotify.setAdapter(notifyAdapter);
+                }
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        });
     }
 }

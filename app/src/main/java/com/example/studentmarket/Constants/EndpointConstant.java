@@ -29,4 +29,6 @@ public class EndpointConstant {
     public static final String GET_LIST_PRODUCT_BY_USER_ID = ENDPOINT_PREFIX + "listings/getListingsByUser";
     public static final String DELETE_PRODUCT_BY_ID = ENDPOINT_PREFIX + "listings/delete";
     public static final String GET_UNI_LIST = ENDPOINT_PREFIX + "uni/getAll";
+    public static final String GET_NOTIFICATION = ENDPOINT_PREFIX + "notifications/myNotification";
+    public static final String MARK_NOTIFICATION_AS_READ = ENDPOINT_PREFIX + "notifications/markNotificationAsRead";
 }
