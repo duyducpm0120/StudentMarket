@@ -7,7 +7,7 @@ public class NotifyClass {
     private String image;
     private String timeStamp;
     private String title;
-    private String user_id;
+    private boolean isRead;
 
     public String getUser_name() {
         return user_name;
@@ -17,14 +17,14 @@ public class NotifyClass {
         this.user_name = user_name;
     }
 
-    public NotifyClass(String id, String user_name, String body, String image, String timeStamp, String title, String user_id) {
+    public NotifyClass(String id, String user_name, String body, String image, String timeStamp, String title, boolean isRead) {
         this.id = id;
         this.user_name=user_name;
         this.body = body;
         this.image = image;
         this.timeStamp = timeStamp;
         this.title = title;
-        this.user_id = user_id;
+        this.isRead = isRead;
     }
 
     public String getId() {
@@ -67,11 +67,10 @@ public class NotifyClass {
         this.title = title;
     }
 
-    public String getUser_id() {
-        return user_id;
+    public boolean isRead() {
+        return isRead;
     }
-
-    public void setUser_id(String user_id) {
-        this.user_id = user_id;
+    public void setRead(boolean read) {
+        isRead = read;
     }
 }

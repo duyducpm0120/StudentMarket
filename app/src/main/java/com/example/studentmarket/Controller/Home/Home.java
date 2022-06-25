@@ -151,6 +151,17 @@ public class Home extends Fragment {
         emptySearch = view.findViewById(R.id.home_empty_search);
             LoadListProduct(view);
             getListCategory(view);
+
+        if (storage.getValue(TOKEN_ID_KEY).isEmpty())
+        {
+            goToNotify.setVisibility(View.INVISIBLE);
+            goToNotify.setActivated(false);
+
+        } else {
+            goToNotify.setVisibility(View.VISIBLE);
+            goToNotify.setActivated(true);
+        }
+
         homeTextViewSeeMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

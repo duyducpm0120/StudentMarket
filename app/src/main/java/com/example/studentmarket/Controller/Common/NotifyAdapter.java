@@ -16,22 +16,30 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.VolleyError;
 import com.example.studentmarket.Controller.Message.ListMessages;
 import com.example.studentmarket.Controller.Message.Messenger;
 import com.example.studentmarket.Controller.Message.MessengerApdater;
 import com.example.studentmarket.Helper.DownloadImageTask.DownloadImageTask;
+import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
+import com.example.studentmarket.Services.NotifyService;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
 public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder>{
     private List<NotifyClass> listNotify;
     private Context context;
+    private NotifyService notifyService;
 
     public NotifyAdapter(List<NotifyClass> listNotify, Context context) {
         this.listNotify = listNotify;
         this.context = context;
+        notifyService = new NotifyService(context);
     }
 
     @NonNull
@@ -50,12 +58,33 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         NotifyClass ntf = listNotify.get(position);
         holder.notify_text.setText(Html.fromHtml("<b>"+ntf.getUser_name()+"</b>"+ntf.getBody(),Html.FROM_HTML_MODE_COMPACT));
+        if (ntf.isRead()){
+            holder.notify_clickable.setBackgroundColor(android.R.color.white);
+        }
 //        new DownloadImageTask(holder.notify_image).execute(ntf.getImage());
         Picasso.get().load(ntf.getImage()).into(holder.notify_image);
         holder.notify_clickable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, ntf.getTitle(), Toast.LENGTH_SHORT).show();
+                if (!ntf.isRead()){
+                    holder.notify_clickable.setBackgroundColor(android.R.color.white);
+                    ntf.setRead(true);
+                    try {
+                        notifyService.markNotificationAsRead(ntf.getId(), new VolleyCallback() {
+                            @Override
+                            public void onSuccess(JSONObject response) throws JSONException {
+
+                            }
+
+                            @Override
+                            public void onError(VolleyError error) {
+
+                            }
+                        });
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
+                    }
+                }
             }
         });
 

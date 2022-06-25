@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,9 @@ import android.widget.LinearLayout;
 import com.android.volley.VolleyError;
 import com.example.studentmarket.Controller.Common.Product;
 import com.example.studentmarket.Controller.Common.productAdater;
+import com.example.studentmarket.Controller.Message.Messenger;
+import com.example.studentmarket.Controller.Message.MessengerApdater;
+import com.example.studentmarket.Helper.Utils;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProductService;
@@ -51,6 +56,8 @@ public class Favorite extends Fragment {
     private LinearLayout favoriteRequireLogin;
     private EditText favoriteEdittextSearch;
     private ProductService productService;
+    private LinearLayout favoriteEmtySearch;
+    private productAdater productAdaterSearch;
 
 
     public Favorite() {
@@ -91,6 +98,8 @@ public class Favorite extends Fragment {
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
         favoriteRequireLogin = view.findViewById(R.id.favorite_require_login);
         favoriteEdittextSearch = view.findViewById(R.id.favorite_edittext_search);
+        favoriteEmtySearch = view.findViewById(R.id.favorite_empty_search);
+        Utils utils = new Utils();
 
         SharedStorage storage = new SharedStorage(getContext());
         if (storage.getValue(TOKEN_ID_KEY).isEmpty()){
@@ -101,6 +110,43 @@ public class Favorite extends Fragment {
             favoriteEdittextSearch.setVisibility(View.VISIBLE);
         }
         productService = new ProductService(getContext());
+
+        favoriteEdittextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().trim().length()>0){
+                    String rawInput = utils.stripAccents(s.toString());
+                    ArrayList<Product> listSearch = new ArrayList<>();
+                    for (int i=0;i<arrayProduct.size();i++){
+                        Product productItem = arrayProduct.get(i);
+                        String rawName = utils.stripAccents(productItem.getTitle());
+                        if (rawName.toLowerCase().contains(rawInput.toLowerCase())){
+                            listSearch.add(productItem);
+                        }
+                    }
+                    if (listSearch.size()>0){
+                        favoriteEmtySearch.setVisibility(View.INVISIBLE);
+                        productAdaterSearch = new productAdater(getContext(),R.layout.product, listSearch,true);
+                        favoriteListProduct.setAdapter(productAdaterSearch);
+                    } else {
+                        favoriteEmtySearch.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    favoriteEmtySearch.setVisibility(View.INVISIBLE);
+                    favoriteListProduct.setAdapter(productAdater);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         if (!storage.getValue(TOKEN_ID_KEY).isEmpty()){
             LoadListProduct(view);
@@ -138,7 +184,7 @@ public class Favorite extends Fragment {
                                         jsonObject.getString("listingImage"),
                                         jsonObject.getString("listingTimestamp"), jsonObject.getString("listingTitle"), i, i, jsonObject.getString("listingPrice"), true));
                             }
-                            productAdater = new productAdater(getContext(), R.layout.product, arrayProduct);
+                            productAdater = new productAdater(getContext(), R.layout.product, arrayProduct,true);
                             favoriteListProduct.setAdapter(productAdater);
                         }
                     }
