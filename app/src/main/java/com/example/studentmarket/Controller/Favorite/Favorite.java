@@ -58,6 +58,7 @@ public class Favorite extends Fragment {
     private ProductService productService;
     private LinearLayout favoriteEmtySearch;
     private productAdater productAdaterSearch;
+    private LinearLayout favoriteEmptyList;
 
 
     public Favorite() {
@@ -99,6 +100,7 @@ public class Favorite extends Fragment {
         favoriteRequireLogin = view.findViewById(R.id.favorite_require_login);
         favoriteEdittextSearch = view.findViewById(R.id.favorite_edittext_search);
         favoriteEmtySearch = view.findViewById(R.id.favorite_empty_search);
+        favoriteEmptyList = view.findViewById(R.id.favorite_empty_list);
         Utils utils = new Utils();
 
         SharedStorage storage = new SharedStorage(getContext());
@@ -186,6 +188,9 @@ public class Favorite extends Fragment {
                             }
                             productAdater = new productAdater(getContext(), R.layout.product, arrayProduct,true);
                             favoriteListProduct.setAdapter(productAdater);
+                            favoriteEmptyList.setVisibility(View.INVISIBLE);
+                        } else {
+                            favoriteEmptyList.setVisibility(View.VISIBLE);
                         }
                     }
                     catch (JSONException jsonException){
