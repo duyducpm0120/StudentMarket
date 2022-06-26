@@ -102,6 +102,11 @@ public class Account extends Fragment {
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
+        else {
+            fragmentTransaction.replace(R.id.fragmentContainerView, new Login());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
     }
 
     @Override
@@ -109,10 +114,7 @@ public class Account extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_account, container, false);
-
-
-
-        accountButtonLogin = (Button) view.findViewById(R.id.button);
+        accountButtonLogin = (Button) view.findViewById(R.id.account_loginButton);
         fragmentManager = getParentFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         accountButtonLogin.setOnClickListener(new View.OnClickListener() {
@@ -173,7 +175,6 @@ public class Account extends Fragment {
 //
 //            }
 //        });
-
 
         return view;
     }

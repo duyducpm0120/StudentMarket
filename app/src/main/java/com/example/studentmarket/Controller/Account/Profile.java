@@ -67,6 +67,9 @@ public class Profile extends Fragment {
         // set values
         Picasso.get().load(userProfile.getUserPic()).transform(new CropCircleTransformation()).fit().into(profile_avatar);
         profile_name_text_view.setText(userProfile.getUserFullName());
+        //init
+        profile_info_fragment = new ProfileInfo(userProfile, ProfileViewMode.MY_PROFILE);
+        profile_post_fragment = new ProfilePost(ProfileViewMode.MY_PROFILE);
         //Call TabLayout
         tabLayout = view.findViewById(R.id.profile_tab_layout);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -89,16 +92,11 @@ public class Profile extends Fragment {
 
             }
         });
-        //init
-        profile_info_fragment = new ProfileInfo(userProfile, ProfileViewMode.MY_PROFILE);
-        profile_post_fragment = new ProfilePost(ProfileViewMode.MY_PROFILE);
         fragmentManager = getParentFragmentManager();
         //init first fragment is profile_info
-
         transaction = fragmentManager.beginTransaction();
-        transaction.add(R.id.profile_fragmentContainerView, profile_info_fragment);
         transaction.add(R.id.profile_fragmentContainerView, profile_post_fragment);
-        transaction.replace(R.id.profile_fragmentContainerView, profile_post_fragment);
+        transaction.add(R.id.profile_fragmentContainerView, profile_info_fragment);
         transaction.replace(R.id.profile_fragmentContainerView, profile_post_fragment);
         transaction.addToBackStack(null);
         transaction.commit();
