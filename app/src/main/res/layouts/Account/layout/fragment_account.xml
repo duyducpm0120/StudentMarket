@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="Hãy đăng nhập để vào chức năng này!"/>
         <Button
-            android:id="@+id/button"
+            android:id="@+id/account_loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/myButton"
