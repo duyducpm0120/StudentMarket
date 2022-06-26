@@ -69,6 +69,19 @@ public class NotifyAdapter extends RecyclerView.Adapter<NotifyAdapter.ViewHolder
                 if (!ntf.isRead()){
                     holder.notify_clickable.setBackgroundColor(android.R.color.white);
                     ntf.setRead(true);
+                    if (true){
+                        Intent myIntent = new Intent(context, ListMessages.class);
+                        myIntent.putExtra("posterId", "posterId");
+                        myIntent.putExtra("posterName", "posterName");
+                        myIntent.putExtra("posterAvatar", "posterAvatar");
+                        context.startActivity(myIntent);
+                    } else {
+                        Intent myIntent = new Intent(context, ListMessages.class);
+                        myIntent.putExtra("posterId", "posterId");
+                        myIntent.putExtra("posterName", "posterName");
+                        myIntent.putExtra("posterAvatar", "posterAvatar");
+                        context.startActivity(myIntent);
+                    }
                     try {
                         notifyService.markNotificationAsRead(ntf.getId(), new VolleyCallback() {
                             @Override

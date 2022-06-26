@@ -75,7 +75,6 @@ public class typeAdapter extends RecyclerView.Adapter<typeAdapter.ViewHolder> {
                     notifyItemChanged(getIndex());
                     setIndex(index);
                 }
-                Log.d("typeAdapter1", String.valueOf(categoryTypeValue.getId()));
 
                 callback.action(categoryTypeValue.getId());
             }

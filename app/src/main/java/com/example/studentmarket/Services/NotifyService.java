@@ -40,6 +40,7 @@ public class NotifyService {
                     @Override
                     public void onResponse(JSONObject response) {
                         //textView.setText("Response: " + response.toString());
+                        Log.d("Response", response.toString());
                         try {
 
                             callback.onSuccess(response);

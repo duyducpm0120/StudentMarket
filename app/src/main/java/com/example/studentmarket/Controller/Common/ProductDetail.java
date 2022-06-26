@@ -203,7 +203,6 @@ public class ProductDetail extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getApplicationContext(), ListMessages.class);
-                Log.d("posterId", posterId + " " + posterName + " " + posterAvatar);
                 myIntent.putExtra("posterId", posterId);
                 myIntent.putExtra("posterName", posterName);
                 myIntent.putExtra("posterAvatar", posterAvatar);

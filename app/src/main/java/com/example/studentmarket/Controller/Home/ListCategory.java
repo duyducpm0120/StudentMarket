@@ -47,9 +47,7 @@ public class ListCategory extends AppCompatActivity {
     private ImageButton listCategoryGoBack;
     private EditText listCategorySearch;
     private LinearLayout listCategoryEmtySearch;
-
-    private String name="testuser12771@gmail.com";
-    private String pass="Testuser1277";
+    private String defaultImage = "https://cdn-icons-png.flaticon.com/512/95/95365.png";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
@@ -123,6 +121,7 @@ public class ListCategory extends AppCompatActivity {
         try {
             JSONArray listCate = res.getJSONArray("categories");
             if (listCate!=null){
+                arrayCategory.add(new CategoryType("0", "All",defaultImage,false));
                 for (int i = 0; i < listCate.length(); i++) {
                     JSONObject jsonObject = listCate.getJSONObject(i);
                     arrayCategory.add(new CategoryType(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"),jsonObject.getString("listingCategoryIcon"), false));
@@ -130,9 +129,9 @@ public class ListCategory extends AppCompatActivity {
                 typeAdapter = new typeAdapter(arrayCategory, 2, new categoryInterface() {
                     @Override
                     public void action(int index) {
-                        Intent resultIntent = new Intent();
-                        resultIntent.putExtra("index", String.valueOf(index));
-                        setResult(Activity.RESULT_OK, resultIntent);
+                            Intent resultIntent = new Intent();
+                            resultIntent.putExtra("index", String.valueOf(index));
+                            setResult(Activity.RESULT_OK, resultIntent);
                         finish();
                     }
                 });
