@@ -84,11 +84,12 @@ public class ProductAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if (!storage.getValue(TOKEN_ID_KEY).isEmpty()) {
-            holder.heartProduct.setVisibility(ImageView.VISIBLE);
-        } else {
-            holder.heartProduct.setVisibility(ImageView.INVISIBLE);
-        }
+//        if (!storage.getValue(TOKEN_ID_KEY).isEmpty()) {
+//            holder.heartProduct.setVisibility(ImageView.VISIBLE);
+//        } else {
+//            holder.heartProduct.setVisibility(ImageView.INVISIBLE);
+//        }
+        holder.heartProduct.setVisibility(ImageView.INVISIBLE);
 
         ProductModel product = productList.get(position);
         // holder.imgProduct.setImageResource(product.get());
@@ -104,7 +105,7 @@ public class ProductAdapter extends BaseAdapter {
                 myIntent.putExtra("body", product.getListingBody());
                 myIntent.putExtra("id", product.getListingId());
                 myIntent.putExtra("categories", new int[]{1, 3});
-                myIntent.putExtra("isHeart", true);
+                myIntent.putExtra("isHeart", product.isListingIsLoved());
                 context.startActivity(myIntent);
             }
         });

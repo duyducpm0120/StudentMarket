@@ -102,6 +102,11 @@ public class Account extends Fragment {
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
+        else {
+            fragmentTransaction.replace(R.id.fragmentContainerView, new Login());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
     }
 
     @Override
@@ -109,71 +114,15 @@ public class Account extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_account, container, false);
-
-
-
-        accountButtonLogin = (Button) view.findViewById(R.id.button);
+        accountButtonLogin = (Button) view.findViewById(R.id.account_loginButton);
         fragmentManager = getParentFragmentManager();
         fragmentTransaction = fragmentManager.beginTransaction();
         accountButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fragmentTransaction.replace(R.id.fragmentContainerView, new Login());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
-        accountButotnForgotPass = (Button) view.findViewById(R.id.button1);
-        accountButotnForgotPass.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fragmentTransaction.replace(R.id.fragmentContainerView, new Change_password());
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
-            }
-        });
-        accountNotice = (Button) view.findViewById(R.id.button2);
-        accountNotice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(getActivity());
-                builder.setMessage("Bạn nhập sai tên đăng nhập hoặc mật khẩu. Vui lòng kiểm tra lại và nhập đúng thông tin");
-                builder.setNegativeButton("Đồng ý", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                TextView title = new TextView(getActivity());
-                title.setText("Thông báo");
-                title.setPadding(10, 20, 10, 10);
-                title.setGravity(Gravity.CENTER);
-                title.setTextSize(25);
-                title.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-                builder.setCustomTitle(title);
-                AlertDialog alertDialog = builder.show();
-                TextView messageText = (TextView) alertDialog.findViewById(android.R.id.message);
-                messageText.setGravity(Gravity.CENTER);
-                alertDialog.show();
-            }
-        });
-        accountPost = view.findViewById(R.id.button_post);
-        accountPost.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(getContext(), PostProduct.class);
-                startActivity(myIntent);
-            }
-        });
-        Button logout = (Button) view.findViewById(R.id.logout);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
 
             }
         });
-
 
         return view;
     }

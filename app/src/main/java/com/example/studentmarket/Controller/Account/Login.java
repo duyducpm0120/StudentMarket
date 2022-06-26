@@ -59,7 +59,6 @@ public class Login extends Fragment {
     private Button loginButton;
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
-    private ImageButton loginClose;
     private TextView loginToRegister;
     private TextView loginForgotPassword;
     private EditText loginEditTextEmail;
@@ -112,15 +111,6 @@ public class Login extends Fragment {
         loginEditTextPassword = (EditText) view.findViewById(R.id.login_password_edit_text);
         loginEditTextEmail.setText("duyduc012");
         loginEditTextPassword.setText("duyduc012");
-        loginClose = (ImageButton) view.findViewById(R.id.login_close_button);
-        loginClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                fragmentTransaction.replace(R.id.fragmentContainerView,new Account());
-//                fragmentTransaction.commit();
-                getParentFragmentManager().popBackStackImmediate();
-            }
-        });
         loginToRegister = (TextView) view.findViewById(R.id.login_to_register);
         loginToRegister.setOnClickListener(new View.OnClickListener() {
             @Override
