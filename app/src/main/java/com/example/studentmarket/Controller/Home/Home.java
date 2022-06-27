@@ -1,5 +1,6 @@
 package com.example.studentmarket.Controller.Home;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,9 +42,12 @@ import com.example.studentmarket.R;
 import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
 import static com.example.studentmarket.Helper.globalValue.*;
 
+import com.example.studentmarket.Services.NotifyService;
 import com.example.studentmarket.Services.ProductService;
 import com.example.studentmarket.Services.ProductService.*;
 import com.example.studentmarket.Store.SharedStorage;
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -85,6 +89,7 @@ public class Home extends Fragment {
     private int indexData = 1;
     private boolean isOver = false;
     private ArrayList<Integer> arr = new ArrayList<>();
+    private NotifyService notifyService;
 
     private FragmentManager fragmentManager;
     private FragmentTransaction fragmentTransaction;
@@ -146,6 +151,7 @@ public class Home extends Fragment {
         productService = new ProductService(getContext());
         emptyCategory = view.findViewById(R.id.home_empty_choose_category);
         fragmentManager = getParentFragmentManager();
+        notifyService = new NotifyService(getContext());
         homeScroll = view.findViewById(R.id.home_scroll);
         fragmentTransaction = fragmentManager.beginTransaction();
         emptySearch = view.findViewById(R.id.home_empty_search);
@@ -160,6 +166,11 @@ public class Home extends Fragment {
         } else {
             goToNotify.setVisibility(View.VISIBLE);
             goToNotify.setActivated(true);
+            try {
+                getNumberOfNotify();
+            } catch (JSONException jsonException) {
+                jsonException.printStackTrace();
+            }
         }
 
         homeTextViewSeeMore.setOnClickListener(new View.OnClickListener() {
@@ -202,6 +213,7 @@ public class Home extends Fragment {
                 getContext().startActivity(myIntent);
             }
         });
+
         homeScroll.getViewTreeObserver()
                 .addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
                     @Override
@@ -231,6 +243,36 @@ public class Home extends Fragment {
 
 
         return view;
+    }
+
+    public void getNumberOfNotify() throws JSONException {
+
+        notifyService.getListNotification(new VolleyCallback() {
+            @SuppressLint("UnsafeOptInUsageError")
+            @Override
+            public void onSuccess(JSONObject response) throws JSONException {
+                JSONArray jsonArray = response.getJSONArray("notificationList");
+                int count = 0;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    if (!jsonObject.getBoolean("userNotificationRead")) {
+                        count++;
+                    }
+                }
+                if (count > 0) {
+                    BadgeDrawable badge = BadgeDrawable.create(getContext());
+                    badge.setNumber(count);
+                    badge.setVisible(true);
+                    BadgeUtils.attachBadgeDrawable(badge,goToNotify);
+                }
+
+            }
+
+            @Override
+            public void onError(VolleyError error) {
+
+            }
+        });
     }
 
     private void LoadListProduct(View view) {
@@ -411,7 +453,6 @@ public class Home extends Fragment {
         if (getListProduct() == null) {
             return;
         }
-        Log.d("refresh", getListProduct().size() + "");
 
         if (productAdater != null) {
             productAdater.setItem(getListProduct());
@@ -432,19 +473,24 @@ public class Home extends Fragment {
                 if (resultCode == Activity.RESULT_OK) {
                     String newIndex = data.getStringExtra("index");
                     int Id = Integer.parseInt(newIndex);
-                    for (int i = 0; i < arrayCategoryType.size(); i++) {
-                        CategoryType elementCategoryTypeOfIndex = arrayCategoryType.get(i);
-                        if (elementCategoryTypeOfIndex.getId() == Id) {
-                            arrayCategoryType.set(i, new CategoryType(newIndex, elementCategoryTypeOfIndex.getName(), elementCategoryTypeOfIndex.getImage(), true));
-                            setIndex(i);
-                            continue;
+                    arr.clear();
+
+                    if (Id != 0) {
+                        for (int i = 0; i < arrayCategoryType.size(); i++) {
+                            CategoryType elementCategoryTypeOfIndex = arrayCategoryType.get(i);
+                            if (elementCategoryTypeOfIndex.getId() == Id) {
+                                arrayCategoryType.set(i, new CategoryType(newIndex, elementCategoryTypeOfIndex.getName(), elementCategoryTypeOfIndex.getImage(), true));
+                                setIndex(i);
+                                continue;
+                            }
+                            arrayCategoryType.set(i, new CategoryType(String.valueOf(elementCategoryTypeOfIndex.getId()), elementCategoryTypeOfIndex.getName(), elementCategoryTypeOfIndex.getImage(), false));
                         }
-                        arrayCategoryType.set(i, new CategoryType(String.valueOf(elementCategoryTypeOfIndex.getId()), elementCategoryTypeOfIndex.getName(), elementCategoryTypeOfIndex.getImage(), false));
+                        arr.add(Id);
+
                     }
+
                     homeTypeAdapter.setItem(arrayCategoryType);
                     homeListType.setAdapter(homeTypeAdapter);
-                    arr.clear();
-                    arr.add(Id);
                     indexData = 1;
                     isOver = false;
                     ArrayList<Product> arrayProductCate = new ArrayList<>();
