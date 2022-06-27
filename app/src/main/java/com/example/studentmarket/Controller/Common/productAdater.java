@@ -20,6 +20,7 @@ import com.example.studentmarket.Store.SharedStorage;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
 import static com.example.studentmarket.Constants.StorageKeyConstant.TOKEN_ID_KEY;
 
 import org.json.JSONException;
@@ -38,7 +39,7 @@ public class productAdater extends BaseAdapter {
         this.productList = productList;
     }
 
-    public productAdater(Context context, int layout, List<Product> productList,boolean isShowHeart) {
+    public productAdater(Context context, int layout, List<Product> productList, boolean isShowHeart) {
         this.context = context;
         this.layout = layout;
         this.productList = productList;
@@ -50,7 +51,7 @@ public class productAdater extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void setItem(List<Product> list){
+    public void setItem(List<Product> list) {
         this.productList = list;
         notifyDataSetChanged();
     }
@@ -95,8 +96,8 @@ public class productAdater extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if (!storage.getValue(TOKEN_ID_KEY).isEmpty()){
-            if (isShowHeart){
+        if (!storage.getValue(TOKEN_ID_KEY).isEmpty()) {
+            if (isShowHeart) {
                 holder.heartProduct.setVisibility(ImageView.VISIBLE);
             } else {
                 holder.heartProduct.setVisibility(ImageView.INVISIBLE);
@@ -117,8 +118,8 @@ public class productAdater extends BaseAdapter {
                 myIntent.putExtra("price", product.getPrice());
                 myIntent.putExtra("image", product.getImage());
                 myIntent.putExtra("body", product.getBody());
-                myIntent.putExtra("id",product.getId());
-                myIntent.putExtra("isHeart",product.isHeart());
+                myIntent.putExtra("id", product.getId());
+                myIntent.putExtra("isHeart", product.isHeart());
                 context.startActivity(myIntent);
             }
         });
@@ -130,13 +131,13 @@ public class productAdater extends BaseAdapter {
                         productService.SaveFavorite(String.valueOf(product.getId()), new VolleyCallback() {
                             @Override
                             public void onSuccess(JSONObject response) throws JSONException {
-                                Log.d("save",response.toString());
+                                Log.d("save", response.toString());
                                 holder.heartProduct.setColorFilter(context.getColor(R.color.secondary));
                             }
 
                             @Override
                             public void onError(VolleyError error) {
-                                Log.d("save",error.toString());
+                                Log.d("save", error.toString());
 
                             }
                         });
@@ -149,12 +150,12 @@ public class productAdater extends BaseAdapter {
                         productService.UnsaveFavorite(String.valueOf(product.getId()), new VolleyCallback() {
                             @Override
                             public void onSuccess(JSONObject response) throws JSONException {
-                                Log.d("unsave",response.toString());
+                                Log.d("unsave", response.toString());
                             }
 
                             @Override
                             public void onError(VolleyError error) {
-                                Log.d("unsave",error.toString());
+                                Log.d("unsave", error.toString());
                                 holder.heartProduct.setColorFilter(context.getColor(R.color.gray));
                                 //remove from list
                                 productList.remove(product);
@@ -177,7 +178,7 @@ public class productAdater extends BaseAdapter {
             holder.heartProduct.setColorFilter(context.getColor(R.color.gray));
         }
         holder.nameProduct.setText(product.getTitle());
-        String formatPrice = String.format("%,d", Integer.parseInt(product.getPrice()))+" đ";
+        String formatPrice = String.format("%,d", Integer.parseInt(product.getPrice())) + " đ";
         holder.priceProduct.setText(formatPrice);
 
         return convertView;
