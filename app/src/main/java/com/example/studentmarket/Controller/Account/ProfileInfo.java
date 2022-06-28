@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.example.studentmarket.Constants.ProfileViewMode;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Helper.VolleyErrorHelper;
+import com.example.studentmarket.Helper.globalValue;
 import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProfileService;
@@ -81,6 +82,7 @@ public class ProfileInfo extends Fragment {
                 fragmentTransaction.commit();
                 SharedStorage storage = new SharedStorage(getContext());
                 storage.removeValue(TOKEN_ID_KEY);
+                globalValue.setUserId(null);
                 UserProfileHolder.getInstance().setData(null);
             }
         });

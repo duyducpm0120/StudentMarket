@@ -66,7 +66,7 @@ public class UserProfileModel implements Serializable {
     }
 
     public int getUserId() {
-            return userId;
+        return userId;
     }
 
     public String getUserAddress() {
@@ -130,6 +130,6 @@ public class UserProfileModel implements Serializable {
     }
 
     public UniversityModel getUserUniversity() {
-            return university;
+        return university;
     }
 }
