@@ -37,7 +37,6 @@ public class ProfileInfo extends Fragment {
     private EditText universityEditText;
     private EditText phoneEditText;
     private EditText emailEditText;
-    private EditText passwordEditText;
     private UserProfileModel userProfile;
     private Button editProfileButton;
     private TextView logOutButton;
@@ -65,7 +64,6 @@ public class ProfileInfo extends Fragment {
 
         emailEditText = view.findViewById(R.id.email_text_box);
 
-        passwordEditText = view.findViewById(R.id.password_text_box);
 
         editProfileButton = view.findViewById(R.id.confirm_button);
 
@@ -135,7 +133,6 @@ public class ProfileInfo extends Fragment {
         universityEditText.setText(userProfile.getUserUniversity().getUniversityName());
         phoneEditText.setText(userProfile.getUserPhone());
         emailEditText.setText(userProfile.getUserEmail());
-        passwordEditText.setText("***ADASDAS**");
     }
 
 //    @Override

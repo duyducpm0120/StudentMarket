@@ -61,7 +61,8 @@
                 android:layout_marginLeft="160dp"
                 android:layout_marginTop="90dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="invisible">
 
                 <ImageButton
                     android:id="@+id/imageButton"
