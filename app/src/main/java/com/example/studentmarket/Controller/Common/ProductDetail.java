@@ -121,15 +121,13 @@ public class ProductDetail extends AppCompatActivity {
         ArrayList<Product> listProduct = new ArrayList<>();
         listProduct = getListProduct();
         ArrayList<Product> finalListProduct = listProduct;
+        try {
+            getDetailPoster(String.valueOf(id));
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+        }
         if (!storage.getValue(TOKEN_ID_KEY).isEmpty()) {
             handleHeart(isHeart, id, productService, finalListProduct);
-
-
-            try {
-                getDetailPoster(String.valueOf(id));
-            } catch (JSONException jsonException) {
-                jsonException.printStackTrace();
-            }
         } else {
             handleShowButton();
         }
@@ -305,22 +303,32 @@ public class ProductDetail extends AppCompatActivity {
                 Picasso.get().load(posterAvatar).fit().into(detailProductAvatar);
                 detailProductAvatarName.setText(posterName);
                 posterId = response.getString("userId");
-                if (getUserId().equals(posterId)) {
-                    detailProductEdit.setVisibility(View.VISIBLE);
-                    detailProductEdit.setActivated(true);
-                    detailProductRemove.setVisibility(View.VISIBLE);
-                    detailProductRemove.setActivated(true);
-                    detailProductChat.setVisibility(ImageView.INVISIBLE);
-                    detailProductChat.setActivated(false);
+                if(getUserId() != null) {
+                    if (getUserId().equals(posterId)) {
+                        detailProductEdit.setVisibility(View.VISIBLE);
+                        detailProductEdit.setActivated(true);
+                        detailProductRemove.setVisibility(View.VISIBLE);
+                        detailProductRemove.setActivated(true);
+                        detailProductChat.setVisibility(ImageView.INVISIBLE);
+                        detailProductChat.setActivated(false);
 
+                    } else {
+                        detailProductChat.setVisibility(View.VISIBLE);
+                        detailProductChat.setActivated(true);
+                        detailProductEdit.setVisibility(ImageView.INVISIBLE);
+                        detailProductRemove.setVisibility(ImageView.INVISIBLE);
+                        detailProductRemove.setActivated(false);
+                        detailProductEdit.setActivated(false);
+                    }
                 } else {
-                    detailProductChat.setVisibility(View.VISIBLE);
-                    detailProductChat.setActivated(true);
                     detailProductEdit.setVisibility(ImageView.INVISIBLE);
                     detailProductRemove.setVisibility(ImageView.INVISIBLE);
                     detailProductRemove.setActivated(false);
                     detailProductEdit.setActivated(false);
+                    detailProductChat.setVisibility(ImageView.INVISIBLE);
+                    detailProductChat.setActivated(false);
                 }
+
             }
 
             @Override
