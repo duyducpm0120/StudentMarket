@@ -121,15 +121,13 @@ public class ProductDetail extends AppCompatActivity {
         ArrayList<Product> listProduct = new ArrayList<>();
         listProduct = getListProduct();
         ArrayList<Product> finalListProduct = listProduct;
+        try {
+            getDetailPoster(String.valueOf(id));
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+        }
         if (!storage.getValue(TOKEN_ID_KEY).isEmpty()) {
             handleHeart(isHeart, id, productService, finalListProduct);
-
-
-            try {
-                getDetailPoster(String.valueOf(id));
-            } catch (JSONException jsonException) {
-                jsonException.printStackTrace();
-            }
         } else {
             handleShowButton();
         }

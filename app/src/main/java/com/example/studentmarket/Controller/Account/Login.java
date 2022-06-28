@@ -199,7 +199,7 @@ public class Login extends Fragment {
                 //textView.setText("Response: " + response.toString());
                 Log.d("get profile response",response.toString());
                 UserProfileModel userProfile = new Gson().fromJson(String.valueOf(response), UserProfileModel.class);
-                setUsername(userProfile.getAccountName());
+                setUsername(userProfile.getUserFullName());
                 setUserId(String.valueOf(userProfile.getUserId()));
                 setUserImg(userProfile.getUserPic());
 
