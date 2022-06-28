@@ -297,12 +297,12 @@ public class ProductDetail extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject response) throws JSONException {
                 //convert response to object
-                Log.d("response", response.toString());
                 posterName = response.getString("userFullName");
                 posterAvatar = response.getString("userPic");
                 Picasso.get().load(posterAvatar).fit().into(detailProductAvatar);
                 detailProductAvatarName.setText(posterName);
                 posterId = response.getString("userId");
+                if (posterId!=null && getUserId()!=null){
                 if (getUserId().equals(posterId)) {
                     detailProductEdit.setVisibility(View.VISIBLE);
                     detailProductEdit.setActivated(true);
@@ -318,7 +318,7 @@ public class ProductDetail extends AppCompatActivity {
                     detailProductRemove.setVisibility(ImageView.INVISIBLE);
                     detailProductRemove.setActivated(false);
                     detailProductEdit.setActivated(false);
-                }
+                }}
             }
 
             @Override
