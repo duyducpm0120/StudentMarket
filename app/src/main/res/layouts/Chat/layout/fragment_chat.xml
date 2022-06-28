@@ -133,7 +133,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/noProduct"
+                android:text="@string/noChat"
                 android:textAlignment="center"
                 android:textColor="@color/primary"
                 android:textSize="20sp" />
