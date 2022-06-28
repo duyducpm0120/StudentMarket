@@ -72,6 +72,7 @@ public class DialogList extends Fragment {
     private ArrayList<Messenger> arrayMessenger;
     private MessengerApdater messengerApdater;
     private MessengerApdater messengerApdaterSearch;
+    private LinearLayout emtyList;
 
     private LinearLayout chatContainerUser;
     private LinearLayout chatRequireLogin;
@@ -122,6 +123,7 @@ public class DialogList extends Fragment {
         chatRequireLogin = view.findViewById(R.id.chat_require_login);
         chatEdittextSearch = view.findViewById(R.id.chat_edittext_search);
         chatEmptySearch = view.findViewById(R.id.chat_empty_search);
+        emtyList = view.findViewById(R.id.chat_empty_list);
         SharedStorage storage = new SharedStorage(getContext());
         Utils utils = new Utils();
 
@@ -245,15 +247,21 @@ public class DialogList extends Fragment {
                         e.printStackTrace();
                     }
                 }
-                //sort array to display newest message first
-                Collections.sort(arrayMessenger, new Comparator<Messenger>() {
-                    @Override
-                    public int compare(Messenger o1, Messenger o2) {
-                        return o2.getRawTime().compareTo(o1.getRawTime());
-                    }
-                });
-                messengerApdater = new MessengerApdater(arrayMessenger,getContext());
-                listMessenger.setAdapter(messengerApdater);
+                if (arrayMessenger.size()!=0){
+                    //sort array to display newest message first
+                    Collections.sort(arrayMessenger, new Comparator<Messenger>() {
+                        @Override
+                        public int compare(Messenger o1, Messenger o2) {
+                            return o2.getRawTime().compareTo(o1.getRawTime());
+                        }
+                    });
+                    messengerApdater = new MessengerApdater(arrayMessenger,getContext());
+                    listMessenger.setAdapter(messengerApdater);
+                    emtyList.setVisibility(View.INVISIBLE);
+                } else {
+                    emtyList.setVisibility(View.VISIBLE);
+                }
+
             }
 
             @Override

@@ -1,5 +1,6 @@
 package com.example.studentmarket.Controller.Home;
 
+import static com.example.studentmarket.Helper.globalValue.getIndex;
 import static com.example.studentmarket.Helper.globalValue.setIndex;
 
 import androidx.annotation.NonNull;
@@ -36,7 +37,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
+import static com.example.studentmarket.Helper.globalValue.*;
 
 public class ListCategory extends AppCompatActivity {
     private RecyclerView listCategory;
@@ -121,22 +122,29 @@ public class ListCategory extends AppCompatActivity {
         try {
             JSONArray listCate = res.getJSONArray("categories");
             if (listCate!=null){
-                arrayCategory.add(new CategoryType("0", "All",defaultImage,false));
+                if (getIndex()==-1){
+                    arrayCategory.add(new CategoryType("0", "All",defaultImage,true));
+                } else {
+                    arrayCategory.add(new CategoryType("0", "All",defaultImage,false));
+                }
                 for (int i = 0; i < listCate.length(); i++) {
                     JSONObject jsonObject = listCate.getJSONObject(i);
-                    arrayCategory.add(new CategoryType(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"),jsonObject.getString("listingCategoryIcon"), false));
+                    if (getIndex()+1==jsonObject.getInt("listingCategoryId")){
+                        arrayCategory.add(new CategoryType(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"),jsonObject.getString("listingCategoryIcon"), true));
+                    } else {
+                        arrayCategory.add(new CategoryType(jsonObject.getString("listingCategoryId"),jsonObject.getString("listingCategoryName"),jsonObject.getString("listingCategoryIcon"), false));
+                    }
                 }
                 typeAdapter = new typeAdapter(arrayCategory, 2, new categoryInterface() {
                     @Override
                     public void action(int index) {
-                            Intent resultIntent = new Intent();
-                            resultIntent.putExtra("index", String.valueOf(index));
-                            setResult(Activity.RESULT_OK, resultIntent);
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("index", String.valueOf(index));
+                        setResult(Activity.RESULT_OK, resultIntent);
                         finish();
                     }
                 });
                 listCategory.setAdapter(typeAdapter);
-                setIndex(-1);
             }
         } catch (JSONException err){
             Log.d("conver list category err",err.toString());

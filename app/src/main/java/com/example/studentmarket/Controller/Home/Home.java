@@ -177,7 +177,6 @@ public class Home extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent myIntent = new Intent(getContext(), ListCategory.class);
-                setIndex(-1);
                 startActivityForResult(myIntent,999);
 //                getContext().startActivity(myIntent);
             }
@@ -248,7 +247,7 @@ public class Home extends Fragment {
     public void getNumberOfNotify() throws JSONException {
 
         notifyService.getListNotification(new VolleyCallback() {
-            @SuppressLint("UnsafeOptInUsageError")
+            @SuppressLint({"UnsafeOptInUsageError", "ResourceAsColor"})
             @Override
             public void onSuccess(JSONObject response) throws JSONException {
                 JSONArray jsonArray = response.getJSONArray("notificationList");
@@ -263,6 +262,7 @@ public class Home extends Fragment {
                     BadgeDrawable badge = BadgeDrawable.create(getContext());
                     badge.setNumber(count);
                     badge.setVisible(true);
+                    badge.setBackgroundColor(R.color.primary);
                     BadgeUtils.attachBadgeDrawable(badge,goToNotify);
                 }
 
@@ -487,6 +487,8 @@ public class Home extends Fragment {
                         }
                         arr.add(Id);
 
+                    } else {
+                        setIndex(-1);
                     }
 
                     homeTypeAdapter.setItem(arrayCategoryType);

@@ -114,6 +114,30 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/chat_empty_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="110dp"
+            android:visibility="invisible"
+            android:gravity="center"
+            android:background="@drawable/gradient_background"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/empty_search" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/noProduct"
+                android:textAlignment="center"
+                android:textColor="@color/primary"
+                android:textSize="20sp" />
+        </LinearLayout>
     </RelativeLayout>
 
 </FrameLayout>
