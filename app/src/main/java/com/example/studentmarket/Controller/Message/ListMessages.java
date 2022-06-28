@@ -104,6 +104,7 @@ public class ListMessages extends AppCompatActivity {
                     if (snapshot.getValue()==null){
                         conversationRef.child("Conversation_"+newConversationId[0]).setValue(new FirebaseConversation(newConversationId[0], myId,posterId,getUsername(),posterName, posterAvatar, imageUrl,"Hiện không có tin nhắn nào",String.valueOf(new Date().getTime())));
                         conversationId = newConversationId[0];
+                        initListener();
                     } else {
                         try {
                             FirebaseConversation conversation = snapshot.getValue(FirebaseConversation.class);
