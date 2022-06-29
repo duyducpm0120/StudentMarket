@@ -20,6 +20,7 @@ import com.android.volley.VolleyError;
 import com.example.studentmarket.Constants.ProfileViewMode;
 import com.example.studentmarket.Helper.VolleyCallback.VolleyCallback;
 import com.example.studentmarket.Helper.VolleyErrorHelper;
+import com.example.studentmarket.Helper.globalValue;
 import com.example.studentmarket.Models.UserProfileModel;
 import com.example.studentmarket.R;
 import com.example.studentmarket.Services.ProfileService;
@@ -36,7 +37,6 @@ public class ProfileInfo extends Fragment {
     private EditText universityEditText;
     private EditText phoneEditText;
     private EditText emailEditText;
-    private EditText passwordEditText;
     private UserProfileModel userProfile;
     private Button editProfileButton;
     private TextView logOutButton;
@@ -64,7 +64,6 @@ public class ProfileInfo extends Fragment {
 
         emailEditText = view.findViewById(R.id.email_text_box);
 
-        passwordEditText = view.findViewById(R.id.password_text_box);
 
         editProfileButton = view.findViewById(R.id.confirm_button);
 
@@ -81,6 +80,7 @@ public class ProfileInfo extends Fragment {
                 fragmentTransaction.commit();
                 SharedStorage storage = new SharedStorage(getContext());
                 storage.removeValue(TOKEN_ID_KEY);
+                globalValue.setUserId(null);
                 UserProfileHolder.getInstance().setData(null);
             }
         });
@@ -133,7 +133,6 @@ public class ProfileInfo extends Fragment {
         universityEditText.setText(userProfile.getUserUniversity().getUniversityName());
         phoneEditText.setText(userProfile.getUserPhone());
         emailEditText.setText(userProfile.getUserEmail());
-        passwordEditText.setText("***ADASDAS**");
     }
 
 //    @Override

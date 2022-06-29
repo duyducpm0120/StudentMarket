@@ -30,7 +30,7 @@
             android:id="@+id/view_avatart_avatar_image_view"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:background="#FFFFFF"
             tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>
