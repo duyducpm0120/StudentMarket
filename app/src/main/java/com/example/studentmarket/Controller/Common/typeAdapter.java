@@ -55,14 +55,13 @@ public class typeAdapter extends RecyclerView.Adapter<typeAdapter.ViewHolder> {
         CategoryType categoryTypeValue = categoryTypeList.get(position);
         holder.name.setText(categoryTypeValue.getName());
         Picasso.get().load(categoryTypeValue.getImage()).into(holder.img);
-        if (type == 1){
-            if (categoryTypeValue.isShow()==true){
-                holder.imageLayout.setVisibility(View.VISIBLE);
-            }
-            else {
-                holder.imageLayout.setVisibility(View.INVISIBLE);
-            }
-        }
+////            if (categoryTypeValue.isShow()){
+////                holder.imageLayout.setVisibility(View.VISIBLE);
+////            }
+////            else {
+////                holder.imageLayout.setVisibility(View.INVISIBLE);
+////            }
+//        holder.imageLayout.setVisibility(View.VISIBLE);
         holder.type_clickable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,25 +78,25 @@ public class typeAdapter extends RecyclerView.Adapter<typeAdapter.ViewHolder> {
                 callback.action(categoryTypeValue.getId());
             }
         });
-        if (holder.imageLayout !=null){
             holder.imageLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    holder.imageLayout.setVisibility(View.INVISIBLE);
-                    categoryTypeValue.setShow(false);
-                    callback.action(-1);
+                    if (type==1){
+                        holder.imageLayout.setVisibility(View.INVISIBLE);
+                        categoryTypeValue.setShow(false);
+                        callback.action(-1);
+                    }
                 }
             });
-            if (categoryTypeValue.isShow()==true){
+            if (categoryTypeValue.isShow()){
                 holder.imageLayout.setVisibility(View.VISIBLE);
             }
             else {
                 holder.imageLayout.setVisibility(View.INVISIBLE);
             }
-            if (getIndex()!=position){
+            if (getIndex()!=position && type == 1){
                 holder.imageLayout.setVisibility(View.INVISIBLE);
             }
-        }
 
     }
 
@@ -124,7 +123,7 @@ public class typeAdapter extends RecyclerView.Adapter<typeAdapter.ViewHolder> {
                 name = itemView.findViewById(R.id.type2_textview_name);
                 img = itemView.findViewById(R.id.type2_imageview);
                 type_clickable = itemView.findViewById(R.id.type2_clickable);
-                imageLayout = null;
+                imageLayout = itemView.findViewById(R.id.type2_image_layout);
             }
         }
     }

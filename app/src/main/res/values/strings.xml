@@ -60,5 +60,6 @@
     <string name="requireLogin">Yêu cầu đăng nhập</string>
     <string name="noProduct">Không có sản phẩm nào</string>
     <string name="emtySearchChat">Không tìm thấy kết quả</string>
+    <string name="noChat">Không có đoạn hội thoại nào</string>
 
 </resources>
